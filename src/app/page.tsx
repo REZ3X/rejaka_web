@@ -94,21 +94,26 @@ export default function Home() {
   ) => {
     setIsLoading(true);
 
-    const url = new URL(endpoint, window.location.origin);
+    const normalizedEndpoint = endpoint.startsWith("/")
+      ? endpoint
+      : `/${endpoint}`;
+
+    const url = new URL(normalizedEndpoint, window.location.origin);
     if (params) {
       Object.entries(params).forEach(([key, value]) => {
         url.searchParams.append(key, value);
       });
     }
 
-    const fullPath = url.pathname + url.search;
-    addLog("info", `Starting request to ${fullPath}`);
-    addLog("info", `Method: GET | URL: ${fullPath}`);
+    const fullUrl = url.toString();
+    const displayPath = url.pathname + url.search;
+    addLog("info", `Starting request to ${displayPath}`);
+    addLog("info", `Method: GET | URL: ${displayPath}`);
 
     const startTime = performance.now();
 
     try {
-      const response = await fetch(fullPath);
+      const response = await fetch(fullUrl);
       const endTime = performance.now();
       const duration = (endTime - startTime).toFixed(2);
 
