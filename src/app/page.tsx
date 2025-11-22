@@ -177,13 +177,23 @@ export default function Home() {
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
         <div className="text-center mb-6 sm:mb-8">
-          <div className="mb-4">
+          <div className="mb-4 hidden sm:block">
             <ASCIIText
               text="REJAKA_PORTFOLIO"
               enableWaves={true}
               asciiFontSize={8}
               textFontSize={150}
               planeBaseHeight={8}
+            />
+          </div>
+
+          <div className="mb-4 sm:hidden">
+            <ASCIIText
+              text="REJAKA"
+              enableWaves={true}
+              asciiFontSize={6}
+              textFontSize={80}
+              planeBaseHeight={6}
             />
           </div>
         </div>
