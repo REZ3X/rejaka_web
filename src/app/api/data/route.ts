@@ -1,9 +1,17 @@
 import { NextResponse } from "next/server";
+import { GET as getAbout } from "./about/route";
+import { GET as getTechStacks } from "./techStacks/route";
+import { GET as getProjects } from "./projects/route";
+import { GET as getExperiences } from "./experiences/route";
+import { GET as getAchievements } from "./achievements/route";
+import { GET as getSocials } from "./socials/route";
+
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
 
 export async function GET() {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
-
+    // Call the route handlers directly instead of making HTTP requests
     const [
       aboutRes,
       techStacksRes,
@@ -12,12 +20,12 @@ export async function GET() {
       achievementsRes,
       socialsRes,
     ] = await Promise.all([
-      fetch(`${baseUrl}/api/data/about`, { cache: "no-store" }),
-      fetch(`${baseUrl}/api/data/techStacks`, { cache: "no-store" }),
-      fetch(`${baseUrl}/api/data/projects`, { cache: "no-store" }),
-      fetch(`${baseUrl}/api/data/experiences`, { cache: "no-store" }),
-      fetch(`${baseUrl}/api/data/achievements`, { cache: "no-store" }),
-      fetch(`${baseUrl}/api/data/socials`, { cache: "no-store" }),
+      getAbout(),
+      getTechStacks(new Request("http://localhost/api/data/techStacks")),
+      getProjects(new Request("http://localhost/api/data/projects")),
+      getExperiences(),
+      getAchievements(),
+      getSocials(),
     ]);
 
     const [about, techStacks, projects, experiences, achievements, socials] =
@@ -43,6 +51,7 @@ export async function GET() {
       },
     });
   } catch (error) {
+    console.error("Error in /api/data:", error);
     return NextResponse.json(
       {
         success: false,
