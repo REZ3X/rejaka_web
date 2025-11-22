@@ -387,7 +387,10 @@ class CanvAscii {
     const planeW = baseH * textAspect;
     const planeH = baseH;
 
-    this.geometry = new THREE.PlaneGeometry(planeW, planeH, 36, 36);
+    const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+    const segments = isMobile ? 12 : 36;
+
+    this.geometry = new THREE.PlaneGeometry(planeW, planeH, segments, segments);
     this.material = new THREE.ShaderMaterial({
       vertexShader,
       fragmentShader,
@@ -405,8 +408,13 @@ class CanvAscii {
   }
 
   setRenderer() {
-    this.renderer = new THREE.WebGLRenderer({ antialias: false, alpha: true });
-    this.renderer.setPixelRatio(1);
+    const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+    this.renderer = new THREE.WebGLRenderer({
+      antialias: false,
+      alpha: true,
+      powerPreference: "high-performance",
+    });
+    this.renderer.setPixelRatio(isMobile ? 0.5 : 1);
     this.renderer.setClearColor(0x000000, 0);
 
     this.filter = new AsciiFilter(this.renderer, {

@@ -265,7 +265,9 @@ export default function FaultyTerminal({
   mouseReact = true,
   mouseStrength = 0.2,
   dpr = typeof window !== "undefined"
-    ? Math.min(window.devicePixelRatio || 1, 2)
+    ? window.innerWidth < 768
+      ? 0.75
+      : Math.min(window.devicePixelRatio || 1, 1.5)
     : 1,
   pageLoadAnimation = true,
   brightness = 1,
@@ -303,7 +305,13 @@ export default function FaultyTerminal({
     const ctn = containerRef.current;
     if (!ctn) return;
 
-    const renderer = new Renderer({ dpr });
+    const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+    const renderer = new Renderer({
+      dpr,
+      alpha: false,
+      premultipliedAlpha: false,
+      antialias: false,
+    });
     rendererRef.current = renderer;
     const gl = renderer.gl;
     gl.clearColor(0, 0, 0, 1);
@@ -365,8 +373,16 @@ export default function FaultyTerminal({
     resizeObserver.observe(ctn);
     resize();
 
+    let lastUpdateTime = 0;
+    const updateInterval = isMobile ? 1000 / 30 : 1000 / 60;
+
     const update = (t: number) => {
       rafRef.current = requestAnimationFrame(update);
+
+      if (isMobile && t - lastUpdateTime < updateInterval) {
+        return;
+      }
+      lastUpdateTime = t;
 
       if (pageLoadAnimation && loadAnimationStartRef.current === 0) {
         loadAnimationStartRef.current = t;
