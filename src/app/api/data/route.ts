@@ -11,7 +11,6 @@ export const runtime = "nodejs";
 
 export async function GET() {
   try {
-    // Call the route handlers directly instead of making HTTP requests
     const [
       aboutRes,
       techStacksRes,

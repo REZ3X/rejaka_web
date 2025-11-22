@@ -18,12 +18,11 @@ const jetBrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://rejaka.id"),
   title: {
-    template: "%s | Rejaka Abimanyu Susanto | Full-Stack Developer",
-    default:
-      "Rejaka Abimanyu Susanto | Full-Stack Developer | API Portfolio Dashboard",
+    template: "%s | Rejaka Abimanyu Susanto",
+    default: "Rejaka Abimanyu Susanto | Full-Stack Developer",
   },
   description:
-    "Interactive API portfolio dashboard showcasing Rejaka Abimanyu Susanto's work: full-stack developer from Yogyakarta, Indonesia. Real-time terminal logging, project explorer, and tech stack visualization.",
+    "Full-stack developer portfolio by Rejaka Abimanyu Susanto. Interactive API dashboard with real-time terminal, tech stack explorer, and projects.",
   keywords: [
     "Rejaka Abimanyu Susanto",
     "Full Stack Web Developer Indonesia",

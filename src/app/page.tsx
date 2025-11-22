@@ -181,8 +181,15 @@ export default function Home() {
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        <div className="text-center mb-6 sm:mb-8">
-          <div className="mb-4 hidden sm:block">
+        <header className="text-center mb-6 sm:mb-8">
+          <h1 className="sr-only">
+            Rejaka Abimanyu Susanto - Full-Stack Developer Portfolio
+          </h1>
+          <div
+            className="mb-4 hidden sm:block"
+            role="img"
+            aria-label="Rejaka Portfolio ASCII Art Title"
+          >
             <ASCIIText
               text="REJAKA_PORTFOLIO"
               enableWaves={true}
@@ -192,7 +199,11 @@ export default function Home() {
             />
           </div>
 
-          <div className="mb-4 sm:hidden">
+          <div
+            className="mb-4 sm:hidden"
+            role="img"
+            aria-label="Rejaka ASCII Art Title"
+          >
             <ASCIIText
               text="REJAKA"
               enableWaves={true}
@@ -201,16 +212,22 @@ export default function Home() {
               planeBaseHeight={6}
             />
           </div>
-        </div>
+        </header>
 
         <div className="space-y-4 sm:space-y-6 lg:space-y-8">
-          <div className="w-full">
+          <section className="w-full" aria-labelledby="terminal-heading">
+            <h2 id="terminal-heading" className="sr-only">
+              API Request Terminal
+            </h2>
             <Terminal logs={logs} isLoading={isLoading} />
-          </div>
+          </section>
 
-          <div className="w-full">
+          <section className="w-full" aria-labelledby="api-tester-heading">
+            <h2 id="api-tester-heading" className="sr-only">
+              Interactive API Tester
+            </h2>
             <ApiTester onRequest={handleRequest} isLoading={isLoading} />
-          </div>
+          </section>
         </div>
 
         <div className="mt-8 sm:mt-12 text-center">
