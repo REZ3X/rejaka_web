@@ -90,7 +90,7 @@ const linkifyJson = (jsonString: string): React.ReactNode[] => {
             <img
               src={imagePath}
               alt="Preview"
-              className="w-48 h-48 object-cover rounded-lg border-2 border-[#00adb4] shadow-2xl"
+              className="max-w-xs max-h-96 w-auto h-auto object-contain rounded-lg border-2 border-[#00adb4] shadow-2xl bg-gray-900/95"
               onError={(e) => {
                 e.currentTarget.style.display = "none";
               }}
