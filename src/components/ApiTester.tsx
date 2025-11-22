@@ -64,7 +64,7 @@ const routes: RouteConfig[] = [
 ];
 
 export default function ApiTester({ onRequest, isLoading }: ApiTesterProps) {
-  const [selectedRoute, setSelectedRoute] = useState(routes[0]);
+  const [selectedRoute, setSelectedRoute] = useState(routes[1]); 
   const [params, setParams] = useState<Record<string, string>>({});
 
   const handleRequest = () => {

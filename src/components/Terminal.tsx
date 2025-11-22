@@ -83,10 +83,20 @@ const linkifyJson = (jsonString: string): React.ReactNode[] => {
       const imagePath = (match as any).path;
       parts.push(
         <span key={`img-${idx}`} className="relative inline-block group">
-          <span className="text-[#00adb4] hover:text-[#0f7f82] cursor-pointer underline decoration-dotted underline-offset-2">
+          <a
+            href={imagePath}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#00adb4] hover:text-[#0f7f82] cursor-pointer underline decoration-dotted underline-offset-2 md:pointer-events-none"
+            onClick={(e) => {
+              if (window.innerWidth >= 768) {
+                e.preventDefault();
+              }
+            }}
+          >
             "{imagePath}"
-          </span>
-          <span className="absolute left-0 bottom-full mb-2 hidden group-hover:block z-50 pointer-events-none">
+          </a>
+          <span className="absolute left-0 bottom-full mb-2 hidden md:group-hover:block z-50 pointer-events-none">
             <img
               src={imagePath}
               alt="Preview"
@@ -157,7 +167,8 @@ const linkifyJson = (jsonString: string): React.ReactNode[] => {
 export default function Terminal({ logs, isLoading }: TerminalProps) {
   const terminalRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const [height, setHeight] = useState(400);
+  const dragHandleRef = useRef<HTMLDivElement>(null);
+  const [height, setHeight] = useState(470);
   const [isResizing, setIsResizing] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
 
@@ -167,13 +178,15 @@ export default function Terminal({ logs, isLoading }: TerminalProps) {
     }
   }, [logs]);
 
-  const handleMouseDown = (e: React.MouseEvent) => {
+  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
+    e.stopPropagation();
     setIsResizing(true);
   };
 
-  const handleTouchStart = (e: React.TouchEvent) => {
+  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
     e.preventDefault();
+    e.stopPropagation();
     setIsResizing(true);
   };
 
@@ -264,7 +277,7 @@ export default function Terminal({ logs, isLoading }: TerminalProps) {
         transition: isResizing ? "none" : "transform 0.3s ease",
       }}
     >
-      <div className="flex items-center justify-between px-3 sm:px-4 py-2 bg-[#161b22] border-b border-gray-800 cursor-move select-none">
+      <div className="flex items-center justify-between px-3 sm:px-4 py-2 bg-[#161b22] border-b border-gray-800 select-none">
         <div className="flex items-center gap-2 flex-1 min-w-0">
           <div className="flex gap-1.5 shrink-0">
             <button
@@ -344,19 +357,20 @@ export default function Terminal({ logs, isLoading }: TerminalProps) {
 
       {!isFullscreen && (
         <div
+          ref={dragHandleRef}
           onMouseDown={handleMouseDown}
           onTouchStart={handleTouchStart}
-          className={`absolute bottom-0 left-0 right-0 h-2 cursor-ns-resize hover:bg-[#00adb4] transition-all group ${
-            isResizing ? "bg-[#00adb4] h-3" : "bg-gray-700/50"
+          className={`absolute bottom-0 left-0 right-0 h-3 cursor-ns-resize hover:bg-[#00adb4] transition-all group z-10 ${
+            isResizing ? "bg-[#00adb4] h-4" : "bg-gray-700/50"
           }`}
         >
-          <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-center">
+          <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-center pointer-events-none">
             <div
               className={`flex gap-1 transition-opacity ${
                 isResizing ? "opacity-100" : "opacity-0 group-hover:opacity-100"
               }`}
             >
-              <div className="w-8 h-0.5 bg-gray-400 rounded-full" />
+              <div className="w-10 h-1 bg-gray-300 rounded-full" />
             </div>
           </div>
         </div>
