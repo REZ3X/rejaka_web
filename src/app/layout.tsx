@@ -19,10 +19,10 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://rejaka.id"),
   title: {
     template: "%s | Rejaka Abimanyu Susanto",
-    default: "Rejaka Abimanyu Susanto | Full-Stack Developer",
+    default: "Rejaka Abimanyu Susanto | Full-Stack Developer Portfolio",
   },
   description:
-    "Full-stack developer portfolio by Rejaka Abimanyu Susanto. Interactive API dashboard with real-time terminal, tech stack explorer, and projects.",
+    "Full-stack developer portfolio by Rejaka Abimanyu Susanto. Interactive API request dashboard with real-time terminal, tech stack explorer, apidata endpoints, and projects showcase.",
   keywords: [
     "Rejaka Abimanyu Susanto",
     "Full Stack Web Developer Indonesia",
@@ -107,7 +107,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Rejaka Abimanyu Susanto | Full-Stack Developer & Tech Innovator",
     description:
-      "Interactive API portfolio dashboard of Rejaka Abimanyu Susanto - Full-stack web developer specializing in Next.js, React, TypeScript, Rust, and MongoDB. Award-winning developer and leader of the Slaviors development team.",
+      "Interactive API request portfolio dashboard of Rejaka Abimanyu Susanto - Full-stack web developer specializing in Next.js, React, TypeScript, Rust, and MongoDB. Test API endpoints, explore apidata, and experience real-time request handling. Award-winning developer and leader of the Slaviors development team.",
     url: "https://rejaka.id",
     siteName: "Rejaka Abimanyu Susanto - Developer Portfolio",
     locale: "en_US",
@@ -128,7 +128,7 @@ export const metadata: Metadata = {
     creator: "@rejaka",
     title: "Rejaka Abimanyu Susanto | Full-Stack Developer",
     description:
-      "Award-winning full-stack developer from Yogyakarta. Specializing in Next.js, React, TypeScript, Rust, WebAssembly. Interactive API portfolio with real-time terminal logging.",
+      "Award-winning full-stack developer from Yogyakarta. Specializing in Next.js, React, TypeScript, Rust, WebAssembly. Interactive API request portfolio with real-time terminal logging and apidata explorer.",
     images: {
       url: "/assets/rez3x.webp",
       alt: "Rejaka Abimanyu Susanto Portfolio Dashboard",
