@@ -231,11 +231,14 @@ export default function TabTerminal() {
 
   const activeTab = tabs.find((tab) => tab.id === activeTabId);
 
-  const formatDataForDisplay = (data: any): any => {
+  const formatDataForDisplay = (data: any, tabId?: string): any => {
     if (!data) return data;
     if (typeof data === "string") return data;
 
     if (Array.isArray(data)) {
+      if (tabId === "projects") {
+        return data.map((item) => formatDataForDisplay(item, tabId));
+      }
       if (data.length > 10) {
         return {
           type: "array",
@@ -244,7 +247,7 @@ export default function TabTerminal() {
           message: `Array with ${data.length} items (showing first 3)`,
         };
       }
-      return data.map((item) => formatDataForDisplay(item));
+      return data.map((item) => formatDataForDisplay(item, tabId));
     }
 
     if (typeof data === "object") {
@@ -254,7 +257,9 @@ export default function TabTerminal() {
       for (const key of keys) {
         const value = data[key];
         if (Array.isArray(value)) {
-          if (value.length > 8) {
+          if (tabId === "projects") {
+            formatted[key] = value;
+          } else if (value.length > 8) {
             formatted[key] = {
               _summary: `Array with ${value.length} items`,
               _preview: value.slice(0, 3),
@@ -294,7 +299,7 @@ export default function TabTerminal() {
       fractionalSecondDigits: 3,
     });
 
-    const formattedData = data ? formatDataForDisplay(data) : undefined;
+    const formattedData = data ? formatDataForDisplay(data, tabId) : undefined;
 
     setTabs((prevTabs) =>
       prevTabs.map((tab) =>
