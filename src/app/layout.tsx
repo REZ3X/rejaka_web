@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     default: "Rejaka Abimanyu Susanto | Full-Stack Developer Portfolio",
   },
   description:
-    "Full-stack developer portfolio by Rejaka Abimanyu Susanto. Interactive API request dashboard with real-time terminal, tech stack explorer, apidata endpoints, and projects showcase.",
+    "Full-stack developer portfolio by Rejaka Abimanyu Susanto. Portfolio +  API real-time terminal, tech stack explorer, apidata endpoints, and projects showcase.",
   keywords: [
     "Rejaka Abimanyu Susanto",
     "Full Stack Web Developer Indonesia",
