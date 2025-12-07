@@ -434,59 +434,55 @@ class CanvAscii {
   }
 
   initGyroscope() {
-    if (typeof window === "undefined" || !("Gyroscope" in window)) {
-      console.log("Gyroscope not supported");
+    if (typeof window === "undefined") {
       return;
     }
 
-    try {
-      const gyroscope = new (window as any).Gyroscope({ frequency: 60 });
+    const handleOrientation = (event: DeviceOrientationEvent) => {
+      if (event.beta === null || event.gamma === null) return;
 
-      let accumulatedX = this.width / 2;
-      let accumulatedY = this.height / 2;
+      const beta = event.beta; 
+      const gamma = event.gamma; 
 
-      gyroscope.addEventListener("reading", () => {
-        const sensitivity = 200;
-        const smoothing = 0.92; 
+      const normalizedX = (gamma + 90) / 180; 
+      const normalizedY = (beta + 90) / 180; 
 
-        const deltaX = gyroscope.y * sensitivity;
-        const deltaY = gyroscope.x * sensitivity;
+      const targetX = normalizedX * this.width;
+      const targetY = normalizedY * this.height;
 
-        accumulatedX += deltaX * 0.016; 
-        accumulatedY -= deltaY * 0.016;
+      this.mouse.x += (targetX - this.mouse.x) * 0.1;
+      this.mouse.y += (targetY - this.mouse.y) * 0.1;
+    };
 
-        accumulatedX =
-          accumulatedX * smoothing + (this.width / 2) * (1 - smoothing);
-        accumulatedY =
-          accumulatedY * smoothing + (this.height / 2) * (1 - smoothing);
-
-        this.mouse.x = Math.max(0, Math.min(this.width, accumulatedX));
-        this.mouse.y = Math.max(0, Math.min(this.height, accumulatedY));
-      });
-
-      gyroscope.addEventListener("error", (event: any) => {
-        console.error("Gyroscope error:", event.error);
-      });
-
-      if (
-        typeof (DeviceOrientationEvent as any).requestPermission === "function"
-      ) {
-        (DeviceOrientationEvent as any)
-          .requestPermission()
-          .then((permissionState: string) => {
-            if (permissionState === "granted") {
-              gyroscope.start();
-            }
-          })
-          .catch(console.error);
-      } else {
-        gyroscope.start();
-      }
-
-      (this as any).gyroscope = gyroscope;
-    } catch (error) {
-      console.error("Failed to initialize gyroscope:", error);
+    if (
+      typeof (DeviceOrientationEvent as any).requestPermission === "function"
+    ) {
+      (DeviceOrientationEvent as any)
+        .requestPermission()
+        .then((permissionState: string) => {
+          if (permissionState === "granted") {
+            window.addEventListener(
+              "deviceorientation",
+              handleOrientation,
+              true
+            );
+            console.log("DeviceOrientation permission granted");
+          } else {
+            console.log("DeviceOrientation permission denied");
+          }
+        })
+        .catch((error: any) => {
+          console.error(
+            "Error requesting DeviceOrientation permission:",
+            error
+          );
+        });
+    } else {
+      window.addEventListener("deviceorientation", handleOrientation, true);
+      console.log("DeviceOrientation listener added");
     }
+
+    (this as any).orientationHandler = handleOrientation;
   }
 
   setSize(w: number, h: number) {
@@ -573,12 +569,12 @@ class CanvAscii {
     this.container.removeChild(this.filter.domElement);
     this.container.removeEventListener("mousemove", this.onMouseMove);
 
-    if ((this as any).gyroscope) {
-      try {
-        (this as any).gyroscope.stop();
-      } catch (error) {
-        console.error("Error stopping gyroscope:", error);
-      }
+    if ((this as any).orientationHandler) {
+      window.removeEventListener(
+        "deviceorientation",
+        (this as any).orientationHandler,
+        true
+      );
     }
 
     this.clear();
