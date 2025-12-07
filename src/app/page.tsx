@@ -62,12 +62,18 @@ export default function Home() {
             />
           </div>
 
-          <div className="relative z-20 mt-1 sm:mt-2 mb-8 sm:mb-6">
+          <div className="relative z-20 mt-1 sm:mt-2 mb-8 sm:mb-6 flex justify-center gap-4">
             <Link
               href="/playground"
               className="inline-block relative z-30 px-3 py-1 text-[#00adb4] hover:text-[#0f7f82] font-mono text-sm underline underline-offset-4 decoration-2 transition-colors"
             >
               $ cd playground
+            </Link>
+            <Link
+              href="/blog"
+              className="inline-block relative z-30 px-3 py-1 text-[#00adb4] hover:text-[#0f7f82] font-mono text-sm underline underline-offset-4 decoration-2 transition-colors"
+            >
+              $ cd blog
             </Link>
           </div>
 

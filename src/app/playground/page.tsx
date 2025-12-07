@@ -260,12 +260,18 @@ export default function PlaygroundPage() {
             />
           </div>
 
-          <div className="relative mt-1 sm:mt-2 mb-8 sm:mb-6">
+          <div className="relative mt-1 sm:mt-2 mb-8 sm:mb-6 flex justify-center gap-4">
             <Link
               href="/"
               className="inline-block relative z-30 px-3 py-1 text-[#00adb4] hover:text-[#0f7f82] font-mono text-sm underline underline-offset-4 decoration-2 transition-colors"
             >
               $ cd ~
+            </Link>
+            <Link
+              href="/blog"
+              className="inline-block relative z-30 px-3 py-1 text-[#00adb4] hover:text-[#0f7f82] font-mono text-sm underline underline-offset-4 decoration-2 transition-colors"
+            >
+              $ cd blog
             </Link>
           </div>
         </header>

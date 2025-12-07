@@ -1,8 +1,41 @@
 import type { MetadataRoute } from "next";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+interface BlogPost {
+  slug: string;
+  title: string;
+  date: string;
+  excerpt: string;
+  coverImage: string;
+  readingTime: number;
+  tags: string[];
+  category: string;
+  lastModified: string;
+}
+
+async function getBlogPosts(): Promise<BlogPost[]> {
+  try {
+    const baseUrl =
+      process.env.NODE_ENV === "development"
+        ? "http://localhost:3000"
+        : "https://rejaka.id";
+    const response = await fetch(`${baseUrl}/api/data/blog`, {
+      cache: "no-store",
+    });
+    const result = await response.json();
+    if (result.success) {
+      return result.data;
+    }
+  } catch (error) {
+    console.error("Failed to fetch blog posts for sitemap:", error);
+  }
+  return [];
+}
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://rejaka.id";
   const currentDate = new Date();
+
+  const blogPosts = await getBlogPosts();
 
   return [
     {
@@ -22,6 +55,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: currentDate,
       changeFrequency: "weekly",
       priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/blog`,
+      lastModified: currentDate,
+      changeFrequency: "weekly",
+      priority: 0.9,
     },
     {
       url: `${baseUrl}/api/data`,
@@ -65,5 +104,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.6,
     },
+    ...blogPosts.map((post) => ({
+      url: `${baseUrl}/blog/${post.slug}`,
+      lastModified: new Date(post.lastModified),
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    })),
   ];
 }
