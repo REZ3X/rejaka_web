@@ -23,7 +23,7 @@ const linkifyJson = (jsonString: string): React.ReactNode[] => {
   const downloadRegex = /"(\/[^"]*\.(apk|zip|pdf|exe|dmg|deb|rpm))"/gi;
   const emailRegex = /"([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})"/g;
   const phoneRegex =
-    /"(\+?\d{1,4}[\s-]?\(?\d{1,4}\)?[\s-]?\d{1,4}[\s-]?\d{1,9})"/g;
+    /"(\+?\d{1,4}[\s-]?\(?\d{1,4}\)?[\s-]?\d{1,4}[\s-]?\d{4,})"/g;
   const parts: React.ReactNode[] = [];
   let lastIndex = 0;
 
@@ -134,11 +134,11 @@ const linkifyJson = (jsonString: string): React.ReactNode[] => {
           >
             "{imagePath}"
           </a>
-          <span className="absolute left-0 bottom-full mb-2 hidden md:group-hover:block z-50 pointer-events-none">
+          <span className="fixed hidden md:group-hover:block z-[100] pointer-events-none left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
             <img
               src={imagePath}
               alt="Preview"
-              className="max-w-xs max-h-96 w-auto h-auto object-contain rounded-lg border-2 border-[#00adb4] shadow-2xl bg-gray-900/95"
+              className="max-w-[280px] max-h-64 w-auto h-auto object-contain rounded-lg border-2 border-[#00adb4] shadow-2xl bg-gray-900/95"
               onError={(e) => {
                 e.currentTarget.style.display = "none";
               }}
