@@ -426,8 +426,57 @@ class CanvAscii {
     this.container.appendChild(this.filter.domElement);
     this.setSize(this.width, this.height);
 
-    this.container.addEventListener("mousemove", this.onMouseMove);
-    this.container.addEventListener("touchmove", this.onMouseMove);
+    if (!isMobile) {
+      this.container.addEventListener("mousemove", this.onMouseMove);
+    } else {
+      this.initGyroscope();
+    }
+  }
+
+  initGyroscope() {
+    if (typeof window === "undefined" || !("Gyroscope" in window)) {
+      console.log("Gyroscope not supported");
+      return;
+    }
+
+    try {
+      const gyroscope = new (window as any).Gyroscope({ frequency: 60 });
+
+      gyroscope.addEventListener("reading", () => {
+        const sensitivity = 50; 
+        const centerX = this.width / 2;
+        const centerY = this.height / 2;
+
+        const deltaX = gyroscope.y * sensitivity; 
+        const deltaY = gyroscope.x * sensitivity;
+
+        this.mouse.x = Math.max(0, Math.min(this.width, centerX + deltaX));
+        this.mouse.y = Math.max(0, Math.min(this.height, centerY - deltaY));
+      });
+
+      gyroscope.addEventListener("error", (event: any) => {
+        console.error("Gyroscope error:", event.error);
+      });
+
+      if (
+        typeof (DeviceOrientationEvent as any).requestPermission === "function"
+      ) {
+        (DeviceOrientationEvent as any)
+          .requestPermission()
+          .then((permissionState: string) => {
+            if (permissionState === "granted") {
+              gyroscope.start();
+            }
+          })
+          .catch(console.error);
+      } else {
+        gyroscope.start();
+      }
+
+      (this as any).gyroscope = gyroscope;
+    } catch (error) {
+      console.error("Failed to initialize gyroscope:", error);
+    }
   }
 
   setSize(w: number, h: number) {
@@ -513,7 +562,15 @@ class CanvAscii {
     this.filter.dispose();
     this.container.removeChild(this.filter.domElement);
     this.container.removeEventListener("mousemove", this.onMouseMove);
-    this.container.removeEventListener("touchmove", this.onMouseMove);
+
+    if ((this as any).gyroscope) {
+      try {
+        (this as any).gyroscope.stop();
+      } catch (error) {
+        console.error("Error stopping gyroscope:", error);
+      }
+    }
+
     this.clear();
     this.renderer.dispose();
   }
