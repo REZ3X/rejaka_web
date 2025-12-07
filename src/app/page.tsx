@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import ASCIIText from "@/components/ASCIIText";
 import FaultyTerminal from "@/components/FaultyTerminal";
 import TabTerminal from "@/components/TabTerminal";
@@ -34,7 +35,7 @@ export default function Home() {
             Rejaka Abimanyu Susanto - Full-Stack Developer Portfolio
           </h1>
           <div
-            className="hidden sm:block -mt-4 -mb-6"
+            className="hidden sm:block -mt-2 -mb-12"
             role="img"
             aria-label="Rejaka Portfolio ASCII Art Title"
           >
@@ -48,7 +49,7 @@ export default function Home() {
           </div>
 
           <div
-            className="sm:hidden -mt-2 -mb-3"
+            className="sm:hidden -mt-1 -mb-8"
             role="img"
             aria-label="Rejaka ASCII Art Title"
           >
@@ -59,6 +60,15 @@ export default function Home() {
               textFontSize={80}
               planeBaseHeight={6}
             />
+          </div>
+
+          <div className="relative z-20 mt-1 sm:mt-2 mb-8 sm:mb-6">
+            <Link
+              href="/playground"
+              className="inline-block relative z-30 px-3 py-1 text-[#00adb4] hover:text-[#0f7f82] font-mono text-sm underline underline-offset-4 decoration-2 transition-colors"
+            >
+              $ cd playground
+            </Link>
           </div>
 
           <div className="sr-only">
