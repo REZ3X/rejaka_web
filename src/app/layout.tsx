@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import Script from "next/script";
+import PageTransition from "@/components/PageTransition";
 import "./globals.css";
 
 const inter = Inter({
@@ -384,7 +385,7 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${jetBrainsMono.variable} antialiased`}
       >
-        {children}
+        <PageTransition>{children}</PageTransition>
       </body>
     </html>
   );
