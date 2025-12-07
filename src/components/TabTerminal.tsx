@@ -292,6 +292,7 @@ export default function TabTerminal() {
   const terminalRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const scrollRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
+  const hasScrolledOnce = useRef<{ [key: string]: boolean }>({});
 
   const activeTab = tabs.find((tab) => tab.id === activeTabId);
 
@@ -483,14 +484,19 @@ export default function TabTerminal() {
 
   useEffect(() => {
     const scrollContainer = scrollRefs.current[activeTabId];
-    if (scrollContainer && activeTab) {
+    if (scrollContainer && activeTab && activeTab.logs.length > 0) {
+      const delay = hasScrolledOnce.current[activeTabId] ? 150 : 600;
+
       if (activeTabId === "resume") {
-        scrollContainer.scrollTop = scrollContainer.scrollHeight;
+        setTimeout(() => {
+          scrollContainer.scrollTop = scrollContainer.scrollHeight;
+          hasScrolledOnce.current[activeTabId] = true;
+        }, delay);
       } else {
         const dataLogIndex = activeTab.logs.findIndex(
           (log) => log.data && !log.data.actions
         );
-        if (dataLogIndex !== -1 && activeTab.logs.length > 0) {
+        if (dataLogIndex !== -1) {
           setTimeout(() => {
             const logElements = scrollContainer.querySelectorAll(".log-entry");
             if (logElements[dataLogIndex]) {
@@ -498,8 +504,9 @@ export default function TabTerminal() {
                 behavior: "smooth",
                 block: "start",
               });
+              hasScrolledOnce.current[activeTabId] = true;
             }
-          }, 100);
+          }, delay);
         }
       }
     }
