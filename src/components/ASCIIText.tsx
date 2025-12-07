@@ -442,16 +442,26 @@ class CanvAscii {
     try {
       const gyroscope = new (window as any).Gyroscope({ frequency: 60 });
 
-      gyroscope.addEventListener("reading", () => {
-        const sensitivity = 50; 
-        const centerX = this.width / 2;
-        const centerY = this.height / 2;
+      let accumulatedX = this.width / 2;
+      let accumulatedY = this.height / 2;
 
-        const deltaX = gyroscope.y * sensitivity; 
+      gyroscope.addEventListener("reading", () => {
+        const sensitivity = 200;
+        const smoothing = 0.92; 
+
+        const deltaX = gyroscope.y * sensitivity;
         const deltaY = gyroscope.x * sensitivity;
 
-        this.mouse.x = Math.max(0, Math.min(this.width, centerX + deltaX));
-        this.mouse.y = Math.max(0, Math.min(this.height, centerY - deltaY));
+        accumulatedX += deltaX * 0.016; 
+        accumulatedY -= deltaY * 0.016;
+
+        accumulatedX =
+          accumulatedX * smoothing + (this.width / 2) * (1 - smoothing);
+        accumulatedY =
+          accumulatedY * smoothing + (this.height / 2) * (1 - smoothing);
+
+        this.mouse.x = Math.max(0, Math.min(this.width, accumulatedX));
+        this.mouse.y = Math.max(0, Math.min(this.height, accumulatedY));
       });
 
       gyroscope.addEventListener("error", (event: any) => {
