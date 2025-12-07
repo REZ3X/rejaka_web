@@ -30,7 +30,7 @@ export async function GET() {
     {
       title: "Coordinator – Student Discipline Team",
       company: "SMKN 2 Depok Sleman",
-      period: "September 2025 – November 2025",
+      period: "September 2024 – November 2025",
       responsibilities: [
         "Led and coordinated volunteer security team activities",
         "Organized scheduling and communication among team members",
@@ -52,7 +52,7 @@ export async function GET() {
     {
       title: "Web Developer – Karyasija (Volunteer)",
       company: "SMKN 2 Depok Sleman",
-      period: "Jun 2025 – Oktober 2025",
+      period: "June 2025 – Oktober 2025",
       responsibilities: [
         "Contributed to development and maintenance of school website",
         "Implemented responsive layouts and backend logic",

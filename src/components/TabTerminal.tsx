@@ -21,6 +21,9 @@ const linkifyJson = (jsonString: string): React.ReactNode[] => {
   const urlRegex = /(https?:\/\/[^\s"',}\]]+)/g;
   const imageRegex = /"(\/[^"]*\.(jpg|jpeg|png|gif|webp|svg))"/gi;
   const downloadRegex = /"(\/[^"]*\.(apk|zip|pdf|exe|dmg|deb|rpm))"/gi;
+  const emailRegex = /"([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})"/g;
+  const phoneRegex =
+    /"(\+?\d{1,4}[\s-]?\(?\d{1,4}\)?[\s-]?\d{1,4}[\s-]?\d{1,9})"/g;
   const parts: React.ReactNode[] = [];
   let lastIndex = 0;
 
@@ -51,6 +54,36 @@ const linkifyJson = (jsonString: string): React.ReactNode[] => {
     });
   }
 
+  const emailMatches: Array<{
+    index: number;
+    length: number;
+    email: string;
+  }> = [];
+  let emailMatch;
+  const emailRegexCopy = new RegExp(emailRegex);
+  while ((emailMatch = emailRegexCopy.exec(jsonString)) !== null) {
+    emailMatches.push({
+      index: emailMatch.index,
+      length: emailMatch[0].length,
+      email: emailMatch[1],
+    });
+  }
+
+  const phoneMatches: Array<{
+    index: number;
+    length: number;
+    phone: string;
+  }> = [];
+  let phoneMatch;
+  const phoneRegexCopy = new RegExp(phoneRegex);
+  while ((phoneMatch = phoneRegexCopy.exec(jsonString)) !== null) {
+    phoneMatches.push({
+      index: phoneMatch.index,
+      length: phoneMatch[0].length,
+      phone: phoneMatch[1],
+    });
+  }
+
   const urlMatches: Array<{ index: number; length: number; url: string }> = [];
   let urlMatch: RegExpExecArray | null;
   while ((urlMatch = urlRegex.exec(jsonString)) !== null) {
@@ -74,6 +107,8 @@ const linkifyJson = (jsonString: string): React.ReactNode[] => {
   const allMatches = [
     ...imageMatches.map((m) => ({ ...m, type: "image" as const })),
     ...downloadMatches.map((m) => ({ ...m, type: "download" as const })),
+    ...emailMatches.map((m) => ({ ...m, type: "email" as const })),
+    ...phoneMatches.map((m) => ({ ...m, type: "phone" as const })),
     ...urlMatches.map((m) => ({ ...m, type: "url" as const })),
   ].sort((a, b) => a.index - b.index);
 
@@ -139,6 +174,35 @@ const linkifyJson = (jsonString: string): React.ReactNode[] => {
             />
           </svg>
           <span className="text-[10px] text-gray-500">({fileExt})</span>
+        </a>
+      );
+    } else if (match.type === "email") {
+      const email = (match as any).email;
+      parts.push(
+        <a
+          key={`email-${idx}`}
+          href={`mailto:${email}`}
+          className="text-[#00adb4] hover:text-[#0f7f82] underline underline-offset-2 transition-colors cursor-pointer"
+          onClick={(e) => e.stopPropagation()}
+          title={`Send email to ${email}`}
+        >
+          "{email}"
+        </a>
+      );
+    } else if (match.type === "phone") {
+      const phone = (match as any).phone;
+      const cleanPhone = phone.replace(/[\s()\-+]/g, "");
+      parts.push(
+        <a
+          key={`phone-${idx}`}
+          href={`https://wa.me/${cleanPhone}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-[#00adb4] hover:text-[#0f7f82] underline underline-offset-2 transition-colors cursor-pointer"
+          onClick={(e) => e.stopPropagation()}
+          title={`Chat on WhatsApp: ${phone}`}
+        >
+          "{phone}"
         </a>
       );
     } else {
