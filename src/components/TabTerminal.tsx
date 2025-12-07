@@ -276,6 +276,13 @@ export default function TabTerminal() {
       isLoading: false,
     },
     {
+      id: "blog",
+      label: "blog",
+      route: "/api/data/blog",
+      logs: [],
+      isLoading: false,
+    },
+    {
       id: "resume",
       label: "resume",
       route: "/resume",
@@ -385,6 +392,59 @@ export default function TabTerminal() {
     const tab = tabs.find((t) => t.id === tabId);
     if (!tab) return;
 
+    if (tabId === "blog") {
+      addLog(tabId, "info", "$ ls -l blog/latest");
+      addLog(tabId, "info", "═".repeat(60));
+      addLog(tabId, "success", "LATEST BLOG POSTS");
+      addLog(tabId, "info", "═".repeat(60));
+      addLog(tabId, "info", "");
+
+      try {
+        const response = await fetch("/api/data/blog");
+        const result = await response.json();
+
+        if (result.success && result.data) {
+          const latestPosts = result.data
+            .sort(
+              (a: any, b: any) =>
+                new Date(b.date).getTime() - new Date(a.date).getTime()
+            )
+            .slice(0, 3);
+
+          latestPosts.forEach((post: any, index: number) => {
+            const date = new Date(post.date).toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "short",
+              day: "numeric",
+            });
+            addLog(tabId, "info", `${index + 1}. ${post.title}`);
+            addLog(
+              tabId,
+              "info",
+              `   📅 ${date} • ${post.readingTime} min read • ${post.category}`
+            );
+            addLog(tabId, "info", "");
+          });
+
+          addLog(tabId, "info", "");
+          addLog(tabId, "info", "", {
+            actions: [
+              {
+                type: "view",
+                label: "View All Blog Posts",
+                icon: "external",
+                url: "/blog",
+                description: "Go to blog page",
+              },
+            ],
+          });
+        }
+      } catch (error) {
+        addLog(tabId, "error", "Failed to fetch blog posts");
+      }
+      return;
+    }
+
     if (tabId === "resume") {
       addLog(tabId, "info", "$ cat resume.info");
       addLog(tabId, "info", "═".repeat(60));
@@ -487,7 +547,7 @@ export default function TabTerminal() {
     if (scrollContainer && activeTab && activeTab.logs.length > 0) {
       const delay = hasScrolledOnce.current[activeTabId] ? 150 : 600;
 
-      if (activeTabId === "resume") {
+      if (activeTabId === "resume" || activeTabId === "blog") {
         setTimeout(() => {
           scrollContainer.scrollTop = scrollContainer.scrollHeight;
           hasScrolledOnce.current[activeTabId] = true;

@@ -1,34 +1,32 @@
-# PHP game changer.. atleast that what they said
+# Getting Started with Laravel on Debian Linux
 
-Hello folks! This time I come up with somehting new for you all.. PHP framework. Not so surprising I mean beside the fact that I don't really like to use PHP but well.. this one bit different and pretty neat actually. So what's the framework? Well of course by reading this blog title you guys already knew.. it's the game changer of PHP.. Laravel.
+This time we're looking at Laravel, a PHP framework that's changed how developers approach PHP development. Even if you're not typically a PHP fan, Laravel offers a different experience worth exploring. Let's walk through setting up Laravel on Debian Linux.
 
-## 🔍 What's Laravel?
+## What is Laravel?
 
 Laravel is a modern PHP web framework created by Taylor Otwell in 2011 to simplify web application development using clean, expressive syntax. It follows the MVC (Model-View-Controller) pattern and includes built-in features like routing, authentication, templating (Blade), database ORM (Eloquent), and a command-line tool (Artisan), making development faster and more organized.
 
-## 💡 So what's so good about it?
+## Why Use Laravel?
 
-Laravel makes web development **faster, cleaner, and more secure**. You don’t have to worry about low-level tasks like routing and authentication, it’s already taken care of. And thanks to tools like Eloquent (database ORM) and Artisan (CLI), development feels less like a chore.
+Laravel makes web development faster, cleaner, and more secure. It handles low-level tasks like routing and authentication automatically. Tools like Eloquent (database ORM) and Artisan (CLI) streamline the development process.
 
-Even better? Laravel has official **Starter Kits** like Breeze and Jetstream, which come with prebuilt auth, session management, and even frontend scaffolding. Wanna use React? Easy. Vue? No problem. Even SSR with Inertia.js? Laravel got your back.
+Laravel includes official Starter Kits like Breeze and Jetstream with prebuilt authentication, session management, and frontend scaffolding. You can use React, Vue, or even SSR with Inertia.js.
 
-Exciting isn't it? Wanna try this framework?? GOOD! I can help you with that! I'll help you to setup and start Laravel Project using Laravel Starter Kit, Composer and of course PHP in Linux Debian!
+This guide covers setting up a Laravel project using Laravel Starter Kit, Composer, and PHP on Linux Debian.
 
-## ⚙️ Requirements
+## Requirements
 
-- 💻 Laptop/PC with Linux Debian OS
-- 🌐 Internet Connection
-- 🧠 Node.js (If you don't have it, check out my [Node.js NVM tutorial](https://rejaka.id/blog/nvmTutorial))
+- Laptop/PC with Linux Debian OS
+- Internet Connection
+- Node.js (If you don't have it, check out my [Node.js NVM tutorial](https://rejaka.id/blog/nvmTutorial))
 
-Ready? Then let's do this!!
+Let's get started.
 
-## 🧱 Laravel Project Setup
+## Laravel Project Setup
 
-### 🐘 PHP Installation
+### PHP Installation
 
-First of all, before jumping into Laravel first we need PHP. The legendary programming language that somehow still exist because of mostly legacy website codebase using this language and for the record it's very popular in the government infrastructure in my country and mostly PHP developer here have high pay grade (it's for real tho).
-
-In this tutorial we'll use PHP 8.3. You guys may be asking why that spesific version? Why not use the latest 8.4? It's because my teacher said..
+Before installing Laravel, we need PHP. This tutorial uses PHP 8.3 instead of the latest 8.4. The reason:
 
 > "It's better to have one version older than latest because it's proved stable and already widely used."
 
@@ -60,7 +58,7 @@ sudo apt update
 sudo apt install -y php8.3 php8.3-cli php8.3-mbstring php8.3-xml php8.3-curl php8.3-mysql php8.3-zip php8.3-readline unzip
 ```
 
-5. Wait for the installation to be done then check for the PHP version.
+5. After installation completes, verify the PHP version.
 
 ```bash
 php -v
@@ -68,13 +66,13 @@ php -v
 
 ![PHP Version Checking](./phpcheck.png "PHP Version Checking")
 
-Boom. PHP is ready.
+PHP is now installed.
 
-### 📦 Composer Installation
+### Composer Installation
 
-Now we install Composer. What’s Composer?
+Now we install Composer. What's Composer?
 
-> It’s like NPM but for PHP. Manages your libraries, dependencies, and automates lots of boring stuff.
+> Composer is a dependency manager for PHP, similar to NPM for Node.js. It manages libraries, dependencies, and autoloading.
 
 1. Download the Composer Installer (Composer Setup).
 
@@ -97,13 +95,13 @@ composer --version
 
 ![Composer Version Checking](./composercheck.png "Composer Version Checking")
 
-Composer installed successfully! Let’s keep moving.
+Composer is now installed.
 
-### 🚀 Laravel Starter Kit & Project Creation
+### Laravel Starter Kit & Project Creation
 
-Now to the real fun, creating your Laravel project!
+Now we'll create a Laravel project using the Laravel Installer.
 
-Why use Laravel Installer (Starter Kit)? It simplifies everything! It’s faster, cleaner, and gives you some helpful scaffolding.
+The Laravel Installer (Starter Kit) simplifies project creation with faster setup and helpful scaffolding.
 
 1. Let’s install it:
 
@@ -111,11 +109,11 @@ Why use Laravel Installer (Starter Kit)? It simplifies everything! It’s faster
 composer global require laravel/installer
 ```
 
-2. Wait a bit...
+2. Wait for the installation to complete.
 
 ![Laravel Version](./laravelversion.png "Laravel Version")
 
-3.  Now create a folder for your project and dive in:
+3. Create a folder for your project:
 
 ```bash
 mkdir laravel_project && cd laravel_project
@@ -127,13 +125,13 @@ mkdir laravel_project && cd laravel_project
 laravel new laravel_app
 ```
 
-> Disclaimer: In this step there is error in mine which is caused because I use zsh terminal so here is the solution.
+> Note: If you're using zsh terminal, you might encounter an error. Here's the solution.
 
 ![Laravel Error](./laravelerror.png "Laravel Error")
 
 That’s because Zsh doesn’t know where the Laravel binary is. Let’s fix it.
 
-### 🛠️ Add Laravel to PATH (For zsh user)
+### Add Laravel to PATH (For zsh users)
 
 5. First, get the global binary path:
 
@@ -171,29 +169,29 @@ laravel --version
 
 ![Laravel Installer Version](./laravelversioncheck.png)
 
-10. Perfect! Let’s retry the project creation:
+10. Now retry the project creation:
 
 ```bash
 laravel new laravel_app
 ```
 
-### 🧩 Starter Kit Setup
+### Starter Kit Setup
 
-Now the CLI will ask a few questions.
+The CLI will prompt you with several configuration questions.
 
 1. **Choose Starter Kit**. I picked React because I’m used to it.
 
 ![Starter Kit Choice](./starterkit.png ""Starter Kit Choice")
 
-12. **Auth Provider**. I went with Laravel’s Built-In Auth.
+12. **Auth Provider**. Select Laravel's Built-In Auth.
 
 ![Auth Provider](./authprovider.png "Auth Provider")
 
-13. **Testing Framework**. I picked Pest, simple and elegant.
+13. **Testing Framework**. Choose Pest for testing.
 
 ![Pest](./pest.png "Pest")
 
-14. Wait for the setup to complete... 🎉
+14. Wait for the setup to complete.
 
 You’ll see the project folder:
 
@@ -213,10 +211,10 @@ This is why we needed Node.js earlier. Laravel uses Vite to build assets and han
 
 ![Laravel Files](./laravelfiles.png "Laravel Files")
 
-## 🎉 You're All Set!
+## Summary
 
-Congrats! You just installed PHP, Composer, Laravel, and created your very first Laravel project on Debian Linux.
+You've successfully installed PHP, Composer, and Laravel, and created your first Laravel project on Debian Linux.
 
-You’re now ready to code something amazing—go ahead and start your journey into the Laravel world 💻🔥
+You're now ready to start developing with Laravel. The project structure includes all necessary files for building modern web applications with React (or your chosen frontend framework).
 
-Got questions? Or maybe you wanna brag about your Laravel setup? Hit me up. And if you found this helpful, share it with your fellow dev friends!
+If you have questions or run into issues, feel free to reach out.
