@@ -1,6 +1,8 @@
 import { Metadata } from "next";
 import BlogPostClient from "@/app/blog/[slug]/BlogPostClient";
 
+export const dynamicParams = true; 
+
 interface BlogPost {
   slug: string;
   title: string;
@@ -20,7 +22,7 @@ async function getBlogPost(slug: string): Promise<BlogPost | null> {
         ? "http://localhost:3000"
         : "https://rejaka.id";
     const response = await fetch(`${baseUrl}/api/data/blog`, {
-      cache: "no-store",
+      next: { revalidate: 3600 }, 
     });
     const result = await response.json();
     if (result.success) {
@@ -114,7 +116,7 @@ export async function generateStaticParams() {
         ? "http://localhost:3000"
         : "https://rejaka.id";
     const response = await fetch(`${baseUrl}/api/data/blog`, {
-      cache: "no-store",
+      next: { revalidate: 3600 }, 
     });
     const result = await response.json();
     if (result.success) {
