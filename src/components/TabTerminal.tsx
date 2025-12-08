@@ -17,6 +17,13 @@ interface TerminalTab {
   isLoading: boolean;
 }
 
+interface ContactFormData {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+}
+
 const linkifyJson = (jsonString: string): React.ReactNode[] => {
   const urlRegex = /(https?:\/\/[^\s"',}\]]+)/g;
   const imageRegex = /"(\/[^"]*\.(jpg|jpeg|png|gif|webp|svg))"/gi;
@@ -289,9 +296,23 @@ export default function TabTerminal() {
       logs: [],
       isLoading: false,
     },
+    {
+      id: "contact",
+      label: "contact",
+      route: "/contact",
+      logs: [],
+      isLoading: false,
+    },
   ]);
 
   const [activeTabId, setActiveTabId] = useState("about");
+  const [contactForm, setContactForm] = useState<ContactFormData>({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
+  const [isSubmittingContact, setIsSubmittingContact] = useState(false);
   const [height, setHeight] = useState(350);
   const [isResizing, setIsResizing] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -473,6 +494,19 @@ export default function TabTerminal() {
       });
       addLog(tabId, "info", "");
       addLog(tabId, "success", "Click on the links above to view or download");
+      return;
+    }
+
+    if (tabId === "contact") {
+      addLog(tabId, "info", "$ cat contact.form");
+      addLog(tabId, "info", "═".repeat(60));
+      addLog(tabId, "success", "CONTACT FORM");
+      addLog(tabId, "info", "Fill out the form below to send me a message");
+      addLog(tabId, "info", "═".repeat(60));
+      addLog(tabId, "info", "");
+      addLog(tabId, "info", "", {
+        contactForm: true,
+      });
       return;
     }
 
@@ -663,6 +697,96 @@ export default function TabTerminal() {
     setTimeout(() => fetchTabData(tabId), 100);
   };
 
+  const handleContactFormChange = (
+    field: keyof ContactFormData,
+    value: string
+  ) => {
+    setContactForm((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const handleContactFormSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const tabId = "contact";
+
+    if (!contactForm.name.trim()) {
+      addLog(tabId, "error", "Name is required");
+      return;
+    }
+    if (!contactForm.email.trim()) {
+      addLog(tabId, "error", "Email is required");
+      return;
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(contactForm.email)) {
+      addLog(tabId, "error", "Please enter a valid email address");
+      return;
+    }
+    if (!contactForm.subject.trim()) {
+      addLog(tabId, "error", "Subject is required");
+      return;
+    }
+    if (!contactForm.message.trim()) {
+      addLog(tabId, "error", "Message is required");
+      return;
+    }
+
+    setIsSubmittingContact(true);
+    addLog(tabId, "info", "");
+    addLog(tabId, "info", "$ curl -X POST https://formsubmit.co/[email]");
+    addLog(tabId, "info", "Sending your message...");
+
+    try {
+      const formData = new FormData();
+      formData.append("name", contactForm.name);
+      formData.append("email", contactForm.email);
+      formData.append("subject", contactForm.subject);
+      formData.append("message", contactForm.message);
+      formData.append("_captcha", "false");
+      formData.append("_template", "table");
+      formData.append(
+        "_autoresponse",
+        "Thank you for contacting me! I'll get back to you soon."
+      );
+
+      const response = await fetch(
+        "https://formsubmit.co/abim@rejaka.id",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+
+      if (response.ok) {
+        addLog(tabId, "success", "Message sent successfully!");
+        addLog(tabId, "info", "");
+        addLog(
+          tabId,
+          "info",
+          `From: ${contactForm.name} <${contactForm.email}>`
+        );
+        addLog(tabId, "info", `Subject: ${contactForm.subject}`);
+        addLog(tabId, "info", `Sent at: ${new Date().toLocaleString()}`);
+        addLog(tabId, "info", "");
+        addLog(tabId, "success", "✓ I'll get back to you soon!");
+
+        setContactForm({
+          name: "",
+          email: "",
+          subject: "",
+          message: "",
+        });
+      } else {
+        addLog(tabId, "error", "Failed to send message. Please try again.");
+      }
+    } catch (error) {
+      addLog(tabId, "error", "Network error. Please try again later.");
+      console.error("Contact form error:", error);
+    } finally {
+      setIsSubmittingContact(false);
+    }
+  };
+
   return (
     <div
       ref={containerRef}
@@ -784,7 +908,108 @@ export default function TabTerminal() {
               </div>
               {log.data && (
                 <>
-                  {log.data.actions ? (
+                  {log.data.contactForm ? (
+                    <form
+                      onSubmit={handleContactFormSubmit}
+                      className="mt-3 ml-0 sm:ml-4 space-y-4 max-w-2xl"
+                    >
+                      <div className="space-y-3">
+                        <div>
+                          <label className="block text-xs text-gray-400 mb-1.5 font-mono">
+                            $ name --required
+                          </label>
+                          <input
+                            type="text"
+                            value={contactForm.name}
+                            onChange={(e) =>
+                              handleContactFormChange("name", e.target.value)
+                            }
+                            placeholder="Your Name"
+                            disabled={isSubmittingContact}
+                            className="w-full px-3 py-2 bg-black/30 border border-gray-700 focus:border-[#00adb4] rounded text-gray-300 text-sm outline-none transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block text-xs text-gray-400 mb-1.5 font-mono">
+                            $ email --required
+                          </label>
+                          <input
+                            type="email"
+                            value={contactForm.email}
+                            onChange={(e) =>
+                              handleContactFormChange("email", e.target.value)
+                            }
+                            placeholder="your.email@example.com"
+                            disabled={isSubmittingContact}
+                            className="w-full px-3 py-2 bg-black/30 border border-gray-700 focus:border-[#00adb4] rounded text-gray-300 text-sm outline-none transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block text-xs text-gray-400 mb-1.5 font-mono">
+                            $ subject --required
+                          </label>
+                          <input
+                            type="text"
+                            value={contactForm.subject}
+                            onChange={(e) =>
+                              handleContactFormChange("subject", e.target.value)
+                            }
+                            placeholder="What's this about?"
+                            disabled={isSubmittingContact}
+                            className="w-full px-3 py-2 bg-black/30 border border-gray-700 focus:border-[#00adb4] rounded text-gray-300 text-sm outline-none transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block text-xs text-gray-400 mb-1.5 font-mono">
+                            $ message --required
+                          </label>
+                          <textarea
+                            value={contactForm.message}
+                            onChange={(e) =>
+                              handleContactFormChange("message", e.target.value)
+                            }
+                            placeholder="Your message here..."
+                            rows={6}
+                            disabled={isSubmittingContact}
+                            className="w-full px-3 py-2 bg-black/30 border border-gray-700 focus:border-[#00adb4] rounded text-gray-300 text-sm outline-none transition-colors resize-none disabled:opacity-50 disabled:cursor-not-allowed"
+                          />
+                        </div>
+                      </div>
+
+                      <button
+                        type="submit"
+                        disabled={isSubmittingContact}
+                        className="group flex items-center gap-3 px-6 py-3 bg-[#00adb4] hover:bg-[#0f7f82] disabled:bg-gray-700 text-white font-mono text-sm rounded-lg transition-all disabled:cursor-not-allowed disabled:opacity-50"
+                      >
+                        {isSubmittingContact ? (
+                          <>
+                            <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                            <span>Sending...</span>
+                          </>
+                        ) : (
+                          <>
+                            <svg
+                              className="w-5 h-5"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+                              />
+                            </svg>
+                            <span>$ send --message</span>
+                          </>
+                        )}
+                      </button>
+                    </form>
+                  ) : log.data.actions ? (
                     <div className="mt-3 ml-0 sm:ml-4 space-y-2">
                       {log.data.actions.map((action: any, idx: number) => (
                         <a
