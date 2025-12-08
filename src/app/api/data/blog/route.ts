@@ -188,7 +188,7 @@ export const blogPosts: BlogPost[] = [
   {
     slug: "windows10Tutorial",
     title:
-      "Installing Windows 10 [error_encrypted_permission error] (Bonus: Installing Autodesk EAGLE)",
+      "Installing Windows 10 (Bonus: Installing Autodesk EAGLE)",
     date: "2025-07-20",
     excerpt:
       "Step-by-step guide to installing Windows 10, plus bonus tips for installing Autodesk EAGLE.",
