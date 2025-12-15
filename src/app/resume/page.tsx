@@ -27,7 +27,7 @@ const ResumePage: React.FC = () => {
           </button>
         </div>
 
-        <div className="max-w-4xl mx-auto p-6 bg-white">
+        <div className="max-w-4xl mx-auto p-6 px-8 lg:px-12 bg-white print:px-0">
           <header className="text-center mb-4 pb-3 border-b border-gray-300">
             <h1 className="text-2xl font-bold text-gray-800 mb-1">
               Rejaka Abimanyu Susanto
@@ -368,13 +368,13 @@ const ResumePage: React.FC = () => {
 
           @page {
             size: A4;
-            margin: 0.5in 0.75in;
+            margin: 0.5in 1.25in;
           }
 
           body {
             font-family: "Merriweather", "Times New Roman", serif !important;
             font-size: 12px !important;
-            line-height: 1.4 !important;
+            line-height: 1.5 !important;
             color: black !important;
             background: white !important;
             margin: 0 !important;
@@ -388,12 +388,13 @@ const ResumePage: React.FC = () => {
           .min-h-screen {
             min-height: auto !important;
             height: auto !important;
+            padding: 0 40px !important;
           }
 
           .max-w-4xl {
             max-width: 100% !important;
             margin: 0 auto !important;
-            padding: 0 0.5in !important;
+            padding: 0 20px !important;
             width: 100% !important;
             box-sizing: border-box !important;
           }
@@ -406,6 +407,8 @@ const ResumePage: React.FC = () => {
             text-align: center !important;
             margin-bottom: 16px !important;
             padding-bottom: 8px !important;
+            padding-left: 10px !important;
+            padding-right: 10px !important;
             border-bottom: 1px solid #333 !important;
           }
 
@@ -436,7 +439,7 @@ const ResumePage: React.FC = () => {
 
           p {
             font-size: 12px !important;
-            line-height: 1.4 !important;
+            line-height: 1.5 !important;
             margin: 0 !important;
             color: black !important;
           }
@@ -455,6 +458,7 @@ const ResumePage: React.FC = () => {
 
           .grid {
             display: grid !important;
+            padding: 0 10px !important;
           }
 
           .grid-cols-1 {
@@ -463,70 +467,73 @@ const ResumePage: React.FC = () => {
 
           .lg\\:grid-cols-3 {
             grid-template-columns: 2.2fr 1fr !important;
+            gap: 30px !important;
           }
 
           .lg\\:col-span-2 {
             grid-column: span 1 !important;
+            padding-right: 16px !important;
+            padding-left: 5px !important;
           }
 
           .gap-4 {
-            gap: 16px !important;
+            gap: 24px !important;
           }
 
           .space-y-3 > * + * {
-            margin-top: 12px !important;
+            margin-top: 14px !important;
           }
 
           .space-y-1\\.5 > * + * {
-            margin-top: 6px !important;
-          }
-
-          .space-y-1 > * + * {
-            margin-top: 4px !important;
-          }
-
-          .space-y-0\\.5 > * + * {
-            margin-top: 2px !important;
-          }
-
-          .mb-4 {
-            margin-bottom: 12px !important;
-          }
-
-          .mb-3 {
-            margin-bottom: 8px !important;
-          }
-
-          .mb-2 {
-            margin-bottom: 6px !important;
-          }
-
-          .mb-1 {
-            margin-bottom: 4px !important;
-          }
-
-          .mt-3 {
             margin-top: 8px !important;
           }
 
+          .space-y-1 > * + * {
+            margin-top: 6px !important;
+          }
+
+          .space-y-0\\.5 > * + * {
+            margin-top: 3px !important;
+          }
+
+          .mb-4 {
+            margin-bottom: 14px !important;
+          }
+
+          .mb-3 {
+            margin-bottom: 10px !important;
+          }
+
+          .mb-2 {
+            margin-bottom: 8px !important;
+          }
+
+          .mb-1 {
+            margin-bottom: 5px !important;
+          }
+
+          .mt-3 {
+            margin-top: 10px !important;
+          }
+
           .mt-1 {
-            margin-top: 4px !important;
+            margin-top: 5px !important;
           }
 
           .mt-0\\.5 {
-            margin-top: 2px !important;
+            margin-top: 3px !important;
           }
 
           .pb-3 {
-            padding-bottom: 8px !important;
+            padding-bottom: 10px !important;
           }
 
           .pb-1 {
-            padding-bottom: 4px !important;
+            padding-bottom: 5px !important;
           }
 
           .pt-2 {
-            padding-top: 6px !important;
+            padding-top: 8px !important;
           }
 
           .flex {
@@ -609,12 +616,12 @@ const ResumePage: React.FC = () => {
           section {
             break-inside: avoid !important;
             page-break-inside: avoid !important;
-            margin-bottom: 10px !important;
+            margin-bottom: 14px !important;
           }
 
           footer {
-            margin-top: 12px !important;
-            padding-top: 6px !important;
+            margin-top: 16px !important;
+            padding-top: 10px !important;
             border-top: 1px solid #333 !important;
             text-align: center !important;
           }
@@ -630,12 +637,12 @@ const ResumePage: React.FC = () => {
           }
 
           .space-y-1\\.5 > div {
-            margin-bottom: 4px !important;
-            padding: 2px 0 !important;
+            margin-bottom: 6px !important;
+            padding: 3px 0 !important;
           }
 
           .space-y-1 > div {
-            margin-bottom: 3px !important;
+            margin-bottom: 4px !important;
             padding: 1px 0 !important;
           }
 

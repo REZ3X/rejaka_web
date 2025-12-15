@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { title } from "process";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -9,6 +10,39 @@ export async function GET(request: Request) {
   const category = searchParams.get("category");
 
   const projects = [
+    {
+      id: "alimentify",
+      title: "Alimentify - AI-Powered Meal Nutrition Analyzer",
+      subtitle: "Analyze meal nutrition using AI technology, train your diet habits, ai agent included",
+      category: "web",
+      description: [
+        "Alimentify is an AI-powered meal nutrition analyzer that helps users understand the nutritional content of their meals. By leveraging advanced AI technology, Alimentify provides detailed insights into calories, macronutrients, vitamins, and minerals present in various dishes.",
+      ],
+      technologies: ["Next.js", "Axum", "Rust", "MongoDB", "TypeScript", "Tailwind CSS"],
+      features: [
+        "AI-Powered Analysis: Utilizes advanced AI algorithms to analyze meal nutrition",
+        "Comprehensive Nutritional Insights: Provides detailed breakdowns of calories, macronutrients, vitamins, and minerals",
+        "AI Agent Integration: Includes an AI agent to assist users in understanding and improving their diet habits",
+      ],
+      year: 2025,
+      links: [
+        {
+          label: "Live Website",
+          url: "https://alimentify.slaviors.id",
+          type: "url",
+        },
+        {
+          Label: "Frontend Repo",
+          url: "https://github.com/REZ3X/alimentify_frontend",
+          type: "url",
+        },
+        {
+          Label: "Backend Repo",
+          url: "https://github.com/REZ3X/alimentify_backend",
+          type: "url",
+        }
+      ],
+    },
     {
       id: "nkpol_profile",
       title: "NKPol Profile Website",
