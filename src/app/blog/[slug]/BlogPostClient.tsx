@@ -318,14 +318,13 @@ export default function BlogPostClient({ slug }: { slug: string }) {
                 </ReactMarkdown>
               </div>
 
-              <script
-                async={true}
-                data-cfasync="false"
-                src="https://passivealexis.com/2f9635cf17feac74d408b29d43d7a956/invoke.js"
-              ></script>
-              <div id="container-2f9635cf17feac74d408b29d43d7a956"></div>
-
               <footer className="mt-8 pt-6 border-t border-gray-800">
+                <script
+                  async={true}
+                  data-cfasync="false"
+                  src="https://passivealexis.com/2f9635cf17feac74d408b29d43d7a956/invoke.js"
+                ></script>
+                <div id="container-2f9635cf17feac74d408b29d43d7a956"></div>
                 <div className="text-sm text-gray-500 font-mono">
                   Last modified:{" "}
                   {new Date(post.lastModified).toLocaleDateString("en-US", {
