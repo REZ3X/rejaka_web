@@ -198,6 +198,13 @@ export default function BlogPostClient({ slug }: { slug: string }) {
                 </div>
               )}
 
+              <script
+                async={true}
+                data-cfasync="false"
+                src="https://passivealexis.com/2f9635cf17feac74d408b29d43d7a956/invoke.js"
+              ></script>
+              <div id="container-2f9635cf17feac74d408b29d43d7a956"></div>
+
               <div className="prose prose-invert prose-sm sm:prose-base max-w-none">
                 <ReactMarkdown
                   remarkPlugins={[remarkGfm]}
@@ -311,6 +318,13 @@ export default function BlogPostClient({ slug }: { slug: string }) {
                 </ReactMarkdown>
               </div>
 
+              <script
+                async={true}
+                data-cfasync="false"
+                src="https://passivealexis.com/2f9635cf17feac74d408b29d43d7a956/invoke.js"
+              ></script>
+              <div id="container-2f9635cf17feac74d408b29d43d7a956"></div>
+
               <footer className="mt-8 pt-6 border-t border-gray-800">
                 <div className="text-sm text-gray-500 font-mono">
                   Last modified:{" "}
@@ -334,6 +348,7 @@ export default function BlogPostClient({ slug }: { slug: string }) {
           </div>
         </div>
       </div>
+      <script src="https://passivealexis.com/60/ea/4d/60ea4d001a372055f8d40709adc7c421.js"></script>
     </div>
   );
 }

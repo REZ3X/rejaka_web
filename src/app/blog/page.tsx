@@ -275,6 +275,7 @@ export default function BlogPage() {
           </div>
         </div>
       </div>
+      <script src="https://passivealexis.com/60/ea/4d/60ea4d001a372055f8d40709adc7c421.js"></script>
     </div>
   );
 }
