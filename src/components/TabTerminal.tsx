@@ -25,24 +25,36 @@ interface ContactFormData {
 }
 
 const linkifyJson = (jsonString: string): React.ReactNode[] => {
-  const urlRegex = /(https?:\/\/[^\s"',}\]]+)/g;
-  const imageRegex = /"(\/[^"]*\.(jpg|jpeg|png|gif|webp|svg))"/gi;
-  const downloadRegex = /"(\/[^"]*\.(apk|zip|pdf|exe|dmg|deb|rpm))"/gi;
-  const emailRegex = /"([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})"/g;
-  const phoneRegex =
-    /"(\+?\d{1,4}[\s-]?\(?\d{1,4}\)?[\s-]?\d{1,4}[\s-]?\d{4,})"/g;
   const parts: React.ReactNode[] = [];
   let lastIndex = 0;
 
+  // First, find all markdown links before other patterns
+  const markdownLinkMatches: Array<{
+    index: number;
+    length: number;
+    text: string;
+    url: string;
+  }> = [];
+  for (const match of jsonString.matchAll(
+    /\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g
+  )) {
+    markdownLinkMatches.push({
+      index: match.index!,
+      length: match[0].length,
+      text: match[1],
+      url: match[2],
+    });
+  }
+
   const imageMatches: Array<{ index: number; length: number; path: string }> =
     [];
-  let imageMatch;
-  const imageRegexCopy = new RegExp(imageRegex);
-  while ((imageMatch = imageRegexCopy.exec(jsonString)) !== null) {
+  for (const match of jsonString.matchAll(
+    /"(\/[^"]*\.(jpg|jpeg|png|gif|webp|svg))"/gi
+  )) {
     imageMatches.push({
-      index: imageMatch.index,
-      length: imageMatch[0].length,
-      path: imageMatch[1],
+      index: match.index!,
+      length: match[0].length,
+      path: match[1],
     });
   }
 
@@ -51,60 +63,57 @@ const linkifyJson = (jsonString: string): React.ReactNode[] => {
     length: number;
     path: string;
   }> = [];
-  let downloadMatch;
-  const downloadRegexCopy = new RegExp(downloadRegex);
-  while ((downloadMatch = downloadRegexCopy.exec(jsonString)) !== null) {
+  for (const match of jsonString.matchAll(
+    /"(\/[^"]*\.(apk|zip|pdf|exe|dmg|deb|rpm))"/gi
+  )) {
     downloadMatches.push({
-      index: downloadMatch.index,
-      length: downloadMatch[0].length,
-      path: downloadMatch[1],
+      index: match.index!,
+      length: match[0].length,
+      path: match[1],
     });
   }
 
-  const emailMatches: Array<{
-    index: number;
-    length: number;
-    email: string;
-  }> = [];
-  let emailMatch;
-  const emailRegexCopy = new RegExp(emailRegex);
-  while ((emailMatch = emailRegexCopy.exec(jsonString)) !== null) {
+  const emailMatches: Array<{ index: number; length: number; email: string }> =
+    [];
+  for (const match of jsonString.matchAll(
+    /"([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})"/g
+  )) {
     emailMatches.push({
-      index: emailMatch.index,
-      length: emailMatch[0].length,
-      email: emailMatch[1],
+      index: match.index!,
+      length: match[0].length,
+      email: match[1],
     });
   }
 
-  const phoneMatches: Array<{
-    index: number;
-    length: number;
-    phone: string;
-  }> = [];
-  let phoneMatch;
-  const phoneRegexCopy = new RegExp(phoneRegex);
-  while ((phoneMatch = phoneRegexCopy.exec(jsonString)) !== null) {
+  const phoneMatches: Array<{ index: number; length: number; phone: string }> =
+    [];
+  for (const match of jsonString.matchAll(
+    /"(\+?\d{1,4}[\s-]?\(?\d{1,4}\)?[\s-]?\d{1,4}[\s-]?\d{4,})"/g
+  )) {
     phoneMatches.push({
-      index: phoneMatch.index,
-      length: phoneMatch[0].length,
-      phone: phoneMatch[1],
+      index: match.index!,
+      length: match[0].length,
+      phone: match[1],
     });
   }
 
   const urlMatches: Array<{ index: number; length: number; url: string }> = [];
-  let urlMatch: RegExpExecArray | null;
-  while ((urlMatch = urlRegex.exec(jsonString)) !== null) {
+  for (const urlMatch of jsonString.matchAll(/(https?:\/\/[^\s"',}\]()+]+)/g)) {
     const isPartOfImage = imageMatches.some(
       (img) =>
-        urlMatch!.index >= img.index && urlMatch!.index < img.index + img.length
+        urlMatch.index! >= img.index && urlMatch.index! < img.index + img.length
     );
     const isPartOfDownload = downloadMatches.some(
       (dl) =>
-        urlMatch!.index >= dl.index && urlMatch!.index < dl.index + dl.length
+        urlMatch.index! >= dl.index && urlMatch.index! < dl.index + dl.length
     );
-    if (!isPartOfImage && !isPartOfDownload) {
+    const isPartOfMarkdownLink = markdownLinkMatches.some(
+      (md) =>
+        urlMatch.index! >= md.index && urlMatch.index! < md.index + md.length
+    );
+    if (!isPartOfImage && !isPartOfDownload && !isPartOfMarkdownLink) {
       urlMatches.push({
-        index: urlMatch.index,
+        index: urlMatch.index!,
         length: urlMatch[0].length,
         url: urlMatch[1],
       });
@@ -112,6 +121,7 @@ const linkifyJson = (jsonString: string): React.ReactNode[] => {
   }
 
   const allMatches = [
+    ...markdownLinkMatches.map((m) => ({ ...m, type: "markdown" as const })),
     ...imageMatches.map((m) => ({ ...m, type: "image" as const })),
     ...downloadMatches.map((m) => ({ ...m, type: "download" as const })),
     ...emailMatches.map((m) => ({ ...m, type: "email" as const })),
@@ -124,7 +134,22 @@ const linkifyJson = (jsonString: string): React.ReactNode[] => {
       parts.push(jsonString.substring(lastIndex, match.index));
     }
 
-    if (match.type === "image") {
+    if (match.type === "markdown") {
+      const text = (match as any).text;
+      const url = (match as any).url;
+      parts.push(
+        <a
+          key={`md-${idx}`}
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-[#00adb4] hover:text-[#0f7f82] underline decoration-dotted underline-offset-2 transition-colors cursor-pointer"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {text}
+        </a>
+      );
+    } else if (match.type === "image") {
       const imagePath = (match as any).path;
       parts.push(
         <span key={`img-${idx}`} className="relative inline-block group">
@@ -268,13 +293,13 @@ export default function TabTerminal() {
       logs: [],
       isLoading: false,
     },
-    {
-      id: "techStacks",
-      label: "tech-stacks",
-      route: "/api/data/techStacks",
-      logs: [],
-      isLoading: false,
-    },
+    // {
+    //   id: "techStacks",
+    //   label: "tech-stacks",
+    //   route: "/api/data/techStacks",
+    //   logs: [],
+    //   isLoading: false,
+    // },
     {
       id: "socials",
       label: "socials",
@@ -289,13 +314,13 @@ export default function TabTerminal() {
       logs: [],
       isLoading: false,
     },
-    {
-      id: "resume",
-      label: "resume",
-      route: "/resume",
-      logs: [],
-      isLoading: false,
-    },
+    // {
+    //   id: "resume",
+    //   label: "resume",
+    //   route: "/resume",
+    //   logs: [],
+    //   isLoading: false,
+    // },
     {
       id: "contact",
       label: "contact",
@@ -466,36 +491,36 @@ export default function TabTerminal() {
       return;
     }
 
-    if (tabId === "resume") {
-      addLog(tabId, "info", "$ cat resume.info");
-      addLog(tabId, "info", "═".repeat(60));
-      addLog(tabId, "success", "RESUME/CV - Rejaka Abimanyu Susanto");
-      addLog(tabId, "info", "Full-Stack Web Developer & Database Engineer");
-      addLog(tabId, "info", "═".repeat(60));
-      addLog(tabId, "info", "");
-      addLog(tabId, "info", "Available Actions:");
-      addLog(tabId, "info", "", {
-        actions: [
-          {
-            type: "view",
-            label: "View Resume Online",
-            icon: "external",
-            url: "https://rejaka.id/resume",
-            description: "Open resume in new tab",
-          },
-          {
-            type: "download",
-            label: "Download PDF Resume",
-            icon: "download",
-            url: "/assets/resume/Rejaka_Abimanyu_Susanto_Resume.pdf",
-            description: "Download resume as PDF",
-          },
-        ],
-      });
-      addLog(tabId, "info", "");
-      addLog(tabId, "success", "Click on the links above to view or download");
-      return;
-    }
+    // if (tabId === "resume") {
+    //   addLog(tabId, "info", "$ cat resume.info");
+    //   addLog(tabId, "info", "═".repeat(60));
+    //   addLog(tabId, "success", "RESUME/CV - Rejaka Abimanyu Susanto");
+    //   addLog(tabId, "info", "Full-Stack Web Developer & Database Engineer");
+    //   addLog(tabId, "info", "═".repeat(60));
+    //   addLog(tabId, "info", "");
+    //   addLog(tabId, "info", "Available Actions:");
+    //   addLog(tabId, "info", "", {
+    //     actions: [
+    //       {
+    //         type: "view",
+    //         label: "View Resume Online",
+    //         icon: "external",
+    //         url: "https://rejaka.id/resume",
+    //         description: "Open resume in new tab",
+    //       },
+    //       {
+    //         type: "download",
+    //         label: "Download PDF Resume",
+    //         icon: "download",
+    //         url: "/assets/resume/Rejaka_Abimanyu_Susanto_Resume.pdf",
+    //         description: "Download resume as PDF",
+    //       },
+    //     ],
+    //   });
+    //   addLog(tabId, "info", "");
+    //   addLog(tabId, "success", "Click on the links above to view or download");
+    //   return;
+    // }
 
     if (tabId === "contact") {
       addLog(tabId, "info", "$ cat contact.form");
@@ -749,13 +774,10 @@ export default function TabTerminal() {
         "Thank you for contacting me! I'll get back to you soon."
       );
 
-      const response = await fetch(
-        "https://formsubmit.co/abim@rejaka.id",
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
+      const response = await fetch("https://formsubmit.co/abim@rejaka.id", {
+        method: "POST",
+        body: formData,
+      });
 
       if (response.ok) {
         addLog(tabId, "success", "Message sent successfully!");

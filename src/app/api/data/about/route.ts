@@ -6,11 +6,11 @@ export const runtime = "nodejs";
 export async function GET() {
   const about = {
     name: "Rejaka Abimanyu Susanto",
-    nicknames: ["Abimanyu", "Abim", "Rejaka", "Reja"],
-    onlineHandles: ["REZ3X", "Xi4N", "VI3LEN"],
-    title: "Full-Stack Developer",
-    focus: "Backend Development",
-    bio: "Hi! My name is Rejaka Abimanyu Susanto, and people usually call me Abimanyu, Abim, Rejaka, or Reja. Online, I go by names like REZ3X, Xi4N, and VI3LEN. I'm a passionate full-stack developer with a strong focus on backend work. I specialize in building comprehensive, powerful, and reliable backend applications using efficient and modern tech stacks. I also work as a web developer, creating web applications that meet high-technology requirements, and I occasionally explore other types of software development, including mobile apps.",
+    // nicknames: ["Abimanyu", "Abim", "Rejaka", "Reja"],
+    // onlineHandles: ["REZ3X", "Xi4N", "VI3LEN"],
+    // title: "Full-Stack Developer",
+    // focus: "Backend Development",
+    bio: "Hi! My name is Rejaka Abimanyu Susanto. I'm a passionate developer and tech enthusiast with a strong focus on building web applications. I specialize in building comprehensive, powerful, and reliable systems, using efficient and modern tech stacks. I also have the opportunity to lead the technical and project sides of [Slaviors](https://slaviors.id), a team of developers who share the same goal to create innovative and impactful software solutions for business.",
     image: "/assets/rez3x.webp",
   };
 

@@ -14,7 +14,7 @@ export async function GET() {
       {
         type: "phone",
         label: "Phone",
-        value: "+62 (821) 4188-4664",
+        value: "+62 (831) 0739-3837",
       },
     ],
     socialLinks: [
