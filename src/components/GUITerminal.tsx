@@ -271,38 +271,66 @@ export default function GUITerminal() {
     }
   };
 
-  const renderAbout = () => (
-    <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 items-center lg:items-start">
-      <div className="relative w-48 h-48 lg:w-64 lg:h-64 flex-shrink-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#00adb4] to-[#0f7f82] rounded-2xl transform rotate-3" />
-        <div className="relative w-full h-full rounded-2xl overflow-hidden border-2 border-[#00adb4]/50">
-          {aboutData?.image && (
-            <Image
-              src={aboutData.image}
-              alt={aboutData.name || "Profile"}
-              fill
-              className="object-cover"
-              priority
-            />
-          )}
+  const renderAbout = () => {
+    const renderBioWithLinks = (bio: string) => {
+      const parts: React.ReactNode[] = [];
+      let lastIndex = 0;
+      const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
+      let match;
+
+      while ((match = linkRegex.exec(bio)) !== null) {
+        if (match.index > lastIndex) {
+          parts.push(bio.substring(lastIndex, match.index));
+        }
+        parts.push(
+          <a
+            key={match.index}
+            href={match[2]}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#00adb4] hover:text-[#0f7f82] underline decoration-dotted underline-offset-2 transition-colors"
+          >
+            {match[1]}
+          </a>
+        );
+        lastIndex = match.index + match[0].length;
+      }
+      if (lastIndex < bio.length) {
+        parts.push(bio.substring(lastIndex));
+      }
+      return parts.length > 0 ? parts : bio;
+    };
+
+    return (
+      <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 items-center lg:items-start">
+        <div className="relative w-48 h-48 lg:w-64 lg:h-64 flex-shrink-0">
+          <div className="absolute inset-0 bg-gradient-to-br from-[#00adb4] to-[#0f7f82] rounded-2xl transform rotate-3" />
+          <div className="relative w-full h-full rounded-2xl overflow-hidden border-2 border-[#00adb4]/50">
+            {aboutData?.image && (
+              <Image
+                src={aboutData.image}
+                alt={aboutData.name || "Profile"}
+                fill
+                className="object-cover"
+                priority
+              />
+            )}
+          </div>
+        </div>
+        <div className="flex-1 text-center lg:text-left">
+          <h2 className="text-2xl lg:text-3xl font-bold text-white mb-2">
+            {aboutData?.name || "Loading..."}
+          </h2>
+          <div className="inline-block px-3 py-1 bg-[#00adb4]/20 border border-[#00adb4]/50 rounded-full text-[#00adb4] text-sm mb-4">
+            Web Developer
+          </div>
+          <p className="text-gray-300 leading-relaxed whitespace-pre-wrap">
+            {aboutData?.bio ? renderBioWithLinks(aboutData.bio) : "Loading..."}
+          </p>
         </div>
       </div>
-      <div className="flex-1 text-center lg:text-left">
-        <h2 className="text-2xl lg:text-3xl font-bold text-white mb-2">
-          {aboutData?.name || "Loading..."}
-        </h2>
-        <div className="inline-block px-3 py-1 bg-[#00adb4]/20 border border-[#00adb4]/50 rounded-full text-[#00adb4] text-sm mb-4">
-          Web Developer
-        </div>
-        <p className="text-gray-300 leading-relaxed whitespace-pre-wrap">
-          {aboutData?.bio?.replace(
-            /\[([^\]]+)\]\(([^)]+)\)/g,
-            (_, text) => text
-          ) || "Loading..."}
-        </p>
-      </div>
-    </div>
-  );
+    );
+  };
 
   const renderProjects = () => (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
