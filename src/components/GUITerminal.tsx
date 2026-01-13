@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useViewMode } from "@/context/ViewModeContext";
 import {
   HiUser,
   HiCode,
@@ -102,7 +103,25 @@ interface ContactFormData {
 }
 
 export default function GUITerminal() {
-  const [activeTab, setActiveTab] = useState<TabId>("about");
+  const { activeTab: sharedActiveTab, setActiveTab: setSharedActiveTab } =
+    useViewMode();
+
+  const validTabs: TabId[] = [
+    "about",
+    "projects",
+    "experiences",
+    "achievements",
+    "socials",
+    "blog",
+    "contact",
+  ];
+  const activeTab: TabId = validTabs.includes(sharedActiveTab as TabId)
+    ? (sharedActiveTab as TabId)
+    : "about";
+
+  const setActiveTab = (tab: TabId) => {
+    setSharedActiveTab(tab);
+  };
   const [aboutData, setAboutData] = useState<AboutData | null>(null);
   const [projects, setProjects] = useState<ProjectData[]>([]);
   const [experiences, setExperiences] = useState<ExperienceData[]>([]);

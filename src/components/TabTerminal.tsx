@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useViewMode } from "@/context/ViewModeContext";
 
 interface LogEntry {
   timestamp: string;
@@ -28,7 +29,6 @@ const linkifyJson = (jsonString: string): React.ReactNode[] => {
   const parts: React.ReactNode[] = [];
   let lastIndex = 0;
 
-  // First, find all markdown links before other patterns
   const markdownLinkMatches: Array<{
     index: number;
     length: number;
@@ -330,7 +330,26 @@ export default function TabTerminal() {
     },
   ]);
 
-  const [activeTabId, setActiveTabId] = useState("about");
+  const { activeTab: sharedActiveTab, setActiveTab: setSharedActiveTab } =
+    useViewMode();
+
+  const validTabIds = [
+    "about",
+    "projects",
+    "experiences",
+    "achievements",
+    "socials",
+    "blog",
+    "contact",
+  ];
+  const activeTabId = validTabIds.includes(sharedActiveTab)
+    ? sharedActiveTab
+    : "about";
+
+  const setActiveTabId = (tabId: string) => {
+    setSharedActiveTab(tabId);
+  };
+
   const [contactForm, setContactForm] = useState<ContactFormData>({
     name: "",
     email: "",
