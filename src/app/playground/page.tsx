@@ -50,13 +50,13 @@ const defaultRoutes: PlaygroundRoute[] = [
     description: "Get achievements",
     mockData: null,
   },
-  {
-    id: "techStacks",
-    method: "GET",
-    path: "/api/data/techStacks",
-    description: "Get tech stacks",
-    mockData: null,
-  },
+  // {
+  //   id: "techStacks",
+  //   method: "GET",
+  //   path: "/api/data/techStacks",
+  //   description: "Get tech stacks",
+  //   mockData: null,
+  // },
   {
     id: "socials",
     method: "GET",
