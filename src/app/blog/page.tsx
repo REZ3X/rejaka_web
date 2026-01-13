@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import ASCIIText from "@/components/ASCIIText";
 import FaultyTerminal from "@/components/FaultyTerminal";
+import { useViewMode } from "@/context/ViewModeContext";
+import { HiCode, HiSparkles } from "react-icons/hi";
 
 interface BlogPost {
   slug: string;
@@ -24,6 +26,7 @@ export default function BlogPage() {
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [selectedTag, setSelectedTag] = useState<string>("All");
   const [isLoading, setIsLoading] = useState(true);
+  const { viewMode, toggleViewMode } = useViewMode();
 
   useEffect(() => {
     fetchPosts();
@@ -132,19 +135,38 @@ export default function BlogPage() {
             />
           </div>
 
-          <div className="flex justify-center gap-4 mt-1 sm:mt-2 mb-4 sm:mb-6">
+          <div className="relative z-30 flex justify-center gap-4 mt-1 sm:mt-2 mb-4 sm:mb-6 flex-wrap">
+            <button
+              onClick={toggleViewMode}
+              className="relative z-30 inline-flex items-center gap-2 px-3 py-1 text-[#00adb4] hover:text-[#0f7f82] font-mono text-sm border border-[#00adb4]/50 hover:border-[#00adb4] rounded-lg transition-all hover:bg-[#00adb4]/10"
+            >
+              {viewMode === "gui" ? (
+                <>
+                  <HiCode className="w-4 h-4" />
+                  <span>Trivia (for backend dev)</span>
+                </>
+              ) : (
+                <>
+                  <HiSparkles className="w-4 h-4" />
+                  <span>Tired of the logs?</span>
+                </>
+              )}
+            </button>
+
             <Link
               href="/"
               className="inline-block relative z-30 px-3 py-1 text-[#00adb4] hover:text-[#0f7f82] font-mono text-sm underline underline-offset-4 decoration-2 transition-colors"
             >
               $ cd ~
             </Link>
-            <Link
-              href="/playground"
-              className="inline-block relative z-30 px-3 py-1 text-[#00adb4] hover:text-[#0f7f82] font-mono text-sm underline underline-offset-4 decoration-2 transition-colors"
-            >
-              $ cd playground
-            </Link>
+            {viewMode === "terminal" && (
+              <Link
+                href="/playground"
+                className="inline-block relative z-30 px-3 py-1 text-[#00adb4] hover:text-[#0f7f82] font-mono text-sm underline underline-offset-4 decoration-2 transition-colors"
+              >
+                $ cd playground
+              </Link>
+            )}
           </div>
         </header>
 

@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import ASCIIText from "@/components/ASCIIText";
 import FaultyTerminal from "@/components/FaultyTerminal";
+import { useViewMode } from "@/context/ViewModeContext";
 
 interface PlaygroundRoute {
   id: string;
@@ -84,6 +85,8 @@ export default function PlaygroundPage() {
   >("GET");
   const [newRouteDescription, setNewRouteDescription] = useState("");
   const [newRouteMockData, setNewRouteMockData] = useState("{}");
+
+  const { toggleViewMode } = useViewMode();
 
   const allRoutes = [...defaultRoutes, ...customRoutes];
 
@@ -260,7 +263,15 @@ export default function PlaygroundPage() {
             />
           </div>
 
-          <div className="relative mt-1 sm:mt-2 mb-8 sm:mb-6 flex justify-center gap-4">
+          <div className="relative mt-1 sm:mt-2 mb-8 sm:mb-6 flex justify-center gap-4 flex-wrap">
+            <button
+              onClick={toggleViewMode}
+              className="inline-flex items-center gap-2 px-3 py-1 text-[#00adb4] hover:text-[#0f7f82] font-mono text-sm border border-[#00adb4]/50 hover:border-[#00adb4] rounded-lg transition-all hover:bg-[#00adb4]/10"
+            >
+              <span className="text-xs">✨</span>
+              <span>Tired of the logs?</span>
+            </button>
+
             <Link
               href="/"
               className="inline-block relative z-30 px-3 py-1 text-[#00adb4] hover:text-[#0f7f82] font-mono text-sm underline underline-offset-4 decoration-2 transition-colors"

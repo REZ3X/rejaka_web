@@ -4,8 +4,12 @@ import Link from "next/link";
 import ASCIIText from "@/components/ASCIIText";
 import FaultyTerminal from "@/components/FaultyTerminal";
 import TabTerminal from "@/components/TabTerminal";
+import GUITerminal from "@/components/GUITerminal";
+import { useViewMode } from "@/context/ViewModeContext";
+import { HiCode, HiSparkles } from "react-icons/hi";
 
 export default function Home() {
+  const { viewMode, toggleViewMode } = useViewMode();
   return (
     <div className="min-h-screen relative font-sans">
       <div className="fixed inset-0 z-0">
@@ -62,13 +66,33 @@ export default function Home() {
             />
           </div>
 
-          <div className="relative z-20 mt-1 sm:mt-2 mb-8 sm:mb-6 flex justify-center gap-4">
-            <Link
-              href="/playground"
-              className="inline-block relative z-30 px-3 py-1 text-[#00adb4] hover:text-[#0f7f82] font-mono text-sm underline underline-offset-4 decoration-2 transition-colors"
+          <div className="relative z-30 mt-1 sm:mt-2 mb-8 sm:mb-6 flex justify-center gap-4 flex-wrap">
+            <button
+              onClick={toggleViewMode}
+              className="relative z-30 inline-flex items-center gap-2 px-3 py-1 text-[#00adb4] hover:text-[#0f7f82] font-mono text-sm border border-[#00adb4]/50 hover:border-[#00adb4] rounded-lg transition-all hover:bg-[#00adb4]/10"
             >
-              $ cd playground
-            </Link>
+              {viewMode === "gui" ? (
+                <>
+                  <HiCode className="w-4 h-4" />
+                  <span>Trivia (for backend dev)</span>
+                </>
+              ) : (
+                <>
+                  <HiSparkles className="w-4 h-4" />
+                  <span>Tired of the logs?</span>
+                </>
+              )}
+            </button>
+
+            {viewMode === "terminal" && (
+              <Link
+                href="/playground"
+                className="inline-block relative z-30 px-3 py-1 text-[#00adb4] hover:text-[#0f7f82] font-mono text-sm underline underline-offset-4 decoration-2 transition-colors"
+              >
+                $ cd playground
+              </Link>
+            )}
+
             <Link
               href="/blog"
               className="inline-block relative z-30 px-3 py-1 text-[#00adb4] hover:text-[#0f7f82] font-mono text-sm underline underline-offset-4 decoration-2 transition-colors"
@@ -188,9 +212,11 @@ export default function Home() {
         <div className="space-y-3 sm:space-y-4 lg:space-y-5">
           <section className="w-full" aria-labelledby="terminal-heading">
             <h2 id="terminal-heading" className="sr-only">
-              Multi-Tab Terminal Sessions
+              {viewMode === "gui"
+                ? "Portfolio Showcase"
+                : "Multi-Tab Terminal Sessions"}
             </h2>
-            <TabTerminal />
+            {viewMode === "gui" ? <GUITerminal /> : <TabTerminal />}
           </section>
         </div>
 

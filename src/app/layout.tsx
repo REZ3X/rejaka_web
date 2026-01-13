@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import Script from "next/script";
 import PageTransition from "@/components/PageTransition";
+import { ViewModeProvider } from "@/context/ViewModeContext";
 import "./globals.css";
 
 const inter = Inter({
@@ -385,7 +386,9 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${jetBrainsMono.variable} antialiased`}
       >
-        <PageTransition>{children}</PageTransition>
+        <ViewModeProvider>
+          <PageTransition>{children}</PageTransition>
+        </ViewModeProvider>
       </body>
     </html>
   );
