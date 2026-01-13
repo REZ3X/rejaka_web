@@ -116,7 +116,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/assets/rez3x.webp",
+        url: "/assets/rez3x.png",
         width: 1200,
         height: 630,
         alt: "Rejaka Abimanyu Susanto - Web Developer Portfolio",
@@ -132,7 +132,7 @@ export const metadata: Metadata = {
     description:
       "Award-winning web developer from Yogyakarta. Specializing in Next.js, React, TypeScript, Rust, WebAssembly. Interactive API request portfolio with real-time terminal logging and apidata explorer.",
     images: {
-      url: "/assets/rez3x.webp",
+      url: "/assets/rez3x.png",
       alt: "Rejaka Abimanyu Susanto Portfolio Dashboard",
     },
   },
@@ -258,11 +258,10 @@ export default function RootLayout({
                   url: "https://rejaka.id",
                   image: {
                     "@type": "ImageObject",
-                    url: "https://rejaka.id/assets/rez3x.webp",
+                    url: "https://rejaka.id/assets/rez3x.png",
                     width: 800,
                     height: 600,
-                    caption:
-                      "Rejaka Abimanyu Susanto - Web Developer",
+                    caption: "Rejaka Abimanyu Susanto - Web Developer",
                   },
                   sameAs: [
                     "https://github.com/REZ3X",
@@ -377,7 +376,7 @@ export default function RootLayout({
 
         <link
           rel="preload"
-          href="/assets/rez3x.webp"
+          href="/assets/rez3x.png"
           as="image"
           type="image/webp"
         />

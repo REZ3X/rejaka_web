@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useViewMode } from "@/context/ViewModeContext";
@@ -140,6 +140,28 @@ export default function GUITerminal() {
     type: "success" | "error";
     message: string;
   } | null>(null);
+  const [selectedAchievement, setSelectedAchievement] =
+    useState<AchievementData | null>(null);
+
+  const imageContainerRef = useRef<HTMLDivElement>(null);
+  const [tilt, setTilt] = useState({ x: 0, y: 0 });
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!imageContainerRef.current) return;
+    const rect = imageContainerRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const tiltX = ((y - centerY) / centerY) * -8;
+    const tiltY = ((x - centerX) / centerX) * 8;
+    setTilt({ x: tiltX, y: tiltY });
+  };
+
+  const handleMouseLeave = () => {
+    setTilt({ x: 0, y: 0 });
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
@@ -303,9 +325,26 @@ export default function GUITerminal() {
 
     return (
       <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 items-center lg:items-start">
-        <div className="relative w-48 h-48 lg:w-64 lg:h-64 flex-shrink-0">
-          <div className="absolute inset-0 bg-gradient-to-br from-[#00adb4] to-[#0f7f82] rounded-2xl transform rotate-3" />
-          <div className="relative w-full h-full rounded-2xl overflow-hidden border-2 border-[#00adb4]/50">
+        <div
+          ref={imageContainerRef}
+          onMouseMove={handleMouseMove}
+          onMouseLeave={handleMouseLeave}
+          className="relative w-48 h-48 lg:w-64 lg:h-64 flex-shrink-0 cursor-pointer"
+          style={{
+            transform: `perspective(1000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
+            transition:
+              tilt.x === 0 && tilt.y === 0
+                ? "transform 0.3s ease-out"
+                : "transform 0.1s ease-out",
+          }}
+        >
+          <div
+            className="absolute inset-0 bg-gradient-to-br from-[#00adb4] to-[#0f7f82] rounded-2xl"
+            style={{
+              transform: "rotate(3deg) translateZ(-10px)",
+            }}
+          />
+          <div className="relative w-full h-full rounded-2xl overflow-hidden border-2 border-[#00adb4]/50 shadow-lg shadow-[#00adb4]/20">
             {aboutData?.image && (
               <Image
                 src={aboutData.image}
@@ -440,46 +479,129 @@ export default function GUITerminal() {
   );
 
   const renderAchievements = () => (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-      {isLoading && achievements.length === 0 ? (
-        <div className="col-span-full text-center py-8 text-gray-400">
-          Loading achievements...
-        </div>
-      ) : (
-        achievements.map((achievement, idx) => (
-          <div
-            key={idx}
-            className="group bg-[#161b22] border border-gray-800 rounded-xl overflow-hidden hover:border-[#00adb4]/50 transition-all duration-300"
-          >
-            <div className="relative h-32 bg-gradient-to-br from-[#00adb4]/20 to-[#0f7f82]/20">
-              {achievement.image && (
-                <Image
-                  src={achievement.image}
-                  alt={achievement.title}
-                  fill
-                  className="object-cover opacity-80 group-hover:opacity-100 transition-opacity"
-                />
-              )}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#161b22] to-transparent" />
-              <div className="absolute bottom-2 right-2 px-2 py-1 bg-[#00adb4] text-white text-xs rounded-full font-medium">
-                {achievement.year}
+    <>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {isLoading && achievements.length === 0 ? (
+          <div className="col-span-full text-center py-8 text-gray-400">
+            Loading achievements...
+          </div>
+        ) : (
+          achievements.map((achievement, idx) => (
+            <div
+              key={idx}
+              onClick={() => setSelectedAchievement(achievement)}
+              className="group bg-[#161b22] border border-gray-800 rounded-xl overflow-hidden hover:border-[#00adb4]/50 transition-all duration-300 cursor-pointer"
+            >
+              <div className="relative h-42 bg-gradient-to-br from-[#00adb4]/20 to-[#0f7f82]/20">
+                {achievement.image && (
+                  <Image
+                    src={achievement.image}
+                    alt={achievement.title}
+                    fill
+                    className="object-cover opacity-80 group-hover:opacity-100 transition-opacity"
+                  />
+                )}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#161b22] via-transparent to-transparent" />
+                <div className="absolute top-2 right-2 px-2 py-1 bg-[#00adb4] text-white text-xs rounded-full font-medium">
+                  {achievement.year}
+                </div>
+                <div className="absolute bottom-2 left-2 right-2 flex items-center gap-2 text-white/70 text-xs">
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                    />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                    />
+                  </svg>
+                  <span>Click to view</span>
+                </div>
+              </div>
+              <div className="p-4">
+                <h3 className="text-white font-semibold text-sm mb-1 line-clamp-2">
+                  {achievement.title}
+                </h3>
+                <p className="text-[#00adb4] text-xs mb-2">
+                  {achievement.issuer}
+                </p>
+                <p className="text-gray-400 text-xs line-clamp-3">
+                  {achievement.description}
+                </p>
               </div>
             </div>
-            <div className="p-4">
-              <h3 className="text-white font-semibold text-sm mb-1 line-clamp-2">
-                {achievement.title}
-              </h3>
-              <p className="text-[#00adb4] text-xs mb-2">
-                {achievement.issuer}
+          ))
+        )}
+      </div>
+
+      {/* Achievement Image Modal */}
+      {selectedAchievement && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4"
+          onClick={() => setSelectedAchievement(null)}
+        >
+          <div
+            className="relative max-w-3xl w-full bg-[#161b22] rounded-2xl overflow-hidden border border-gray-700 shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setSelectedAchievement(null)}
+              className="absolute top-3 right-3 z-10 w-8 h-8 flex items-center justify-center bg-black/50 hover:bg-black/70 text-white rounded-full transition-colors"
+            >
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+            <div className="relative aspect-video bg-gradient-to-br from-[#00adb4]/20 to-[#0f7f82]/20">
+              {selectedAchievement.image && (
+                <Image
+                  src={selectedAchievement.image}
+                  alt={selectedAchievement.title}
+                  fill
+                  className="object-contain"
+                />
+              )}
+            </div>
+            <div className="p-5">
+              <div className="flex items-start justify-between gap-4 mb-2">
+                <h3 className="text-white font-semibold text-lg">
+                  {selectedAchievement.title}
+                </h3>
+                <span className="flex-shrink-0 px-3 py-1 bg-[#00adb4] text-white text-xs rounded-full font-medium">
+                  {selectedAchievement.year}
+                </span>
+              </div>
+              <p className="text-[#00adb4] text-sm mb-3">
+                {selectedAchievement.issuer}
               </p>
-              <p className="text-gray-400 text-xs line-clamp-2">
-                {achievement.description}
+              <p className="text-gray-400 text-sm">
+                {selectedAchievement.description}
               </p>
             </div>
           </div>
-        ))
+        </div>
       )}
-    </div>
+    </>
   );
 
   const renderSocials = () => (
