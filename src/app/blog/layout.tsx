@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Blog - Technical Articles & Tutorials | Rejaka Portfolio",
   description:
-    "Explore technical articles, tutorials, and guides on web development, cybersecurity, databases, Linux, and more. Written by Rejaka Abimanyu Susanto - Full-Stack Developer.",
+    "Explore technical articles, tutorials, and guides on web development, cybersecurity, databases, Linux, and more. Written by Rejaka Abimanyu Susanto - Web Developer.",
   keywords: [
     "programming blog",
     "web development tutorials",
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     "developer resources",
     "coding tutorials",
     "ethical hacking",
-    "full stack development",
+    "web development",
   ],
   authors: [{ name: "Rejaka Abimanyu Susanto" }],
   openGraph: {
