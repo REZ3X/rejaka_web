@@ -129,6 +129,9 @@ export default function GUITerminal() {
   const [socials, setSocials] = useState<SocialData | null>(null);
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [expandedProjects, setExpandedProjects] = useState<Set<string>>(
+    new Set()
+  );
   const [contactForm, setContactForm] = useState<ContactFormData>({
     name: "",
     email: "",
@@ -395,9 +398,33 @@ export default function GUITerminal() {
               </span>
             </div>
 
-            <p className="text-gray-300 text-sm mb-4 line-clamp-2">
-              {project.description[0]}
-            </p>
+            <div className="mb-4">
+              <p
+                className={`text-gray-300 text-sm ${
+                  expandedProjects.has(project.id) ? "" : "line-clamp-2"
+                }`}
+              >
+                {project.description.join(" ")}
+              </p>
+              {project.description.join(" ").length > 120 && (
+                <button
+                  onClick={() => {
+                    setExpandedProjects((prev) => {
+                      const newSet = new Set(prev);
+                      if (newSet.has(project.id)) {
+                        newSet.delete(project.id);
+                      } else {
+                        newSet.add(project.id);
+                      }
+                      return newSet;
+                    });
+                  }}
+                  className="text-[#00adb4] text-xs underline underline-offset-2 hover:text-[#0f7f82] transition-colors mt-1"
+                >
+                  {expandedProjects.has(project.id) ? "See less" : "See more"}
+                </button>
+              )}
+            </div>
 
             {project.features && project.features.length > 0 && (
               <div className="mb-4">
