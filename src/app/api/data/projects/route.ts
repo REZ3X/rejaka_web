@@ -351,7 +351,7 @@ export async function GET(request: Request) {
       links: [
         {
           label: "Live Website",
-          url: "https://archivenotes.site",
+          url: "https://archivenotes.rejaka.id",
           type: "url",
         },
       ],
