@@ -12,6 +12,29 @@ export async function GET(request: Request) {
 
   const projects = [
     {
+      id: "roomet",
+      title: "Roomet - Socialize by Chats",
+      subtitle: "Chat rooms with XP progression, achievements, and end-to-end encryption. A social space designed for real connection",
+      category: "web",
+      description: [
+        "Roomet is a chat room platform that combines social interaction with gamification elements. Users can join various chat rooms based on their interests and engage in conversations while earning XP and unlocking achievements.",
+        "The platform emphasizes privacy and security, with end-to-end encryption to ensure that all conversations remain confidential.",
+      ],
+      features: [
+        "Chat Rooms: Join and create chat rooms based on interests",
+        "XP Progression: Earn XP for active participation and unlock achievements",
+        "End-to-End Encryption: Ensures all conversations are secure and private",
+      ],
+      year: 2026,
+      links: [
+        {
+          label: "Live Website",
+          url: "https://roomet.rejaka.id",
+          type: "url",
+        },
+      ],
+    },
+    {
       id: "alimentify",
       title: "Alimentify - AI-Powered Meal Nutrition Analyzer",
       subtitle: "Analyze meal nutrition using AI technology, train your diet habits, ai agent included",
