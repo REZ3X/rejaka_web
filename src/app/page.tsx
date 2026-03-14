@@ -35,14 +35,7 @@ export default function Home() {
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
         <header className="text-center mb-2">
-          <h1 className="sr-only">
-            Rejaka Abimanyu Susanto - Full-Stack Developer Portfolio
-          </h1>
-          <div
-            className="hidden sm:block -mt-2 -mb-12"
-            role="img"
-            aria-label="Rejaka Portfolio ASCII Art Title"
-          >
+          <h1 className="hidden sm:block -mt-2 -mb-12">
             <ASCIIText
               text="REJAKA_PORTFOLIO"
               enableWaves={true}
@@ -50,13 +43,12 @@ export default function Home() {
               textFontSize={150}
               planeBaseHeight={8}
             />
-          </div>
+            <span className="sr-only">
+              Rejaka Abimanyu Susanto — Full-Stack Web Developer Portfolio
+            </span>
+          </h1>
 
-          <div
-            className="sm:hidden -mt-1 -mb-8"
-            role="img"
-            aria-label="Rejaka ASCII Art Title"
-          >
+          <h1 className="sm:hidden -mt-1 -mb-8">
             <ASCIIText
               text="REJAKA"
               enableWaves={true}
@@ -64,7 +56,10 @@ export default function Home() {
               textFontSize={80}
               planeBaseHeight={6}
             />
-          </div>
+            <span className="sr-only">
+              Rejaka Abimanyu Susanto — Full-Stack Web Developer Portfolio
+            </span>
+          </h1>
 
           <div className="relative z-30 mt-1 sm:mt-2 mb-8 sm:mb-6 flex justify-center gap-4 flex-wrap">
             <button

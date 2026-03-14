@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://rejaka.id"),
   title: {
     template: "%s | Rejaka Abimanyu Susanto",
-    default: "Rejaka Abimanyu Susanto | Web Developer Portfolio",
+    default: "Rejaka Abimanyu Susanto | Full-Stack Web Developer",
   },
   description:
     "Web developer portfolio by Rejaka Abimanyu Susanto. Portfolio +  API real-time terminal, tech stack explorer, apidata endpoints, and projects showcase.",
