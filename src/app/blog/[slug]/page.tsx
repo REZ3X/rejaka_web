@@ -1,37 +1,14 @@
 import { Metadata } from "next";
+import { blogPosts } from "@/data/blogPosts";
+import { getBlogContent } from "@/lib/blog";
 import BlogPostClient from "@/app/blog/[slug]/BlogPostClient";
 
-export const dynamicParams = true; 
+export const dynamicParams = true;
 
-interface BlogPost {
-  slug: string;
-  title: string;
-  date: string;
-  excerpt: string;
-  coverImage: string;
-  readingTime: number;
-  tags: string[];
-  category: string;
-  lastModified: string;
-}
-
-async function getBlogPost(slug: string): Promise<BlogPost | null> {
-  try {
-    const baseUrl =
-      process.env.NODE_ENV === "development"
-        ? "http://localhost:3000"
-        : "https://rejaka.id";
-    const response = await fetch(`${baseUrl}/api/data/blog`, {
-      next: { revalidate: 3600 }, 
-    });
-    const result = await response.json();
-    if (result.success) {
-      return result.data.find((p: BlogPost) => p.slug === slug) || null;
-    }
-  } catch (error) {
-    console.error("Failed to fetch blog post:", error);
-  }
-  return null;
+export async function generateStaticParams() {
+  return blogPosts.map((post) => ({
+    slug: post.slug,
+  }));
 }
 
 export async function generateMetadata({
@@ -40,7 +17,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const post = await getBlogPost(slug);
+  const post = blogPosts.find((p) => p.slug === slug);
 
   if (!post) {
     return {
@@ -109,32 +86,84 @@ export async function generateMetadata({
   };
 }
 
-export async function generateStaticParams() {
-  try {
-    const baseUrl =
-      process.env.NODE_ENV === "development"
-        ? "http://localhost:3000"
-        : "https://rejaka.id";
-    const response = await fetch(`${baseUrl}/api/data/blog`, {
-      next: { revalidate: 3600 }, 
-    });
-    const result = await response.json();
-    if (result.success) {
-      return result.data.map((post: BlogPost) => ({
-        slug: post.slug,
-      }));
-    }
-  } catch (error) {
-    console.error("Failed to generate static params:", error);
-  }
-  return [];
-}
-
 export default async function BlogPostPage({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  return <BlogPostClient slug={slug} />;
+  const post = blogPosts.find((p) => p.slug === slug) || null;
+  const content = post ? getBlogContent(slug) : "";
+
+  const baseUrl = "https://rejaka.id";
+
+  return (
+    <>
+      {post && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@graph": [
+                {
+                  "@type": "Article",
+                  "@id": `${baseUrl}/blog/${post.slug}#article`,
+                  headline: post.title,
+                  description: post.excerpt,
+                  datePublished: post.date,
+                  dateModified: post.lastModified,
+                  author: {
+                    "@type": "Person",
+                    name: "Rejaka Abimanyu Susanto",
+                    url: baseUrl,
+                  },
+                  publisher: {
+                    "@type": "Person",
+                    name: "Rejaka Abimanyu Susanto",
+                    url: baseUrl,
+                  },
+                  mainEntityOfPage: {
+                    "@type": "WebPage",
+                    "@id": `${baseUrl}/blog/${post.slug}`,
+                  },
+                  image: post.coverImage
+                    ? `${baseUrl}${post.coverImage}`
+                    : undefined,
+                  keywords: post.tags.join(", "),
+                  articleSection: post.category,
+                  inLanguage: "en-US",
+                  wordCount: Math.round(post.readingTime * 200),
+                },
+                {
+                  "@type": "BreadcrumbList",
+                  itemListElement: [
+                    {
+                      "@type": "ListItem",
+                      position: 1,
+                      name: "Home",
+                      item: baseUrl,
+                    },
+                    {
+                      "@type": "ListItem",
+                      position: 2,
+                      name: "Blog",
+                      item: `${baseUrl}/blog`,
+                    },
+                    {
+                      "@type": "ListItem",
+                      position: 3,
+                      name: post.title,
+                      item: `${baseUrl}/blog/${post.slug}`,
+                    },
+                  ],
+                },
+              ],
+            }),
+          }}
+        />
+      )}
+      <BlogPostClient initialPost={post} initialContent={content} />
+    </>
+  );
 }

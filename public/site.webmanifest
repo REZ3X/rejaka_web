@@ -1,1 +1,23 @@
-{"name":"","short_name":"","icons":[{"src":"/android-chrome-192x192.png","sizes":"192x192","type":"image/png"},{"src":"/android-chrome-512x512.png","sizes":"512x512","type":"image/png"}],"theme_color":"#ffffff","background_color":"#ffffff","display":"standalone"}
+{
+  "name": "Rejaka Abimanyu Susanto - Developer Portfolio",
+  "short_name": "Rejaka",
+  "description": "Full-stack web developer portfolio with interactive API dashboard, terminal-style interface, and technical blog.",
+  "start_url": "/",
+  "scope": "/",
+  "lang": "en",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#060910",
+  "background_color": "#060910",
+  "display": "standalone"
+}

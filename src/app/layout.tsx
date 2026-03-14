@@ -27,56 +27,20 @@ export const metadata: Metadata = {
     "Web developer portfolio by Rejaka Abimanyu Susanto. Portfolio +  API real-time terminal, tech stack explorer, apidata endpoints, and projects showcase.",
   keywords: [
     "Rejaka Abimanyu Susanto",
-    "Web Developer Indonesia",
-    "Next.js Developer Yogyakarta",
-    "TypeScript React Developer",
-    "MongoDB Database Engineer",
-    "API Portfolio Dashboard",
-    "Interactive Terminal Portfolio",
-    "Real-time API Testing",
-
-    "Next.js 16 App Router",
-    "React 19 Developer",
-    "Three.js WebGL Portfolio",
-    "TypeScript Developer",
-    "API Development Specialist",
-    "Server-Side Rendering Expert",
-    "Frontend Backend Developer",
-    "Node.js Backend Engineer",
-    "Tailwind CSS Expert",
-    "Responsive Web Design",
-    "WebAssembly Rust Developer",
-
     "Web Developer Yogyakarta",
-    "Indonesia Software Engineer",
-    "Yogyakarta Tech Professional",
-    "Indonesian Web Developer",
-
-    "Portfolio API Explorer",
-    "Interactive Developer Portfolio",
-    "Terminal-based Portfolio",
-    "RESTful API Showcase",
-    "Modern Web Technologies",
-    "WebSocket Real-time Apps",
-    "Performance Optimization",
-    "SEO Web Development",
-    "Mobile-First Development",
-
-    "Programming Competition Winner",
-    "Digital Hero Competition",
-    "Web Development Competition",
-    "Tech Competition Finalist",
-
-    "Slaviors Team Lead",
-    "Open Source Contributor",
-    "Tech Community Leader",
-    "Freelance Web Developer",
-
-    "rez3x developer",
+    "Next.js Developer Indonesia",
+    "TypeScript React Developer",
+    "Full-Stack Developer Portfolio",
+    "Interactive Terminal Portfolio",
+    "API Development",
+    "MongoDB Database Engineer",
     "REZ3X portfolio",
     "rejaka.id",
-    "ghost chat developer",
-    "rusted quotes creator",
+    "Slaviors Team Lead",
+    "Web Development Competition Winner",
+    "Node.js Backend Engineer",
+    "Modern Web Technologies",
+    "Freelance Web Developer Indonesia",
   ],
   authors: [
     {
@@ -120,7 +84,7 @@ export const metadata: Metadata = {
         width: 1200,
         height: 630,
         alt: "Rejaka Abimanyu Susanto - Web Developer Portfolio",
-        type: "image/webp",
+        type: "image/png",
       },
     ],
   },
@@ -148,8 +112,6 @@ export const metadata: Metadata = {
   },
   manifest: "/site.webmanifest",
   verification: {
-    google: "google-site-verification-code",
-    yandex: "yandex-verification-code",
     other: {
       me: ["mailto:abim@rejaka.id", "https://rejaka.id"],
     },
@@ -378,7 +340,13 @@ export default function RootLayout({
           rel="preload"
           href="/assets/rez3x.png"
           as="image"
-          type="image/webp"
+          type="image/png"
+        />
+        <link
+          rel="alternate"
+          type="application/rss+xml"
+          title="Rejaka Blog RSS Feed"
+          href="/feed.xml"
         />
       </head>
       <body

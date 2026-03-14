@@ -1,6 +1,5 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -21,49 +20,15 @@ interface BlogPost {
   lastModified: string;
 }
 
-export default function BlogPostClient({ slug }: { slug: string }) {
-  const [post, setPost] = useState<BlogPost | null>(null);
-  const [content, setContent] = useState<string>("");
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    if (slug) {
-      fetchPost();
-    }
-  }, [slug]);
-
-  const fetchPost = async () => {
-    try {
-      const metaResponse = await fetch("/api/data/blog");
-      const metaResult = await metaResponse.json();
-      if (metaResult.success) {
-        const foundPost = metaResult.data.find(
-          (p: BlogPost) => p.slug === slug
-        );
-        if (foundPost) {
-          setPost(foundPost);
-
-          const contentResponse = await fetch(`/blog/posts/${slug}/index.md`);
-          if (contentResponse.ok) {
-            const markdown = await contentResponse.text();
-            setContent(markdown);
-          }
-        }
-      }
-    } catch (error) {
-      console.error("Failed to fetch blog post:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-[#00adb4] font-mono">Loading...</div>
-      </div>
-    );
-  }
+export default function BlogPostClient({
+  initialPost,
+  initialContent,
+}: {
+  initialPost: BlogPost | null;
+  initialContent: string;
+}) {
+  const post = initialPost;
+  const content = initialContent;
 
   if (!post) {
     return (
@@ -97,7 +62,10 @@ export default function BlogPostClient({ slug }: { slug: string }) {
       </div>
 
       <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
-        <div className="mb-4 font-mono text-sm flex items-center justify-between">
+        <nav
+          className="mb-4 font-mono text-sm flex items-center justify-between"
+          aria-label="Breadcrumb"
+        >
           <div className="text-gray-400">
             <Link
               href="/"
@@ -134,7 +102,7 @@ export default function BlogPostClient({ slug }: { slug: string }) {
             </svg>
             <span className="hidden sm:inline">back</span>
           </Link>
-        </div>
+        </nav>
 
         <div className="bg-[#0d1117] border border-gray-800 rounded-lg shadow-2xl overflow-hidden">
           <div className="bg-[#161b22] border-b border-gray-800 px-4 py-3 flex items-center justify-between">
@@ -192,7 +160,7 @@ export default function BlogPostClient({ slug }: { slug: string }) {
                 <div className="mb-8">
                   <img
                     src={post.coverImage}
-                    alt={post.title}
+                    alt={`Cover image for ${post.title}`}
                     className="w-full rounded-lg border border-gray-800"
                   />
                 </div>
@@ -211,7 +179,7 @@ export default function BlogPostClient({ slug }: { slug: string }) {
                   rehypePlugins={[rehypeRaw, rehypeHighlight]}
                   components={{
                     h1: ({ node, ...props }) => (
-                      <h1
+                      <h2
                         className="text-2xl sm:text-3xl font-bold text-[#00adb4] mt-8 mb-4"
                         {...props}
                       />
@@ -289,6 +257,8 @@ export default function BlogPostClient({ slug }: { slug: string }) {
                           className="rounded-lg border border-gray-800 my-4 w-full"
                           {...props}
                           src={src}
+                          alt={props.alt || `Image in ${post.title}`}
+                          loading="lazy"
                         />
                       );
                     },
