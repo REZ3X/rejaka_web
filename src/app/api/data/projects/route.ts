@@ -12,6 +12,31 @@ export async function GET(request: Request) {
 
   const projects = [
     {
+      id: "blessedly",
+      title: "Blessedly - AI-Powered Mental Health Companion (Alpha)",
+      subtitle: "AI-powered mental health companion with journaling, mood tracking, and AI-driven emotional support",
+      category: "web",
+      description: [
+        "Blessedly is a mental health companion platform that utilizes AI technology to provide emotional support and guidance to users. The platform offers a range of features designed to help users improve their mental well-being, including journaling, mood tracking, and AI-driven emotional support.",
+      ],
+      features: [
+        "Healthy article: Provides healthy articles to help users improve their mental well-being",
+        "Journaling: Users can journal their thoughts and feelings to improve their mental health",
+        "Mood tracking: Users can track their mood to identify patterns and triggers",
+        "AI-Powered Analysis: Utilizes advanced AI algorithms to analyze user's mental health",
+        "Comprehensive Emotional Support: Provides detailed emotional support and guidance to users",
+        "AI Agent Integration: Includes an AI agent to assist users in understanding and improving their mental health",
+      ],
+      year: 2026,
+      links: [
+        {
+          label: "Live Website",
+          url: "https://blessedly.slaviors.id",
+          type: "url",
+        },
+      ],
+    },
+    {
       id: "roomet",
       title: "Roomet - Socialize by Chats",
       subtitle: "Chat rooms with XP progression, achievements, and end-to-end encryption. A social space designed for real connection",
