@@ -12,6 +12,26 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: "mailServer",
+    title: "Mail Server Explained: How Email Actually Works Behind the Scenes",
+    date: "2026-03-16",
+    excerpt:
+      "You hit send and the email arrives in seconds. Behind that simplicity is a chain of servers, protocols, and DNS lookups most people never see. Here's how it all actually works.",
+    coverImage: "",
+    readingTime: 10,
+    tags: [
+      "Mail Server",
+      "Networking",
+      "SMTP",
+      "IMAP",
+      "POP3",
+      "Email Security",
+      "DNS",
+    ],
+    category: "Guide",
+    lastModified: "2026-03-16",
+  },
+  {
     slug: "triggerDatabaseSQL",
     title: "Database Triggers Explained: Automatic SQL Execution Made Simple",
     date: "2025-09-19",
