@@ -316,37 +316,37 @@ export async function GET(request: Request) {
         },
       ],
     },
-    {
-      id: "voidboard",
-      title: "VoidBoard - Anonymous Image Board",
-      subtitle: "A platform for anonymous image sharing",
-      category: "web",
-      description: [
-        "VoidBoard is an anonymous image board that allows users to share and discuss images without revealing their identities. The platform is designed to foster open communication and creativity while maintaining user privacy.",
-        "Users can post images, comment on others' posts, and engage in discussions without the fear of being judged or identified.",
-      ],
-      // technologies: [
-      //   "Next.js",
-      //   "ImageKit",
-      //   "MongoDB",
-      //   "TypeScript",
-      //   "Tailwind CSS",
-      // ],
-      features: [
-        "Anonymous Posting: Users can share images without revealing their identity",
-        "Discussion Threads: Engage in conversations around shared images",
-        "User Privacy: Focus on maintaining user anonymity and security",
-        "Responsive design: Optimized for both desktop and mobile devices",
-      ],
-      year: 2025,
-      links: [
-        {
-          label: "Live Website",
-          url: "https://void-board.vercel.app/",
-          type: "url",
-        },
-      ],
-    },
+    // {
+    //   id: "voidboard",
+    //   title: "VoidBoard - Anonymous Image Board",
+    //   subtitle: "A platform for anonymous image sharing",
+    //   category: "web",
+    //   description: [
+    //     "VoidBoard is an anonymous image board that allows users to share and discuss images without revealing their identities. The platform is designed to foster open communication and creativity while maintaining user privacy.",
+    //     "Users can post images, comment on others' posts, and engage in discussions without the fear of being judged or identified.",
+    //   ],
+    //   // technologies: [
+    //   //   "Next.js",
+    //   //   "ImageKit",
+    //   //   "MongoDB",
+    //   //   "TypeScript",
+    //   //   "Tailwind CSS",
+    //   // ],
+    //   features: [
+    //     "Anonymous Posting: Users can share images without revealing their identity",
+    //     "Discussion Threads: Engage in conversations around shared images",
+    //     "User Privacy: Focus on maintaining user anonymity and security",
+    //     "Responsive design: Optimized for both desktop and mobile devices",
+    //   ],
+    //   year: 2025,
+    //   links: [
+    //     {
+    //       label: "Live Website",
+    //       url: "https://void-board.vercel.app/",
+    //       type: "url",
+    //     },
+    //   ],
+    // },
     // {
     //   id: "wa-bots",
     //   title: "Void X Bot",
@@ -380,30 +380,30 @@ export async function GET(request: Request) {
     //     },
     //   ],
     // },
-    {
-      id: "archive",
-      title: "ArcHive Cloud Notes",
-      subtitle: "A cloud-based note-taking app, beta version",
-      category: "web",
-      description: [
-        "ArcHive is a cloud-based note-taking application designed to help users organize and manage their notes efficiently. It offers features like real-time collaboration, rich text editing, and seamless synchronization across devices.",
-        "The beta version focuses on core functionalities, with plans for additional features based on user feedback.",
-      ],
-      technologies: ["Next.js", "TypeScript", "MongoDB", "Tailwind CSS"],
-      features: [
-        "Cloud synchronization for notes",
-        "Secure user authentication",
-        "Fast and responsive UI",
-      ],
-      year: 2025,
-      links: [
-        {
-          label: "Live Website",
-          url: "https://archivenotes.rejaka.id",
-          type: "url",
-        },
-      ],
-    },
+    // {
+    //   id: "archive",
+    //   title: "ArcHive Cloud Notes",
+    //   subtitle: "A cloud-based note-taking app, beta version",
+    //   category: "web",
+    //   description: [
+    //     "ArcHive is a cloud-based note-taking application designed to help users organize and manage their notes efficiently. It offers features like real-time collaboration, rich text editing, and seamless synchronization across devices.",
+    //     "The beta version focuses on core functionalities, with plans for additional features based on user feedback.",
+    //   ],
+    //   technologies: ["Next.js", "TypeScript", "MongoDB", "Tailwind CSS"],
+    //   features: [
+    //     "Cloud synchronization for notes",
+    //     "Secure user authentication",
+    //     "Fast and responsive UI",
+    //   ],
+    //   year: 2025,
+    //   links: [
+    //     {
+    //       label: "Live Website",
+    //       url: "https://archivenotes.rejaka.id",
+    //       type: "url",
+    //     },
+    //   ],
+    // },
     {
       id: "gachapon",
       title: "Gachapon Website",
