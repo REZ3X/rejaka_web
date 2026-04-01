@@ -12,6 +12,26 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: "ipAddressingAndSubnet",
+    title:
+      "IP Addressing and Subnetting: A Beginner's Guide That Actually Makes Sense",
+    date: "2026-04-1",
+    excerpt:
+      "Every device on a network needs an address. Here is how IP addresses actually work, how subnet masks divide a network, and how to calculate host ranges and subnet blocks without the confusion.",
+    coverImage: "",
+    readingTime: 12,
+    tags: [
+      "Networking",
+      "IP Address",
+      "Subnetting",
+      "Subnet Mask",
+      "IPv4",
+      "CIDR",
+    ],
+    category: "Guide",
+    lastModified: "2026-04-1",
+  },
+  {
     slug: "mailServer",
     title: "Mail Server Explained: How Email Actually Works Behind the Scenes",
     date: "2026-03-16",
