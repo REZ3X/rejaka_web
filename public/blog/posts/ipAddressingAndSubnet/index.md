@@ -12,9 +12,10 @@ An IPv4 address is a 32-bit number, written as four groups of decimal numbers se
 
 ```
 192.168.10.25
- ^    ^   ^  ^
- |    |   |  |
-Oct1 Oct2 Oct3 Oct4
+ ^   ^   ^  ^
+ |   |   |  |
+Oct Oct Oct Oct
+ 1   2   3   4
 ```
 
 Four octets, 8 bits each, 32 bits total.
