@@ -10,7 +10,7 @@ export async function GET() {
     // onlineHandles: ["REZ3X", "Xi4N", "VI3LEN"],
     // title: "Full-Stack Developer",
     // focus: "Backend Development",
-    bio: "Hi! My name is Rejaka Abimanyu Susanto. I'm a passionate developer and tech enthusiast with a strong focus on building web applications. I specialize in building comprehensive, powerful, and reliable systems, using efficient and modern tech stacks. I also have the opportunity to lead the technical and project sides of [Slaviors](https://slaviors.id), a team of developers who share the same goal to create innovative and impactful software solutions for business.",
+    bio: "Hi! My name is Rejaka Abimanyu Susanto. I'm a passionate developer and tech enthusiast with a strong focus on building web applications. I specialize in building comprehensive, powerful, and reliable systems, using efficient and modern tech stacks such as Next.js, React, and Axum. Open for freelance works.",
     image: "/assets/rez3x.png",
   };
 
