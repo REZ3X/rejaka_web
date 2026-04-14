@@ -30,11 +30,6 @@ export async function GET(request: Request) {
       year: 2026,
       links: [
         {
-          label: "Live Website",
-          url: "https://blessedly.slaviors.id",
-          type: "url",
-        },
-        {
           label: "Backend API Repo",
           url: "https://github.com/REZ3X/bsdy_api",
           type: "url",
@@ -102,11 +97,6 @@ export async function GET(request: Request) {
       ],
       year: 2025,
       links: [
-        {
-          label: "Live Website",
-          url: "https://alimentify.slaviors.id",
-          type: "url",
-        },
         // {
         //   Label: "Frontend Repo",
         //   url: "https://github.com/REZ3X/alimentify_frontend",
