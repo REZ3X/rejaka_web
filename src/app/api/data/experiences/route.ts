@@ -6,25 +6,14 @@ export const runtime = "nodejs";
 export async function GET() {
   const experiences = [
     {
-      title: "Freelance Web Developer",
-      company: "Self-employed",
-      period: "Dec 2023 – Present",
+      title: "Freelance Fullstack Developer",
+      company: "Slaviors - Self Employed",
+      period: "June 2025 – January 2026",
       // responsibilities: [
       //   "Designed and delivered full-stack web solutions for clients",
       //   "Collaborated with designers on intuitive user interfaces",
       //   "Implemented responsive designs and optimized site performance",
       //   "Provided maintenance, updates, and enhancements post-launch",
-      // ],
-    },
-    {
-      title: "co-Founder",
-      company: "Slaviors",
-      period: "Oct 2024 – Present",
-      // responsibilities: [
-      //   "Lead the development of high-performance web applications using Next.js and MongoDB",
-      //   "Design and implement API routes, database schemas, and scalable system architectures",
-      //   "Conduct code reviews to ensure maintainability, quality, and adherence to best practices",
-      //   "Oversee deployment processes, establish CI/CD pipelines, and manage release schedules",
       // ],
     },
     {
