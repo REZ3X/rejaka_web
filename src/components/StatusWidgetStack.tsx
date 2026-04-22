@@ -11,10 +11,14 @@ import WakaTimeWidget from "./WakaTimeWidget";
  * Positioning rules:
  *   - Discord expanded  → WakaTime sits below the full Discord panel
  *   - Discord collapsed → WakaTime clears only the toggle-tab height
+ *
+ * localStorage keys:
+ *   rejaka_discord_collapsed  "true" | "false"
+ *   rejaka_waka_collapsed     "true" | "false"
  */
 
-const TOP = 8;  /* px from viewport top */
-const GAP = 6;  /* px gap between the two panels */
+const TOP = 8; /* px from viewport top */
+const GAP = 6; /* px gap between the two panels */
 
 export default function StatusWidgetStack() {
   const [discordCollapsed, setDiscordCollapsed] = useState(false);
@@ -24,6 +28,21 @@ export default function StatusWidgetStack() {
 
   const discordWrapRef = useRef<HTMLDivElement>(null);
 
+  /*
+   * Read saved state from localStorage after mount.
+   * useEffect is always client-side, so no SSR mismatch.
+   * We intentionally do NOT guard the render with isMounted — that pattern
+   * prevents the ResizeObserver from attaching to the real DOM elements.
+   */
+  useEffect(() => {
+    const savedDiscord = localStorage.getItem("rejaka_discord_collapsed");
+    if (savedDiscord !== null) setDiscordCollapsed(savedDiscord === "true");
+
+    const savedWaka = localStorage.getItem("rejaka_waka_collapsed");
+    if (savedWaka !== null) setWakaCollapsed(savedWaka === "true");
+  }, []);
+
+  /* Measure the Discord wrapper's full rendered height */
   useEffect(() => {
     const el = discordWrapRef.current;
     if (!el) return;
@@ -41,9 +60,26 @@ export default function StatusWidgetStack() {
   const discordSlide = discordCollapsed ? "calc(100% - 32px)" : "0%";
   const wakaSlide = wakaCollapsed ? "calc(100% - 32px)" : "0%";
 
-  const toggleDiscord = useCallback(() => setDiscordCollapsed((c) => !c), []);
-  const toggleWaka = useCallback(() => setWakaCollapsed((c) => !c), []);
-  const handleDiscordTabHeight = useCallback((h: number) => setDiscordTabHeight(h), []);
+  const toggleDiscord = useCallback(() => {
+    setDiscordCollapsed((c) => {
+      const next = !c;
+      localStorage.setItem("rejaka_discord_collapsed", String(next));
+      return next;
+    });
+  }, []);
+
+  const toggleWaka = useCallback(() => {
+    setWakaCollapsed((c) => {
+      const next = !c;
+      localStorage.setItem("rejaka_waka_collapsed", String(next));
+      return next;
+    });
+  }, []);
+
+  const handleDiscordTabHeight = useCallback(
+    (h: number) => setDiscordTabHeight(h),
+    []
+  );
 
   return (
     <>
@@ -57,7 +93,12 @@ export default function StatusWidgetStack() {
           width: "252px",
           transform: `translateX(${discordSlide})`,
           transition: "transform 0.35s cubic-bezier(0.4, 0, 0.2, 1)",
-          pointerEvents: "auto",
+          /*
+           * "none" on the wrapper lets the translateX-shifted invisible area
+           * pass clicks through. The widget component itself re-enables
+           * pointer-events on its own root div.
+           */
+          pointerEvents: "none",
         }}
       >
         <DiscordWidget
@@ -75,8 +116,9 @@ export default function StatusWidgetStack() {
           zIndex: 50,
           width: "252px",
           transform: `translateX(${wakaSlide})`,
-          transition: "top 0.35s cubic-bezier(0.4, 0, 0.2, 1), transform 0.35s cubic-bezier(0.4, 0, 0.2, 1)",
-          pointerEvents: "auto",
+          transition:
+            "top 0.35s cubic-bezier(0.4, 0, 0.2, 1), transform 0.35s cubic-bezier(0.4, 0, 0.2, 1)",
+          pointerEvents: "none",
         }}
       >
         <WakaTimeWidget collapsed={wakaCollapsed} onToggle={toggleWaka} />

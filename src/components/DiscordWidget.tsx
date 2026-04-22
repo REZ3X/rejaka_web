@@ -208,7 +208,7 @@ export default function DiscordWidget({ collapsed, onToggle, onTabHeightChange, 
   return (
     <div
       ref={panelRef}
-      style={{ position: "relative", display: "flex", flexDirection: "row", alignItems: "flex-start" }}
+      style={{ position: "relative", display: "flex", flexDirection: "row", alignItems: "flex-start", pointerEvents: "none" }}
     >
       <button
         ref={tabRef}
@@ -223,13 +223,16 @@ export default function DiscordWidget({ collapsed, onToggle, onTabHeightChange, 
           gap: "5px",
           padding: "8px 5px",
           background: panelBg,
-          border: `1px solid ${panelBorder}`,
-          borderRight: collapsed ? undefined : "none",
+          borderTop: `1px solid ${panelBorder}`,
+          borderBottom: `1px solid ${panelBorder}`,
+          borderLeft: `1px solid ${panelBorder}`,
+          borderRight: collapsed ? `1px solid ${panelBorder}` : "none",
           borderRadius: "8px 0 0 8px",
           cursor: "pointer",
           flexShrink: 0,
           width: "32px",
           transition: "border-color 0.3s ease",
+          pointerEvents: "auto",
         }}
       >
         <DiscordSVG size={15} />
@@ -242,6 +245,7 @@ export default function DiscordWidget({ collapsed, onToggle, onTabHeightChange, 
             display: "block",
             boxShadow: loading ? "none" : `0 0 5px ${statusColor}80`,
             transition: "background 0.4s ease, box-shadow 0.4s ease",
+            animation: (!loading && presence?.discord_status === "online") ? "dc-pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite" : undefined,
           }}
         />
         <span style={{ color: accent, lineHeight: 1 }}>
@@ -253,7 +257,9 @@ export default function DiscordWidget({ collapsed, onToggle, onTabHeightChange, 
         style={{
           width: "220px",
           background: panelBg,
-          border: `1px solid ${panelBorder}`,
+          borderTop: `1px solid ${panelBorder}`,
+          borderBottom: `1px solid ${panelBorder}`,
+          borderRight: `1px solid ${panelBorder}`,
           borderLeft: "none",
           borderRadius: "0 0 8px 0",
           overflow: "hidden",
@@ -262,6 +268,7 @@ export default function DiscordWidget({ collapsed, onToggle, onTabHeightChange, 
           scrollbarWidth: "none",
           boxShadow: "0 8px 32px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.04)",
           transition: "border-color 0.3s ease",
+          pointerEvents: "auto",
         }}
       >
         <div
@@ -357,6 +364,7 @@ export default function DiscordWidget({ collapsed, onToggle, onTabHeightChange, 
                       border: "2px solid #0d1117",
                       display: "block",
                       boxShadow: `0 0 5px ${statusColor}80`,
+                      animation: (presence?.discord_status === "online") ? "dc-pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite" : undefined,
                     }}
                   />
                 </div>
@@ -581,7 +589,14 @@ export default function DiscordWidget({ collapsed, onToggle, onTabHeightChange, 
         </div>
       </div>
 
-      <style>{`@keyframes dc-spin { to { transform: rotate(360deg); } }`}</style>
+      <style>{`
+        @keyframes dc-spin { to { transform: rotate(360deg); } }
+        @keyframes dc-pulse {
+          0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+          50% { box-shadow: 0 0 0 4px rgba(34, 197, 94, 0); }
+          100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+        }
+      `}</style>
     </div>
   );
 }

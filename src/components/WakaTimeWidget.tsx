@@ -135,7 +135,7 @@ export default function WakaTimeWidget({ collapsed, onToggle }: { collapsed: boo
   const topLangColor = stats?.languages?.[0] ? getLangColor(stats.languages[0].name) : accent;
 
   return (
-    <div style={{ position: "relative", display: "flex", flexDirection: "row", alignItems: "flex-start" }}>
+    <div style={{ position: "relative", display: "flex", flexDirection: "row", alignItems: "flex-start", pointerEvents: "none" }}>
       <button
         onClick={onToggle}
         title={collapsed ? "Expand WakaTime stats" : "Collapse WakaTime stats"}
@@ -148,13 +148,16 @@ export default function WakaTimeWidget({ collapsed, onToggle }: { collapsed: boo
           gap: "5px",
           padding: "8px 5px",
           background: "#0d1117",
-          border: `1px solid ${panelBorder}`,
-          borderRight: collapsed ? undefined : "none",
+          borderTop: `1px solid ${panelBorder}`,
+          borderBottom: `1px solid ${panelBorder}`,
+          borderLeft: `1px solid ${panelBorder}`,
+          borderRight: collapsed ? `1px solid ${panelBorder}` : "none",
           borderRadius: "8px 0 0 8px",
           cursor: "pointer",
           flexShrink: 0,
           width: "32px",
           transition: "border-color 0.3s ease",
+          pointerEvents: "auto",
         }}
       >
         <ClockCircleIcon size={14} color={accent} />
@@ -178,7 +181,9 @@ export default function WakaTimeWidget({ collapsed, onToggle }: { collapsed: boo
         style={{
           width: "220px",
           background: "#0d1117",
-          border: `1px solid ${panelBorder}`,
+          borderTop: `1px solid ${panelBorder}`,
+          borderBottom: `1px solid ${panelBorder}`,
+          borderRight: `1px solid ${panelBorder}`,
           borderLeft: "none",
           borderRadius: "0 0 8px 0",
           overflow: "hidden",
@@ -187,6 +192,7 @@ export default function WakaTimeWidget({ collapsed, onToggle }: { collapsed: boo
           scrollbarWidth: "none",
           boxShadow: "0 8px 32px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.04)",
           transition: "border-color 0.3s ease",
+          pointerEvents: "auto",
         }}
       >
         <div
