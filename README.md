@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# rejaka.id — Portfolio
+
+Personal portfolio site for Rejaka Abimanyu Susanto, built with Next.js 15 (App Router).
+
+## Features
+
+- **Dual-theme UI** — toggle between a GUI card view and a terminal/developer mode
+- **Discord presence** — live status widget powered by [Lanyard](https://github.com/Phineas/lanyard), showing current status, Spotify playback, and active activities
+- **WakaTime stats** — weekly coding language breakdown via WakaTime embeddable JSON
+- **Project showcase** — structured project data served from internal API routes
+- **Blog** — MDX-based posts with syntax highlighting
+- **Contact form** — submits via FormSubmit, no backend required
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment Variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Create a `.env` file in the project root:
 
-## Learn More
+```env
+# Your Discord user ID (for Lanyard presence)
+DISCORD_USER_ID=your_discord_user_id
 
-To learn more about Next.js, take a look at the following resources:
+# WakaTime embeddable JSON URL
+# Generate at https://wakatime.com/share/embed → Last 7 Days → Languages → JSON
+WAKATIME_JSON_URL=https://wakatime.com/share/...
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+> **Discord presence note:** your account must be a member of [discord.gg/lanyard](https://discord.gg/lanyard) for Lanyard to monitor your presence.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Project Structure
 
-## Deploy on Vercel
+```
+src/
+├── app/
+│   ├── api/
+│   │   ├── data/          # Static data routes (projects, about, etc.)
+│   │   └── status/        # Live status proxies (discord, wakatime)
+│   ├── blog/              # Blog pages
+│   └── layout.tsx         # Root layout — mounts StatusWidgetStack
+├── components/
+│   ├── DiscordWidget.tsx   # Discord presence panel
+│   ├── WakaTimeWidget.tsx  # WakaTime language stats panel
+│   ├── StatusWidgetStack.tsx # Fixed overlay managing both status widgets
+│   ├── GUITerminal.tsx     # GUI-mode main content
+│   └── TabTerminal.tsx     # Terminal-mode main content
+└── context/
+    └── ViewModeContext.tsx # Global gui/terminal mode state
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Tech Stack
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [Next.js 15](https://nextjs.org) — App Router, React Server Components
+- [Lanyard API](https://github.com/Phineas/lanyard) — Discord real-time presence
+- [WakaTime](https://wakatime.com) — Coding activity stats
+- Vanilla CSS / inline styles — no CSS framework
+
+## Deployment
+
+Deploy to [Vercel](https://vercel.com) and set the environment variables in the project settings.
