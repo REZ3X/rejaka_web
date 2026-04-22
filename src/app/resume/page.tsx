@@ -157,7 +157,7 @@ export default function ResumePage() {
             About Me
           </h3>
           <p style={{ fontSize: "14px", marginTop: 0 }}>
-            I am a graduate of SMKN 2 Depok Sleman with a strong interest in fullstack development and team management.
+            I am a student of SMKN 2 Depok Sleman with a strong interest in fullstack development and team management.
             Experienced with modern tech stacks such as Next.js, React, and Axum, I am also passionate about system and
             database design. I actively lead and develop projects, learn quickly, and am eager to take on new challenges.
           </p>
