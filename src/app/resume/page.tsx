@@ -3,9 +3,33 @@ import Image from "next/image";
 import { ACHIEVEMENTS_DATA } from "../api/data/achievements/route";
 import ResumeClientControls from "./ResumeClientControls";
 
-export const metadata = {
-  title: "Resume - Rejaka Abimanyu Susanto",
-  description: "CV and Resume of Rejaka Abimanyu Susanto",
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Resume | Rejaka Abimanyu Susanto",
+  description: "Professional CV and Resume of Rejaka Abimanyu Susanto. Fullstack Developer specializing in Next.js, React, Express, Axum, and Database Design.",
+  openGraph: {
+    title: "Resume | Rejaka Abimanyu Susanto - Fullstack Developer",
+    description: "Explore the professional experience, skills, and educational background of Rejaka Abimanyu Susanto. Read online or print to PDF.",
+    url: "https://rejaka.id/resume",
+    siteName: "Rejaka Abimanyu Susanto Portfolio",
+    images: [
+      {
+        url: "/assets/rez3x.png",
+        width: 1200,
+        height: 630,
+        alt: "Rejaka Abimanyu Susanto - Resume Preview",
+      },
+    ],
+    locale: "en_US",
+    type: "profile",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Resume | Rejaka Abimanyu Susanto",
+    description: "Explore the professional experience, skills, and educational background of Rejaka Abimanyu Susanto. Read online or print to PDF.",
+    images: ["/assets/rez3x.png"],
+  },
 };
 
 export default function ResumePage() {
