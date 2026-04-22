@@ -5,32 +5,40 @@ import ResumeClientControls from "./ResumeClientControls";
 
 import type { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: "Resume | Rejaka Abimanyu Susanto",
-  description: "Professional CV and Resume of Rejaka Abimanyu Susanto. Fullstack Developer specializing in Next.js, React, Express, Axum, and Database Design.",
-  openGraph: {
-    title: "Resume | Rejaka Abimanyu Susanto - Fullstack Developer",
-    description: "Explore the professional experience, skills, and educational background of Rejaka Abimanyu Susanto. Read online or print to PDF.",
-    url: "https://rejaka.id/resume",
-    siteName: "Rejaka Abimanyu Susanto Portfolio",
-    images: [
-      {
-        url: "/assets/rez3x.png",
-        width: 1200,
-        height: 630,
-        alt: "Rejaka Abimanyu Susanto - Resume Preview",
-      },
-    ],
-    locale: "en_US",
-    type: "profile",
-  },
-  twitter: {
-    card: "summary_large_image",
+export async function generateMetadata(): Promise<Metadata> {
+  const baseUrl = "https://rejaka.id";
+  const ogImageUrl = `${baseUrl}/assets/rez3x.png`;
+
+  return {
     title: "Resume | Rejaka Abimanyu Susanto",
-    description: "Explore the professional experience, skills, and educational background of Rejaka Abimanyu Susanto. Read online or print to PDF.",
-    images: ["/assets/rez3x.png"],
-  },
-};
+    description: "Professional CV and Resume of Rejaka Abimanyu Susanto. Fullstack Developer specializing in Next.js, React, Express, Axum, and Database Design.",
+    alternates: {
+      canonical: `${baseUrl}/resume`,
+    },
+    openGraph: {
+      title: "Resume | Rejaka Abimanyu Susanto - Fullstack Developer",
+      description: "Explore the professional experience, skills, and educational background of Rejaka Abimanyu Susanto. Read online or print to PDF.",
+      url: `${baseUrl}/resume`,
+      siteName: "Rejaka Abimanyu Susanto Portfolio",
+      images: [
+        {
+          url: ogImageUrl,
+          width: 1200,
+          height: 630,
+          alt: "Rejaka Abimanyu Susanto - Resume Preview",
+        },
+      ],
+      locale: "en_US",
+      type: "profile",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "Resume | Rejaka Abimanyu Susanto",
+      description: "Explore the professional experience, skills, and educational background of Rejaka Abimanyu Susanto. Read online or print to PDF.",
+      images: [ogImageUrl],
+    },
+  };
+}
 
 export default function ResumePage() {
   return (
