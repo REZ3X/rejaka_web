@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
+import { usePathname } from "next/navigation";
 import DiscordWidget from "./DiscordWidget";
 import WakaTimeWidget from "./WakaTimeWidget";
 
@@ -21,6 +22,8 @@ const TOP = 8; /* px from viewport top */
 const GAP = 6; /* px gap between the two panels */
 
 export default function StatusWidgetStack() {
+  const pathname = usePathname();
+  
   const [discordCollapsed, setDiscordCollapsed] = useState(false);
   const [wakaCollapsed, setWakaCollapsed] = useState(false);
   const [discordFullHeight, setDiscordFullHeight] = useState(0);
@@ -80,6 +83,10 @@ export default function StatusWidgetStack() {
     (h: number) => setDiscordTabHeight(h),
     []
   );
+
+  if (pathname === "/resume") {
+    return null;
+  }
 
   return (
     <>

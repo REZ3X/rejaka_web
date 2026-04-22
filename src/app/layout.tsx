@@ -4,6 +4,7 @@ import Script from "next/script";
 import PageTransition from "@/components/PageTransition";
 import { ViewModeProvider } from "@/context/ViewModeContext";
 import StatusWidgetStack from "@/components/StatusWidgetStack";
+import ResumeSidebarButton from "@/components/ResumeSidebarButton";
 import "./globals.css";
 
 const inter = Inter({
@@ -357,6 +358,8 @@ export default function RootLayout({
           <PageTransition>{children}</PageTransition>
           {/* Fixed-position status widgets — layout managed by StatusWidgetStack */}
           <StatusWidgetStack />
+          {/* Global resume button on the left edge */}
+          <ResumeSidebarButton />
         </ViewModeProvider>
       </body>
     </html>
