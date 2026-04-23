@@ -3,43 +3,6 @@ import Image from "next/image";
 import { ACHIEVEMENTS_DATA } from "../api/data/achievements/route";
 import ResumeClientControls from "./ResumeClientControls";
 
-import type { Metadata } from "next";
-
-export async function generateMetadata(): Promise<Metadata> {
-  const baseUrl = "https://rejaka.id";
-  const ogImageUrl = `${baseUrl}/assets/rez3x.png`;
-
-  return {
-    title: "Resume | Rejaka Abimanyu Susanto",
-    description: "Professional CV and Resume of Rejaka Abimanyu Susanto. Fullstack Developer specializing in Next.js, React, Express, Axum, and Database Design.",
-    alternates: {
-      canonical: `${baseUrl}/resume`,
-    },
-    openGraph: {
-      title: "Resume | Rejaka Abimanyu Susanto - Fullstack Developer",
-      description: "Explore the professional experience, skills, and educational background of Rejaka Abimanyu Susanto. Read online or print to PDF.",
-      url: `${baseUrl}/resume`,
-      siteName: "Rejaka Abimanyu Susanto Portfolio",
-      images: [
-        {
-          url: ogImageUrl,
-          width: 1200,
-          height: 630,
-          alt: "Rejaka Abimanyu Susanto - Resume Preview",
-        },
-      ],
-      locale: "en_US",
-      type: "profile",
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: "Resume | Rejaka Abimanyu Susanto",
-      description: "Explore the professional experience, skills, and educational background of Rejaka Abimanyu Susanto. Read online or print to PDF.",
-      images: [ogImageUrl],
-    },
-  };
-}
-
 export default function ResumePage() {
   return (
     <div
@@ -68,6 +31,7 @@ export default function ResumePage() {
       >
         {/* HEADER */}
         <header
+          className="resume-header"
           style={{
             display: "flex",
             justifyContent: "space-between",
@@ -122,6 +86,7 @@ export default function ResumePage() {
           </div>
 
           <div
+            className="resume-header-image"
             style={{
               width: "120px",
               height: "120px",
@@ -178,7 +143,7 @@ export default function ResumePage() {
           >
             Skills
           </h3>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px", fontSize: "14px" }}>
+          <div className="skills-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px", fontSize: "14px" }}>
             <div>
               <strong>Web Development:</strong> Next.js, React, Tailwind CSS
             </div>
@@ -211,7 +176,7 @@ export default function ResumePage() {
           </h3>
 
           <div style={{ marginBottom: "20px" }} className="print-avoid-break">
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
+            <div className="experience-flex" style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
               <h4 style={{ fontSize: "16px", fontWeight: 700, margin: "0 0 5px 0" }}>Slaviors</h4>
               <span style={{ fontSize: "13px", color: "#555555", fontWeight: 600 }}>June 2025 - January 2026</span>
             </div>
@@ -226,7 +191,7 @@ export default function ResumePage() {
           </div>
 
           <div style={{ marginBottom: "20px" }} className="print-avoid-break">
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
+            <div className="experience-flex" style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
               <h4 style={{ fontSize: "16px", fontWeight: 700, margin: "0 0 5px 0" }}>Student Discipline Team</h4>
               <span style={{ fontSize: "13px", color: "#555555", fontWeight: 600 }}>October 2024 - November 2025</span>
             </div>
@@ -259,7 +224,7 @@ export default function ResumePage() {
           <div style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
             {ACHIEVEMENTS_DATA.map((achievement, idx) => (
               <div key={idx} className="print-avoid-break">
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
+                <div className="experience-flex" style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
                   <h4 style={{ fontSize: "15px", fontWeight: 700, margin: "0 0 3px 0" }}>{achievement.title}</h4>
                   <span style={{ fontSize: "13px", color: "#555555", fontWeight: 600 }}>{achievement.year}</span>
                 </div>
@@ -289,7 +254,7 @@ export default function ResumePage() {
           </h3>
 
           <div style={{ marginBottom: "12px" }} className="print-avoid-break">
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
+            <div className="experience-flex" style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
               <h4 style={{ fontSize: "15px", fontWeight: 700, margin: "0 0 3px 0" }}>SMKN 2 DEPOK SLEMAN</h4>
               <span style={{ fontSize: "13px", color: "#555555", fontWeight: 600 }}>2023 - 2027</span>
             </div>
@@ -297,14 +262,14 @@ export default function ResumePage() {
           </div>
 
           <div style={{ marginBottom: "12px" }} className="print-avoid-break">
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
+            <div className="experience-flex" style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
               <h4 style={{ fontSize: "15px", fontWeight: 700, margin: "0 0 3px 0" }}>SMPN 6 YOGYAKARTA</h4>
               <span style={{ fontSize: "13px", color: "#555555", fontWeight: 600 }}>2020 - 2023</span>
             </div>
           </div>
 
           <div className="print-avoid-break">
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
+            <div className="experience-flex" style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
               <h4 style={{ fontSize: "15px", fontWeight: 700, margin: "0 0 3px 0" }}>SDN GLAGAH</h4>
               <span style={{ fontSize: "13px", color: "#555555", fontWeight: 600 }}>2014 - 2020</span>
             </div>
@@ -347,6 +312,36 @@ export default function ResumePage() {
             page-break-after: avoid;
             break-after: avoid;
             margin-top: 15px;
+          }
+        }
+
+        @media screen and (max-width: 768px) {
+          .resume-page-wrapper {
+            padding: 15px 10px !important;
+          }
+          .resume-container {
+            padding: 20px !important;
+          }
+          .resume-header {
+            flex-direction: column !important;
+            text-align: center !important;
+            gap: 20px !important;
+          }
+          .resume-header > div:first-child {
+            order: 2;
+          }
+          .resume-header-image {
+            order: 1;
+            margin: 0 auto;
+          }
+          .skills-grid {
+            grid-template-columns: 1fr !important;
+            gap: 15px !important;
+          }
+          .experience-flex {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            gap: 2px !important;
           }
         }
       `,

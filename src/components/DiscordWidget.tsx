@@ -581,7 +581,9 @@ export default function DiscordWidget({ collapsed, onToggle, onTabHeightChange, 
                     fontFamily: fontMono,
                   }}
                 >
-                  {isGui ? "Just chilling..." : "$ idle — no active session"}
+                  {presence?.discord_status === "offline" 
+                    ? (isGui ? "Currently offline." : "$ status -- offline")
+                    : (isGui ? "Just chilling..." : "$ idle — no active session")}
                 </div>
               )}
             </div>
