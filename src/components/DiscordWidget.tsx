@@ -415,18 +415,21 @@ export default function DiscordWidget({ collapsed, onToggle, onTabHeightChange, 
                   {spotify.album_art_url && (
                     <div
                       style={{
-                        marginBottom: "7px",
-                        borderRadius: "4px",
+                        marginBottom: "10px",
+                        borderRadius: "6px",
                         overflow: "hidden",
                         border: "1px solid #1c2128",
                         position: "relative",
+                        width: "50%",
+                        margin: "0 auto 10px auto",
+                        boxShadow: "0 4px 12px rgba(0,0,0,0.3)"
                       }}
                     >
                       <Image
                         src={spotify.album_art_url}
                         alt={spotify.album}
-                        width={200}
-                        height={200}
+                        width={150}
+                        height={150}
                         unoptimized
                         style={{ width: "100%", height: "auto", display: "block" }}
                       />

@@ -157,7 +157,7 @@ const PixelTransition: React.FC<PixelTransitionProps> = ({
 
       <div
         ref={pixelGridRef}
-        className="absolute inset-0 w-full h-full pointer-events-none z-50"
+        className="fixed inset-0 w-full h-screen pointer-events-none z-[100]"
       />
     </div>
   );

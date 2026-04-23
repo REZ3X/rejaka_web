@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Script from "next/script";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
@@ -166,11 +167,11 @@ export default function BlogPostClient({
                 </div>
               )}
 
-              <script
+              <Script
                 async={true}
                 data-cfasync="false"
                 src="https://passivealexis.com/2f9635cf17feac74d408b29d43d7a956/invoke.js"
-              ></script>
+              />
               <div id="container-2f9635cf17feac74d408b29d43d7a956"></div>
 
               <div className="prose prose-invert prose-sm sm:prose-base max-w-none">
@@ -289,11 +290,11 @@ export default function BlogPostClient({
               </div>
 
               <footer className="mt-8 pt-6 border-t border-gray-800">
-                <script
+                <Script
                   async={true}
                   data-cfasync="false"
                   src="https://passivealexis.com/2f9635cf17feac74d408b29d43d7a956/invoke.js"
-                ></script>
+                />
                 <div id="container-2f9635cf17feac74d408b29d43d7a956"></div>
                 <div className="text-sm text-gray-500 font-mono">
                   Last modified:{" "}
@@ -317,7 +318,7 @@ export default function BlogPostClient({
           </div>
         </div>
       </div>
-      <script src="https://passivealexis.com/60/ea/4d/60ea4d001a372055f8d40709adc7c421.js"></script>
+      <Script src="https://passivealexis.com/60/ea/4d/60ea4d001a372055f8d40709adc7c421.js" strategy="afterInteractive" />
     </div>
   );
 }

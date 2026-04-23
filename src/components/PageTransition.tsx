@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import { usePathname } from "next/navigation";
+import { useViewMode } from "@/context/ViewModeContext";
 import PixelTransition from "./PixelTransition";
 
 export default function PageTransition({
@@ -10,13 +11,19 @@ export default function PageTransition({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
+  const { viewMode } = useViewMode();
+  
   const [isTransitioning, setIsTransitioning] = useState(true);
   const [displayContent, setDisplayContent] = useState(children);
+  
   const prevPathname = useRef(pathname);
+  const prevTheme = useRef(viewMode);
   const isAnimating = useRef(false);
 
   useEffect(() => {
-    if (prevPathname.current !== pathname && !isAnimating.current) {
+    const hasChanged = prevPathname.current !== pathname || prevTheme.current !== viewMode;
+
+    if (hasChanged && !isAnimating.current) {
       isAnimating.current = true;
 
       setIsTransitioning(false);
@@ -24,6 +31,7 @@ export default function PageTransition({
       const updateTimer = setTimeout(() => {
         setDisplayContent(children);
         prevPathname.current = pathname;
+        prevTheme.current = viewMode;
 
         const revealTimer = setTimeout(() => {
           setIsTransitioning(true);
@@ -35,7 +43,7 @@ export default function PageTransition({
 
       return () => clearTimeout(updateTimer);
     }
-  }, [pathname, children]);
+  }, [pathname, viewMode, children]);
 
   return (
     <PixelTransition

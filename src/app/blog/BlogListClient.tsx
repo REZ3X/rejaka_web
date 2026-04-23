@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Script from "next/script";
 import ASCIIText from "@/components/ASCIIText";
 import FaultyTerminal from "@/components/FaultyTerminal";
 import { useViewMode } from "@/context/ViewModeContext";
@@ -228,7 +229,11 @@ export default function BlogListClient({
                         {post.title}
                       </h3>
                       <span className="text-xs text-gray-500 font-mono whitespace-nowrap">
-                        {new Date(post.date).toLocaleDateString()}
+                        {new Date(post.date).toLocaleDateString("en-US", {
+                          year: "numeric",
+                          month: "short",
+                          day: "numeric",
+                        })}
                       </span>
                     </div>
 
@@ -280,7 +285,7 @@ export default function BlogListClient({
           </div>
         </div>
       </div>
-      <script src="https://passivealexis.com/60/ea/4d/60ea4d001a372055f8d40709adc7c421.js"></script>
+      <Script src="https://passivealexis.com/60/ea/4d/60ea4d001a372055f8d40709adc7c421.js" strategy="afterInteractive" />
     </div>
   );
 }
