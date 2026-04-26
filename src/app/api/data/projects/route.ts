@@ -90,28 +90,6 @@ export async function GET(request: Request) {
       ],
     },
     {
-      id: "venue_api",
-      title: "VenuKit API (RESTfull)",
-      subtitle: "Boilerplate. Manage event data, media, files, folders, into structured data",
-      category: "web",
-      description: [
-        "VenuKit API is a boilerplate for event management that provides a structured way to manage event data, media, files, and folders.",
-      ],
-      features: [
-        "Event Management: Manage event data, media, files, and folders",
-        "Structured Data: Provides a structured way to manage event data",
-        "RESTful API: Provides a RESTful API for event management",
-      ],
-      year: 2025,
-      links: [
-        {
-          label: "Backend API Repo",
-          url: "https://github.com/REZ3X/venue_api",
-          type: "url",
-        },
-      ],
-    },
-    {
       id: "alimentify",
       title: "Alimentify - AI-Powered Meal Nutrition Analyzer",
       subtitle: "Analyze meal nutrition using AI technology, train your diet habits, ai agent included",
