@@ -12,6 +12,19 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: "natMikrotik",
+    title:
+      "NAT on MikroTik Explained: Source NAT, Destination NAT, and Masquerade",
+    date: "2026-04-29",
+    excerpt:
+      "Your laptop has a private IP that the internet has never heard of. NAT is the reason you can still browse freely. Here is how srcnat, dstnat, and masquerade work, with a real MikroTik lab walkthrough.",
+    coverImage: "/blog/posts/natMikrotik/cover.webp",
+    readingTime: 9,
+    tags: ["MikroTik", "NAT", "Networking", "DHCP", "Firewall", "MTCNA"],
+    category: "Guide",
+    lastModified: "2026-04-29",
+  },
+  {
     slug: "ipAddressingAndSubnet",
     title:
       "IP Addressing and Subnetting: A Beginner's Guide That Actually Makes Sense",
