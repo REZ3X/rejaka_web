@@ -83,8 +83,8 @@ export async function GET(request: Request) {
       year: 2026,
       links: [
         {
-          label: "Live Website",
-          url: "https://roomet.rejaka.id",
+          label: "GitHub Repo",
+          url: "https://github.com/REZ3X/roomet",
           type: "url",
         },
       ],

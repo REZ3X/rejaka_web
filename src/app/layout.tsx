@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     "MongoDB Database Engineer",
     "REZ3X portfolio",
     "rejaka.id",
-    "Slaviors Team Lead",
+    "Slaviors Freelance Developer",
     "Web Development Competition Winner",
     "Node.js Backend Engineer",
     "Modern Web Technologies",
@@ -75,7 +75,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Rejaka Abimanyu Susanto | Web Developer & Tech Innovator",
     description:
-      "Interactive API request portfolio dashboard of Rejaka Abimanyu Susanto - Web developer specializing in Next.js, React, TypeScript, Rust, and MongoDB. Test API endpoints, explore apidata, and experience real-time request handling. Award-winning developer and leader of the Slaviors development team.",
+      "Interactive API request portfolio dashboard of Rejaka Abimanyu Susanto - Web developer specializing in Next.js, React, TypeScript, Rust, and MongoDB. Test API endpoints, explore apidata, and experience real-time request handling. Award-winning developer and Freelance Fullstack Developer at Slaviors.",
     url: "https://rejaka.id",
     siteName: "Rejaka Abimanyu Susanto - Developer Portfolio",
     locale: "en_US",
@@ -236,7 +236,7 @@ export default function RootLayout({
                     "Award-winning web developer, database engineer, and tech innovator specializing in modern web technologies including Next.js, React, TypeScript, Rust, and WebAssembly",
                   worksFor: {
                     "@type": "Organization",
-                    name: "Slaviors Development Team",
+                    name: "Slaviors",
                     url: "https://rejaka.id",
                   },
                   address: {
