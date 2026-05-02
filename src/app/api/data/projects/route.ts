@@ -12,9 +12,36 @@ export async function GET(request: Request) {
 
   const projects = [
     {
+      id: "rejaka_f1",
+      title: "Rejaka F1",
+      subtitle: "Formula 1 Information and Updates",
+      category: "web",
+      description: [
+        "A dedicated web platform for Formula 1 enthusiasts, delivering up-to-date race results, schedules, and information.",
+      ],
+      features: [
+        "Responsive design: Optimized for both desktop and mobile devices",
+        "F1 Data: View latest race schedules, driver standings, and constructor standings",
+      ],
+      year: 2026,
+      links: [
+        {
+          label: "Live Website",
+          url: "https://rf1.rejaka.id",
+          type: "url",
+        },
+        {
+          label: "GitHub Repo",
+          url: "https://github.com/REZ3X/rejaka_f1",
+          type: "url",
+        },
+      ],
+    },
+    {
       id: "jogjawaskita",
       title: "JogjaWaskita - Public Civil Room & Reports",
-      subtitle: "A civic engagement platform empowering citizens to report public issues and enabling transparent government responses",
+      subtitle:
+        "A civic engagement platform empowering citizens to report public issues and enabling transparent government responses",
       category: "web",
       description: [
         "JogjaWaskita is a comprehensive civic engagement platform designed to bridge the gap between citizens and government departments. It provides a structured public room for citizens to report local issues, attach media evidence, and track the resolution process.",
@@ -44,7 +71,8 @@ export async function GET(request: Request) {
     {
       id: "blessedly",
       title: "Blessedly - AI-Powered Mental Health Companion (Alpha)",
-      subtitle: "AI-powered mental health companion with journaling, mood tracking, and AI-driven emotional support",
+      subtitle:
+        "AI-powered mental health companion with journaling, mood tracking, and AI-driven emotional support",
       category: "web",
       description: [
         "Blessedly is a mental health companion platform that utilizes AI technology to provide emotional support and guidance to users. The platform offers a range of features designed to help users improve their mental well-being, including journaling, mood tracking, and AI-driven emotional support.",
@@ -63,13 +91,14 @@ export async function GET(request: Request) {
           label: "Backend API Repo",
           url: "https://github.com/REZ3X/bsdy_api",
           type: "url",
-        }
+        },
       ],
     },
     {
       id: "roomet",
       title: "Roomet - Socialize by Chats",
-      subtitle: "Chat rooms with XP progression, achievements, and end-to-end encryption. A social space designed for real connection",
+      subtitle:
+        "Chat rooms with XP progression, achievements, and end-to-end encryption. A social space designed for real connection",
       category: "web",
       description: [
         "Roomet is a chat room platform that combines social interaction with gamification elements. Users can join various chat rooms based on their interests and engage in conversations while earning XP and unlocking achievements.",
@@ -92,7 +121,8 @@ export async function GET(request: Request) {
     {
       id: "alimentify",
       title: "Alimentify - AI-Powered Meal Nutrition Analyzer",
-      subtitle: "Analyze meal nutrition using AI technology, train your diet habits, ai agent included",
+      subtitle:
+        "Analyze meal nutrition using AI technology, train your diet habits, ai agent included",
       category: "web",
       description: [
         "Alimentify is an AI-powered meal nutrition analyzer that helps users understand the nutritional content of their meals. By leveraging advanced AI technology, Alimentify provides detailed insights into calories, macronutrients, vitamins, and minerals present in various dishes.",
@@ -114,7 +144,7 @@ export async function GET(request: Request) {
           Label: "Backend API Repo",
           url: "https://github.com/REZ3X/alimentify_backend",
           type: "url",
-        }
+        },
       ],
     },
     {
@@ -518,7 +548,7 @@ export async function GET(request: Request) {
     }
     return NextResponse.json(
       { success: false, error: "Project not found" },
-      { status: 404 }
+      { status: 404 },
     );
   }
 

@@ -264,13 +264,13 @@ export default function PlaygroundPage() {
           </div>
 
           <div className="relative mt-1 sm:mt-2 mb-8 sm:mb-6 flex justify-center gap-4 flex-wrap">
-            <button
+            {/* <button
               onClick={toggleViewMode}
               className="inline-flex items-center gap-2 px-3 py-1 text-[#00adb4] hover:text-[#0f7f82] font-mono text-sm border border-[#00adb4]/50 hover:border-[#00adb4] rounded-lg transition-all hover:bg-[#00adb4]/10"
             >
               <span className="text-xs">✨</span>
               <span>Tired of the logs?</span>
-            </button>
+            </button> */}
 
             <Link
               href="/"

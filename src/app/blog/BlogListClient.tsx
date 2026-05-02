@@ -124,7 +124,7 @@ export default function BlogListClient({
           </div>
 
           <div className="relative z-30 flex justify-center gap-4 mt-1 sm:mt-2 mb-4 sm:mb-6 flex-wrap">
-            <button
+            {/* <button
               onClick={toggleViewMode}
               className="relative z-30 inline-flex items-center gap-2 px-3 py-1 text-[#00adb4] hover:text-[#0f7f82] font-mono text-sm border border-[#00adb4]/50 hover:border-[#00adb4] rounded-lg transition-all hover:bg-[#00adb4]/10"
             >
@@ -139,7 +139,7 @@ export default function BlogListClient({
                   <span>Tired of the logs?</span>
                 </>
               )}
-            </button>
+            </button> */}
 
             <Link
               href="/"
