@@ -12,6 +12,26 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: "mikrotikFirewall",
+    title: "MikroTik Firewall Filter Rules: Allow, Drop, and Access Control",
+    date: "2026-04-29",
+    excerpt:
+      "NAT gets your clients online. Firewall controls what they can actually do once they are there. Here is a full two-router lab walkthrough covering static routing, NAT, and firewall filter rules with real test results.",
+    coverImage: "",
+    readingTime: 11,
+    tags: [
+      "MikroTik",
+      "Firewall",
+      "Networking",
+      "MTCNA",
+      "Routing",
+      "NAT",
+      "Access Control",
+    ],
+    category: "Guide",
+    lastModified: "2026-05-03",
+  },
+  {
     slug: "natMikrotik",
     title:
       "NAT on MikroTik Explained: Source NAT, Destination NAT, and Masquerade",
