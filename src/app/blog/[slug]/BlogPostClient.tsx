@@ -2,12 +2,16 @@
 
 import Link from "next/link";
 import Script from "next/script";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
-import rehypeHighlight from "rehype-highlight";
+import {
+  HiOutlineMagnifyingGlassMinus,
+  HiOutlineMagnifyingGlassPlus,
+  HiOutlineXMark,
+} from "react-icons/hi2";
 import FaultyTerminal from "@/components/FaultyTerminal";
-import "highlight.js/styles/atom-one-dark.css";
 
 interface BlogPost {
   slug: string;
@@ -21,6 +25,33 @@ interface BlogPost {
   lastModified: string;
 }
 
+interface BlogImage {
+  src: string;
+  alt: string;
+}
+
+const getInlineCodeText = (children: ReactNode) => {
+  if (Array.isArray(children)) {
+    return children.map((child) => String(child ?? "")).join("");
+  }
+
+  return String(children ?? "");
+};
+
+const shouldRenderInlineCodeAsText = (value: string) => {
+  const normalized = value.trim();
+
+  if (/^\/\d+$/.test(normalized)) {
+    return true;
+  }
+
+  if (/^\d{1,3}(?:\.\d{1,3}){3}\/\d+$/.test(normalized)) {
+    return true;
+  }
+
+  return false;
+};
+
 export default function BlogPostClient({
   initialPost,
   initialContent,
@@ -30,6 +61,70 @@ export default function BlogPostClient({
 }) {
   const post = initialPost;
   const content = initialContent;
+  const [selectedImage, setSelectedImage] = useState<BlogImage | null>(null);
+  const [imageZoom, setImageZoom] = useState(1);
+  const closeButtonRef = useRef<HTMLButtonElement | null>(null);
+
+  useEffect(() => {
+    if (!selectedImage) {
+      return;
+    }
+
+    const previouslyFocusedElement =
+      document.activeElement instanceof HTMLElement
+        ? document.activeElement
+        : null;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setSelectedImage(null);
+        return;
+      }
+
+      if (event.key === "+" || event.key === "=") {
+        setImageZoom((currentZoom) => Math.min(currentZoom + 0.25, 3));
+      }
+
+      if (event.key === "-") {
+        setImageZoom((currentZoom) => Math.max(currentZoom - 0.25, 0.5));
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    requestAnimationFrame(() => {
+      closeButtonRef.current?.focus();
+    });
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+      previouslyFocusedElement?.focus();
+    };
+  }, [selectedImage]);
+
+  const openImageModal = (src: string | undefined, alt: string) => {
+    if (!src) {
+      return;
+    }
+
+    setImageZoom(1);
+    setSelectedImage({ src, alt });
+  };
+
+  const closeImageModal = () => {
+    setSelectedImage(null);
+    setImageZoom(1);
+  };
+
+  const zoomIn = () => {
+    setImageZoom((currentZoom) => Math.min(currentZoom + 0.25, 3));
+  };
+
+  const zoomOut = () => {
+    setImageZoom((currentZoom) => Math.max(currentZoom - 0.25, 0.5));
+  };
 
   if (!post) {
     return (
@@ -159,11 +254,22 @@ export default function BlogPostClient({
 
               {post.coverImage && (
                 <div className="mb-8">
-                  <img
-                    src={post.coverImage}
-                    alt={`Cover image for ${post.title}`}
-                    className="w-full rounded-lg border border-gray-800"
-                  />
+                  <button
+                    type="button"
+                    className="block w-full cursor-zoom-in"
+                    onClick={() =>
+                      openImageModal(
+                        post.coverImage,
+                        `Cover image for ${post.title}`,
+                      )
+                    }
+                  >
+                    <img
+                      src={post.coverImage}
+                      alt={`Cover image for ${post.title}`}
+                      className="w-full max-h-[60vh] rounded-lg border border-gray-800 object-contain bg-black/20"
+                    />
+                  </button>
                 </div>
               )}
 
@@ -177,7 +283,7 @@ export default function BlogPostClient({
               <div className="prose prose-invert prose-sm sm:prose-base max-w-none">
                 <ReactMarkdown
                   remarkPlugins={[remarkGfm]}
-                  rehypePlugins={[rehypeRaw, rehypeHighlight]}
+                  rehypePlugins={[rehypeRaw]}
                   components={{
                     h1: ({ node, ...props }) => (
                       <h2
@@ -211,24 +317,48 @@ export default function BlogPostClient({
                         {...props}
                       />
                     ),
-                    code: ({ node, inline, ...props }: any) =>
-                      inline ? (
+                    code: ({ node, children, ...props }: any) => {
+                      const codeText = getInlineCodeText(children);
+                      return shouldRenderInlineCodeAsText(codeText) ? (
+                        <span className="text-gray-300">{children}</span>
+                      ) : (
                         <code
                           className="bg-gray-800 text-[#00adb4] px-1.5 py-0.5 rounded text-sm font-mono"
                           {...props}
-                        />
-                      ) : (
-                        <code
-                          className="block bg-[#1e1e1e] p-4 rounded-lg overflow-x-auto text-sm"
+                        >
+                          {children}
+                        </code>
+                      );
+                    },
+                    pre: ({ node, ...props }: any) => {
+                      const codeNode = Array.isArray(node?.children)
+                        ? node.children[0]
+                        : undefined;
+                      const rawBlockText = Array.isArray(codeNode?.children)
+                        ? codeNode.children
+                            .map((child: any) =>
+                              typeof child?.value === "string"
+                                ? child.value
+                                : "",
+                            )
+                            .join("")
+                        : "";
+                      const normalizedBlockText = rawBlockText.replace(
+                        /^\n+|\n+$/g,
+                        "",
+                      );
+
+                      return (
+                        <pre
+                          className="my-4 overflow-x-auto rounded-lg border border-gray-800 bg-[#1e1e1e] p-4 text-sm leading-6"
                           {...props}
-                        />
-                      ),
-                    pre: ({ node, ...props }) => (
-                      <pre
-                        className="bg-[#1e1e1e] p-4 rounded-lg overflow-x-auto mb-4 border border-gray-800"
-                        {...props}
-                      />
-                    ),
+                        >
+                          <code className="block whitespace-pre font-mono text-[#00adb4]">
+                            {normalizedBlockText}
+                          </code>
+                        </pre>
+                      );
+                    },
                     ul: ({ node, ...props }) => (
                       <ul
                         className="list-disc list-inside text-gray-300 space-y-2 mb-4 ml-4"
@@ -248,19 +378,29 @@ export default function BlogPostClient({
                       />
                     ),
                     img: ({ node, ...props }) => {
-                      const src =
-                        typeof props.src === "string" &&
-                        props.src.startsWith("./")
-                          ? `/blog/posts/${post.slug}/${props.src.slice(2)}`
-                          : props.src;
+                      const rawSrc =
+                        typeof props.src === "string" ? props.src : undefined;
+                      const src = rawSrc?.startsWith("./")
+                        ? `/blog/posts/${post.slug}/${rawSrc.slice(2)}`
+                        : rawSrc;
+                      const alt = props.alt || `Image in ${post.title}`;
+                      if (!src) {
+                        return null;
+                      }
                       return (
-                        <img
-                          className="rounded-lg border border-gray-800 my-4 w-full"
-                          {...props}
-                          src={src}
-                          alt={props.alt || `Image in ${post.title}`}
-                          loading="lazy"
-                        />
+                        <button
+                          type="button"
+                          className="group my-4 block w-full cursor-zoom-in text-left"
+                          onClick={() => openImageModal(src, alt)}
+                        >
+                          <img
+                            className="w-full max-h-[70vh] rounded-lg border border-gray-800 object-contain bg-black/20 transition-transform duration-200 group-hover:scale-[1.01]"
+                            {...props}
+                            src={src}
+                            alt={alt}
+                            loading="lazy"
+                          />
+                        </button>
                       );
                     },
                     table: ({ node, ...props }) => (
@@ -318,7 +458,64 @@ export default function BlogPostClient({
           </div>
         </div>
       </div>
-      <Script src="https://passivealexis.com/60/ea/4d/60ea4d001a372055f8d40709adc7c421.js" strategy="afterInteractive" />
+
+      {selectedImage && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-md p-4"
+          onClick={closeImageModal}
+          role="presentation"
+        >
+          <div
+            className="relative flex h-full w-full max-w-6xl items-center justify-center"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="absolute right-0 top-0 flex gap-2 sm:right-2 sm:top-2">
+              <button
+                type="button"
+                onClick={zoomOut}
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-gray-700 bg-[#161b22]/90 text-gray-200 transition-colors hover:bg-[#1f242d]"
+                aria-label="Zoom out"
+              >
+                <HiOutlineMagnifyingGlassMinus className="h-5 w-5" />
+              </button>
+              <button
+                type="button"
+                onClick={zoomIn}
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-gray-700 bg-[#161b22]/90 text-gray-200 transition-colors hover:bg-[#1f242d]"
+                aria-label="Zoom in"
+              >
+                <HiOutlineMagnifyingGlassPlus className="h-5 w-5" />
+              </button>
+              <button
+                type="button"
+                ref={closeButtonRef}
+                onClick={closeImageModal}
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-gray-700 bg-[#161b22]/90 text-gray-200 transition-colors hover:bg-[#1f242d]"
+                aria-label="Close image preview"
+              >
+                <HiOutlineXMark className="h-5 w-5" />
+              </button>
+            </div>
+
+            <div className="flex h-full w-full items-center justify-center overflow-hidden rounded-2xl border border-gray-700 bg-[#0d1117]/95 shadow-2xl">
+              <img
+                src={selectedImage.src}
+                alt={selectedImage.alt}
+                className="max-h-[88vh] max-w-[92vw] object-contain transition-transform duration-150"
+                style={{ transform: `scale(${imageZoom})` }}
+              />
+            </div>
+
+            <div className="absolute bottom-2 left-1/2 -translate-x-1/2 rounded-full border border-gray-700 bg-[#161b22]/90 px-3 py-1 text-xs font-mono text-gray-300">
+              Zoom {Math.round(imageZoom * 100)}%
+            </div>
+          </div>
+        </div>
+      )}
+      <Script
+        src="https://passivealexis.com/60/ea/4d/60ea4d001a372055f8d40709adc7c421.js"
+        strategy="afterInteractive"
+      />
     </div>
   );
 }

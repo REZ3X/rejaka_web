@@ -45,8 +45,8 @@ export default function BlogListClient({
           post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
           post.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
           post.tags.some((tag) =>
-            tag.toLowerCase().includes(searchQuery.toLowerCase())
-          )
+            tag.toLowerCase().includes(searchQuery.toLowerCase()),
+          ),
       );
     }
 
@@ -285,7 +285,10 @@ export default function BlogListClient({
           </div>
         </div>
       </div>
-      <Script src="https://passivealexis.com/60/ea/4d/60ea4d001a372055f8d40709adc7c421.js" strategy="afterInteractive" />
+      <Script
+        src="https://passivealexis.com/60/ea/4d/60ea4d001a372055f8d40709adc7c421.js"
+        strategy="afterInteractive"
+      />
     </div>
   );
 }
