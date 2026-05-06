@@ -2,6 +2,7 @@
 
 import { useRef, useEffect } from "react";
 import * as THREE from "three";
+import { usePerformanceHints } from "@/context/PerformanceContext";
 
 const vertexShader = `
 varying vec2 vUv;
@@ -49,7 +50,7 @@ function map(
   start: number,
   stop: number,
   start2: number,
-  stop2: number
+  stop2: number,
 ) {
   return ((n - start) / (stop - start)) * (stop2 - start2) + start2;
 }
@@ -83,7 +84,7 @@ class AsciiFilter {
 
   constructor(
     renderer: THREE.WebGLRenderer,
-    { fontSize, fontFamily, charset, invert }: AsciiFilterOptions = {}
+    { fontSize, fontFamily, charset, invert }: AsciiFilterOptions = {},
   ) {
     this.renderer = renderer;
     this.domElement = document.createElement("div");
@@ -133,7 +134,7 @@ class AsciiFilter {
       const charWidth = this.context.measureText("A").width;
 
       this.cols = Math.floor(
-        this.width / (this.fontSize * (charWidth / this.fontSize))
+        this.width / (this.fontSize * (charWidth / this.fontSize)),
       );
       this.rows = Math.floor(this.height / this.fontSize);
 
@@ -244,7 +245,7 @@ class CanvasTxt {
       fontSize = 200,
       fontFamily = "Arial",
       color = "#fdf9f3",
-    }: CanvasTxtOptions = {}
+    }: CanvasTxtOptions = {},
   ) {
     this.canvas = document.createElement("canvas");
     this.context = this.canvas.getContext("2d");
@@ -264,7 +265,7 @@ class CanvasTxt {
       const textWidth = Math.ceil(metrics.width) + 20;
       const textHeight =
         Math.ceil(
-          metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent
+          metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent,
         ) + 20;
 
       this.canvas.width = textWidth;
@@ -305,6 +306,8 @@ interface CanvAsciiOptions {
   textColor: string;
   planeBaseHeight: number;
   enableWaves: boolean;
+  lowSpec: boolean;
+  interactive: boolean;
 }
 
 class CanvAscii {
@@ -317,6 +320,8 @@ class CanvAscii {
   width: number;
   height: number;
   enableWaves: boolean;
+  lowSpec: boolean;
+  interactive: boolean;
   camera: THREE.PerspectiveCamera;
   scene: THREE.Scene;
   mouse: { x: number; y: number };
@@ -338,10 +343,12 @@ class CanvAscii {
       textColor,
       planeBaseHeight,
       enableWaves,
+      lowSpec,
+      interactive,
     }: CanvAsciiOptions,
     containerElem: HTMLElement,
     width: number,
-    height: number
+    height: number,
   ) {
     this.textString = text;
     this.asciiFontSize = asciiFontSize;
@@ -352,12 +359,14 @@ class CanvAscii {
     this.width = width;
     this.height = height;
     this.enableWaves = enableWaves;
+    this.lowSpec = lowSpec;
+    this.interactive = interactive;
 
     this.camera = new THREE.PerspectiveCamera(
       45,
       this.width / this.height,
       1,
-      1000
+      1000,
     );
     this.camera.position.z = 30;
 
@@ -388,7 +397,7 @@ class CanvAscii {
     const planeH = baseH;
 
     const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
-    const segments = isMobile ? 12 : 36;
+    const segments = this.lowSpec ? 8 : isMobile ? 12 : 36;
 
     this.geometry = new THREE.PlaneGeometry(planeW, planeH, segments, segments);
     this.material = new THREE.ShaderMaterial({
@@ -414,7 +423,7 @@ class CanvAscii {
       alpha: true,
       powerPreference: "high-performance",
     });
-    this.renderer.setPixelRatio(isMobile ? 0.5 : 1);
+    this.renderer.setPixelRatio(this.lowSpec ? 0.5 : isMobile ? 0.75 : 1);
     this.renderer.setClearColor(0x000000, 0);
 
     this.filter = new AsciiFilter(this.renderer, {
@@ -425,6 +434,10 @@ class CanvAscii {
 
     this.container.appendChild(this.filter.domElement);
     this.setSize(this.width, this.height);
+
+    if (!this.interactive) {
+      return;
+    }
 
     if (!isMobile) {
       this.container.addEventListener("mousemove", this.onMouseMove);
@@ -441,11 +454,11 @@ class CanvAscii {
     const handleOrientation = (event: DeviceOrientationEvent) => {
       if (event.beta === null || event.gamma === null) return;
 
-      const beta = event.beta; 
-      const gamma = event.gamma; 
+      const beta = event.beta;
+      const gamma = event.gamma;
 
-      const normalizedX = (gamma + 90) / 180; 
-      const normalizedY = (beta + 90) / 180; 
+      const normalizedX = (gamma + 90) / 180;
+      const normalizedY = (beta + 90) / 180;
 
       const targetX = normalizedX * this.width;
       const targetY = normalizedY * this.height;
@@ -464,7 +477,7 @@ class CanvAscii {
             window.addEventListener(
               "deviceorientation",
               handleOrientation,
-              true
+              true,
             );
             console.log("DeviceOrientation permission granted");
           } else {
@@ -474,7 +487,7 @@ class CanvAscii {
         .catch((error: any) => {
           console.error(
             "Error requesting DeviceOrientation permission:",
-            error
+            error,
           );
         });
     } else {
@@ -497,8 +510,13 @@ class CanvAscii {
     this.center = { x: w / 2, y: h / 2 };
   }
 
-  load() {
-    this.animate();
+  load(shouldAnimate = true) {
+    if (shouldAnimate) {
+      this.animate();
+      return;
+    }
+
+    this.render();
   }
 
   onMouseMove(evt: MouseEvent | TouchEvent) {
@@ -567,13 +585,15 @@ class CanvAscii {
     cancelAnimationFrame(this.animationFrameId);
     this.filter.dispose();
     this.container.removeChild(this.filter.domElement);
-    this.container.removeEventListener("mousemove", this.onMouseMove);
+    if (this.interactive) {
+      this.container.removeEventListener("mousemove", this.onMouseMove);
+    }
 
     if ((this as any).orientationHandler) {
       window.removeEventListener(
         "deviceorientation",
         (this as any).orientationHandler,
-        true
+        true,
       );
     }
 
@@ -601,6 +621,12 @@ export default function ASCIIText({
 }: ASCIITextProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const asciiRef = useRef<CanvAscii | null>(null);
+  const { performanceTier, prefersReducedMotion, isPageHidden } =
+    usePerformanceHints();
+
+  const reduceMotion = prefersReducedMotion || performanceTier === "low";
+  const lowSpec = performanceTier === "low";
+  const shouldAnimate = !reduceMotion && !isPageHidden;
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -624,18 +650,20 @@ export default function ASCIIText({
                 textFontSize,
                 textColor,
                 planeBaseHeight,
-                enableWaves,
+                enableWaves: enableWaves && !reduceMotion,
+                lowSpec,
+                interactive: !reduceMotion,
               },
               containerRef.current!,
               w,
-              h
+              h,
             );
-            asciiRef.current.load();
+            asciiRef.current.load(shouldAnimate);
 
             observer.disconnect();
           }
         },
-        { threshold: 0.1 }
+        { threshold: 0.1 },
       );
 
       observer.observe(containerRef.current);
@@ -655,13 +683,15 @@ export default function ASCIIText({
         textFontSize,
         textColor,
         planeBaseHeight,
-        enableWaves,
+        enableWaves: enableWaves && !reduceMotion,
+        lowSpec,
+        interactive: !reduceMotion,
       },
       containerRef.current,
       width,
-      height
+      height,
     );
-    asciiRef.current.load();
+    asciiRef.current.load(shouldAnimate);
 
     const ro = new ResizeObserver((entries) => {
       if (!entries[0] || !asciiRef.current) return;
@@ -685,6 +715,9 @@ export default function ASCIIText({
     textColor,
     planeBaseHeight,
     enableWaves,
+    reduceMotion,
+    lowSpec,
+    shouldAnimate,
   ]);
 
   return (

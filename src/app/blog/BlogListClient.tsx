@@ -6,6 +6,7 @@ import Script from "next/script";
 import ASCIIText from "@/components/ASCIIText";
 import FaultyTerminal from "@/components/FaultyTerminal";
 import { useViewMode } from "@/context/ViewModeContext";
+import { usePerformanceHints } from "@/context/PerformanceContext";
 import { HiCode, HiSparkles } from "react-icons/hi";
 
 interface BlogPost {
@@ -31,6 +32,18 @@ export default function BlogListClient({
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [selectedTag, setSelectedTag] = useState<string>("All");
   const { viewMode, toggleViewMode } = useViewMode();
+  const { performanceTier, prefersReducedMotion, dpr, isPageHidden } =
+    usePerformanceHints();
+
+  const reduceMotion = prefersReducedMotion || performanceTier === "low";
+  const pauseBackground = reduceMotion || isPageHidden;
+  const allowMouseReact = !reduceMotion;
+  const terminalTimeScale = performanceTier === "low" ? 0.12 : 0.2;
+  const terminalNoise = performanceTier === "low" ? 0.45 : 0.8;
+  const terminalFlicker = performanceTier === "low" ? 0.25 : 0.5;
+  const terminalGlitch = performanceTier === "low" ? 0.55 : 0.8;
+  const terminalScanline = performanceTier === "low" ? 0.1 : 0.2;
+  const terminalDither = performanceTier === "low" ? 0.2 : 0.5;
 
   useEffect(() => {
     filterPosts();
@@ -74,19 +87,21 @@ export default function BlogListClient({
           scale={1.2}
           gridMul={[2, 1]}
           digitSize={1.5}
-          timeScale={0.2}
-          scanlineIntensity={0.2}
-          glitchAmount={0.8}
-          flickerAmount={0.5}
-          noiseAmp={0.8}
+          timeScale={terminalTimeScale}
+          scanlineIntensity={terminalScanline}
+          glitchAmount={terminalGlitch}
+          flickerAmount={terminalFlicker}
+          noiseAmp={terminalNoise}
           chromaticAberration={0}
-          dither={0.5}
+          dither={terminalDither}
           curvature={0.1}
           tint="#00adb4"
-          mouseReact={true}
+          mouseReact={allowMouseReact}
           mouseStrength={0.15}
-          pageLoadAnimation={true}
+          pageLoadAnimation={!reduceMotion}
           brightness={0.3}
+          pause={pauseBackground}
+          dpr={dpr}
         />
       </div>
 
@@ -102,7 +117,7 @@ export default function BlogListClient({
           >
             <ASCIIText
               text="BLOG"
-              enableWaves={true}
+              enableWaves={!reduceMotion}
               asciiFontSize={8}
               textFontSize={150}
               planeBaseHeight={8}
@@ -116,7 +131,7 @@ export default function BlogListClient({
           >
             <ASCIIText
               text="BLOG"
-              enableWaves={true}
+              enableWaves={!reduceMotion}
               asciiFontSize={6}
               textFontSize={80}
               planeBaseHeight={6}

@@ -5,8 +5,7 @@ import React, { useEffect, useRef, useMemo, useCallback } from "react";
 
 type Vec2 = [number, number];
 
-export interface FaultyTerminalProps
-  extends React.HTMLAttributes<HTMLDivElement> {
+export interface FaultyTerminalProps extends React.HTMLAttributes<HTMLDivElement> {
   scale?: number;
   gridMul?: Vec2;
   digitSize?: number;
@@ -289,7 +288,7 @@ export default function FaultyTerminal({
 
   const ditherValue = useMemo(
     () => (typeof dither === "boolean" ? (dither ? 1 : 0) : dither),
-    [dither]
+    [dither],
   );
 
   const handleMouseMove = useCallback((e: MouseEvent) => {
@@ -327,7 +326,7 @@ export default function FaultyTerminal({
           value: new Color(
             gl.canvas.width,
             gl.canvas.height,
-            gl.canvas.width / gl.canvas.height
+            gl.canvas.width / gl.canvas.height,
           ),
         },
         uScale: { value: scale },
@@ -365,7 +364,7 @@ export default function FaultyTerminal({
       program.uniforms.iResolution.value = new Color(
         gl.canvas.width,
         gl.canvas.height,
-        gl.canvas.width / gl.canvas.height
+        gl.canvas.width / gl.canvas.height,
       );
     }
 
@@ -376,9 +375,7 @@ export default function FaultyTerminal({
     let lastUpdateTime = 0;
     const updateInterval = isMobile ? 1000 / 30 : 1000 / 60;
 
-    const update = (t: number) => {
-      rafRef.current = requestAnimationFrame(update);
-
+    const renderFrame = (t: number) => {
       if (isMobile && t - lastUpdateTime < updateInterval) {
         return;
       }
@@ -417,7 +414,19 @@ export default function FaultyTerminal({
 
       renderer.render({ scene: mesh });
     };
-    rafRef.current = requestAnimationFrame(update);
+
+    const update = (t: number) => {
+      rafRef.current = requestAnimationFrame(update);
+      renderFrame(t);
+    };
+
+    if (pause) {
+      const now =
+        typeof performance !== "undefined" ? performance.now() : Date.now();
+      renderFrame(now);
+    } else {
+      rafRef.current = requestAnimationFrame(update);
+    }
     ctn.appendChild(gl.canvas);
 
     if (mouseReact) ctn.addEventListener("mousemove", handleMouseMove);

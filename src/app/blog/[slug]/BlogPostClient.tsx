@@ -12,6 +12,7 @@ import {
   HiOutlineXMark,
 } from "react-icons/hi2";
 import FaultyTerminal from "@/components/FaultyTerminal";
+import { usePerformanceHints } from "@/context/PerformanceContext";
 
 interface BlogPost {
   slug: string;
@@ -64,6 +65,18 @@ export default function BlogPostClient({
   const [selectedImage, setSelectedImage] = useState<BlogImage | null>(null);
   const [imageZoom, setImageZoom] = useState(1);
   const closeButtonRef = useRef<HTMLButtonElement | null>(null);
+  const { performanceTier, prefersReducedMotion, dpr, isPageHidden } =
+    usePerformanceHints();
+
+  const reduceMotion = prefersReducedMotion || performanceTier === "low";
+  const pauseBackground = reduceMotion || isPageHidden;
+  const allowMouseReact = !reduceMotion;
+  const terminalTimeScale = performanceTier === "low" ? 0.12 : 0.2;
+  const terminalNoise = performanceTier === "low" ? 0.45 : 0.8;
+  const terminalFlicker = performanceTier === "low" ? 0.25 : 0.5;
+  const terminalGlitch = performanceTier === "low" ? 0.55 : 0.8;
+  const terminalScanline = performanceTier === "low" ? 0.1 : 0.2;
+  const terminalDither = performanceTier === "low" ? 0.2 : 0.5;
 
   useEffect(() => {
     if (!selectedImage) {
@@ -141,19 +154,21 @@ export default function BlogPostClient({
           scale={1.2}
           gridMul={[2, 1]}
           digitSize={1.5}
-          timeScale={0.2}
-          scanlineIntensity={0.2}
-          glitchAmount={0.8}
-          flickerAmount={0.5}
-          noiseAmp={0.8}
+          timeScale={terminalTimeScale}
+          scanlineIntensity={terminalScanline}
+          glitchAmount={terminalGlitch}
+          flickerAmount={terminalFlicker}
+          noiseAmp={terminalNoise}
           chromaticAberration={0}
-          dither={0.5}
+          dither={terminalDither}
           curvature={0.1}
           tint="#00adb4"
-          mouseReact={true}
+          mouseReact={allowMouseReact}
           mouseStrength={0.15}
-          pageLoadAnimation={true}
+          pageLoadAnimation={!reduceMotion}
           brightness={0.3}
+          pause={pauseBackground}
+          dpr={dpr}
         />
       </div>
 

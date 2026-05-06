@@ -5,6 +5,10 @@ import PageTransition from "@/components/PageTransition";
 import { ViewModeProvider } from "@/context/ViewModeContext";
 import StatusWidgetStack from "@/components/StatusWidgetStack";
 import ResumeSidebarButton from "@/components/ResumeSidebarButton";
+import { PerformanceProvider } from "@/context/PerformanceContext";
+import PerformanceModeToggle from "@/components/PerformanceModeToggle";
+import PerformanceMetrics from "@/components/PerformanceMetrics";
+import PerformanceMetricsOverlay from "@/components/PerformanceMetricsOverlay";
 import "./globals.css";
 
 const inter = Inter({
@@ -354,13 +358,18 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${jetBrainsMono.variable} antialiased`}
       >
-        <ViewModeProvider>
-          <PageTransition>{children}</PageTransition>
-          {/* Fixed-position status widgets — layout managed by StatusWidgetStack */}
-          <StatusWidgetStack />
-          {/* Global resume button on the left edge */}
-          <ResumeSidebarButton />
-        </ViewModeProvider>
+        <PerformanceProvider>
+          <ViewModeProvider>
+            <PageTransition>{children}</PageTransition>
+            {/* Fixed-position status widgets — layout managed by StatusWidgetStack */}
+            <StatusWidgetStack />
+            {/* Global resume button on the left edge */}
+            <ResumeSidebarButton />
+            <PerformanceModeToggle />
+            <PerformanceMetrics />
+            <PerformanceMetricsOverlay />
+          </ViewModeProvider>
+        </PerformanceProvider>
       </body>
     </html>
   );
