@@ -168,8 +168,11 @@ export default function PerformanceMetrics() {
             height: window.screen.height,
           },
           connection:
-            (navigator as Navigator & { connection?: NetworkInformation })
-              .connection?.effectiveType ?? null,
+            (
+              navigator as Navigator & {
+                connection?: { effectiveType?: string };
+              }
+            ).connection?.effectiveType ?? null,
         },
       };
 
