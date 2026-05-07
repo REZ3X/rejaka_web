@@ -12,6 +12,26 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: "mikrotikQos",
+    title:
+      "MikroTik QoS with Simple Queue: Bandwidth Control That Actually Works",
+    date: "2026-04-29",
+    excerpt:
+      "Without QoS, whoever sends the most traffic wins. Here is how Simple Queue on MikroTik lets you cap bandwidth per client or per subnet, scope limits to specific destinations, and keep one device from starving everyone else.",
+    coverImage: "",
+    readingTime: 8,
+    tags: [
+      "MikroTik",
+      "QoS",
+      "Networking",
+      "MTCNA",
+      "Bandwidth",
+      "Simple Queue",
+    ],
+    category: "Networking",
+    lastModified: "2026-04-29",
+  },
+  {
     slug: "mikrotikFirewall",
     title: "MikroTik Firewall Filter Rules: Allow, Drop, and Access Control",
     date: "2026-04-29",
@@ -28,7 +48,7 @@ export const blogPosts: BlogPost[] = [
       "NAT",
       "Access Control",
     ],
-    category: "Guide",
+    category: "Networking",
     lastModified: "2026-05-03",
   },
   {
@@ -41,7 +61,7 @@ export const blogPosts: BlogPost[] = [
     coverImage: "/blog/posts/natMikrotik/cover.webp",
     readingTime: 9,
     tags: ["MikroTik", "NAT", "Networking", "DHCP", "Firewall", "MTCNA"],
-    category: "Guide",
+    category: "Networking",
     lastModified: "2026-04-29",
   },
   {
@@ -61,7 +81,7 @@ export const blogPosts: BlogPost[] = [
       "IPv4",
       "CIDR",
     ],
-    category: "Guide",
+    category: "Networking",
     lastModified: "2026-04-1",
   },
   {
@@ -81,7 +101,7 @@ export const blogPosts: BlogPost[] = [
       "Email Security",
       "DNS",
     ],
-    category: "Guide",
+    category: "PaaS",
     lastModified: "2026-03-16",
   },
   {
@@ -104,7 +124,7 @@ export const blogPosts: BlogPost[] = [
       "Database Design",
       "Stored Procedures",
     ],
-    category: "Tutorial",
+    category: "Database",
     lastModified: "2025-09-19",
   },
   {
@@ -129,7 +149,7 @@ export const blogPosts: BlogPost[] = [
       "Reconnaissance",
       "Security Tools",
     ],
-    category: "Tutorial",
+    category: "Cybersecurity",
     lastModified: "2025-09-03",
   },
   {
@@ -171,7 +191,7 @@ export const blogPosts: BlogPost[] = [
       "Case Study",
       "Risk Management",
     ],
-    category: "Guide",
+    category: "Cybersecurity",
     lastModified: "2025-08-25",
   },
   {
@@ -189,7 +209,7 @@ export const blogPosts: BlogPost[] = [
       "System Design",
       "Documentation",
     ],
-    category: "Guide",
+    category: "Software Engineering",
     lastModified: "2025-08-22",
   },
   {
@@ -207,7 +227,7 @@ export const blogPosts: BlogPost[] = [
       "Data Structure",
       "Database Design",
     ],
-    category: "Guide",
+    category: "Database",
     lastModified: "2025-08-22",
   },
   {
