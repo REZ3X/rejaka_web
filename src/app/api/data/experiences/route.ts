@@ -41,7 +41,7 @@ export async function GET() {
     {
       title: "Web Developer – Karyasija (Volunteer)",
       company: "SMKN 2 Depok Sleman",
-      period: "June 2025 – Oktober 2025",
+      period: "July 2025 – Oktober 2025",
       // responsibilities: [
       //   "Contributed to development and maintenance of school website",
       //   "Implemented responsive layouts and backend logic",
