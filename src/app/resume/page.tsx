@@ -66,7 +66,14 @@ export default function ResumePage() {
               Fullstack Developer
             </h2>
 
-            <div style={{ fontSize: "14px", display: "flex", flexDirection: "column", gap: "4px" }}>
+            <div
+              style={{
+                fontSize: "14px",
+                display: "flex",
+                flexDirection: "column",
+                gap: "4px",
+              }}
+            >
               <div>
                 <strong>Email:</strong> abim@rejaka.id
               </div>
@@ -122,9 +129,11 @@ export default function ResumePage() {
             About Me
           </h3>
           <p style={{ fontSize: "14px", marginTop: 0 }}>
-            I am a student of SMKN 2 Depok Sleman with a strong interest in fullstack development and team management.
-            Experienced with modern tech stacks such as Next.js, React, and Axum, I am also passionate about system and
-            database design. I actively lead and develop projects, learn quickly, and am eager to take on new challenges.
+            I am a student of SMKN 2 Depok Sleman with a strong interest in
+            fullstack development and team management. Experienced with modern
+            tech stacks such as Next.js, React, and Axum, I am also passionate
+            about system and database design. I actively lead and develop
+            projects, learn quickly, and am eager to take on new challenges.
           </p>
         </section>
 
@@ -143,7 +152,15 @@ export default function ResumePage() {
           >
             Skills
           </h3>
-          <div className="skills-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px", fontSize: "14px" }}>
+          <div
+            className="skills-grid"
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: "10px",
+              fontSize: "14px",
+            }}
+          >
             <div>
               <strong>Web Development:</strong> Next.js, React, Tailwind CSS
             </div>
@@ -155,6 +172,41 @@ export default function ResumePage() {
             </div>
             <div>
               <strong>Core Competencies:</strong> Team Leadership, Quick Learner
+            </div>
+          </div>
+        </section>
+
+        {/* LANGUAGES */}
+        <section style={{ marginBottom: "30px" }}>
+          <h3
+            style={{
+              fontSize: "18px",
+              fontWeight: 700,
+              textTransform: "uppercase",
+              borderBottom: "1px solid #dddddd",
+              paddingBottom: "5px",
+              marginBottom: "15px",
+              letterSpacing: "1px",
+            }}
+          >
+            Languages
+          </h3>
+          <div
+            style={{
+              fontSize: "14px",
+              display: "flex",
+              flexDirection: "column",
+              gap: "6px",
+            }}
+          >
+            <div>
+              <strong>Indonesia:</strong> Native
+            </div>
+            <div>
+              <strong>English:</strong> Professional
+            </div>
+            <div>
+              <strong>German:</strong> Basic
             </div>
           </div>
         </section>
@@ -176,31 +228,140 @@ export default function ResumePage() {
           </h3>
 
           <div style={{ marginBottom: "20px" }} className="print-avoid-break">
-            <div className="experience-flex" style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
-              <h4 style={{ fontSize: "16px", fontWeight: 700, margin: "0 0 5px 0" }}>Slaviors</h4>
-              <span style={{ fontSize: "13px", color: "#555555", fontWeight: 600 }}>June 2025 - January 2026</span>
+            <div
+              className="experience-flex"
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "baseline",
+              }}
+            >
+              <h4
+                style={{
+                  fontSize: "16px",
+                  fontWeight: 700,
+                  margin: "0 0 5px 0",
+                }}
+              >
+                Slaviors
+              </h4>
+              <span
+                style={{ fontSize: "13px", color: "#555555", fontWeight: 600 }}
+              >
+                July 2025 - January 2026
+              </span>
             </div>
-            <div style={{ fontSize: "14px", fontWeight: 600, color: "#333333", marginBottom: "8px" }}>
+            <div
+              style={{
+                fontSize: "14px",
+                fontWeight: 600,
+                color: "#333333",
+                marginBottom: "8px",
+              }}
+            >
               Freelance Fullstack Developer
             </div>
             <ul style={{ fontSize: "14px", margin: 0, paddingLeft: "20px" }}>
-              <li>Database design (ERD) and workflow planning for system and client requirements.</li>
-              <li>Building and managing systems used by clients, including frontend and backend integration.</li>
-              <li>Leading the development team, distributing work scope, and ensuring optimal and efficient team performance.</li>
+              <li>
+                Database design (ERD) and workflow planning for system and
+                client requirements.
+              </li>
+              <li>
+                Building and managing systems used by clients, including
+                frontend and backend integration.
+              </li>
+              <li>
+                Leading the development team, distributing work scope, and
+                ensuring optimal and efficient team performance.
+              </li>
             </ul>
           </div>
 
           <div style={{ marginBottom: "20px" }} className="print-avoid-break">
-            <div className="experience-flex" style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
-              <h4 style={{ fontSize: "16px", fontWeight: 700, margin: "0 0 5px 0" }}>Student Discipline Team</h4>
-              <span style={{ fontSize: "13px", color: "#555555", fontWeight: 600 }}>October 2024 - November 2025</span>
+            <div
+              className="experience-flex"
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "baseline",
+              }}
+            >
+              <h4
+                style={{
+                  fontSize: "16px",
+                  fontWeight: 700,
+                  margin: "0 0 5px 0",
+                }}
+              >
+                Web Developer – Karyasija (Volunteer)
+              </h4>
+              <span
+                style={{ fontSize: "13px", color: "#555555", fontWeight: 600 }}
+              >
+                June 2025 - Oktober 2025
+              </span>
             </div>
-            <div style={{ fontSize: "14px", fontWeight: 600, color: "#333333", marginBottom: "8px" }}>
+            <div
+              style={{
+                fontSize: "14px",
+                fontWeight: 600,
+                color: "#333333",
+                marginBottom: "8px",
+              }}
+            >
+              SMKN 2 Depok Sleman
+            </div>
+            <ul style={{ fontSize: "14px", margin: 0, paddingLeft: "20px" }}>
+              <li>
+                Become a web dev in Karyasija as one of the developer to
+                maintain the codebase of SMKN 2 Depok Sleman Website.
+              </li>
+            </ul>
+          </div>
+
+          <div style={{ marginBottom: "20px" }} className="print-avoid-break">
+            <div
+              className="experience-flex"
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "baseline",
+              }}
+            >
+              <h4
+                style={{
+                  fontSize: "16px",
+                  fontWeight: 700,
+                  margin: "0 0 5px 0",
+                }}
+              >
+                Student Discipline Team
+              </h4>
+              <span
+                style={{ fontSize: "13px", color: "#555555", fontWeight: 600 }}
+              >
+                October 2024 - November 2025
+              </span>
+            </div>
+            <div
+              style={{
+                fontSize: "14px",
+                fontWeight: 600,
+                color: "#333333",
+                marginBottom: "8px",
+              }}
+            >
               Coordinator
             </div>
             <ul style={{ fontSize: "14px", margin: 0, paddingLeft: "20px" }}>
-              <li>Led and coordinated 35 TaSis division members under the student council.</li>
-              <li>Contributed to security and disciplinary operations at various school events.</li>
+              <li>
+                Led and coordinated 35 TaSis division members under the student
+                council.
+              </li>
+              <li>
+                Contributed to security and disciplinary operations at various
+                school events.
+              </li>
             </ul>
           </div>
         </section>
@@ -221,17 +382,51 @@ export default function ResumePage() {
             Achievements
           </h3>
 
-          <div style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
+          <div
+            style={{ display: "flex", flexDirection: "column", gap: "15px" }}
+          >
             {ACHIEVEMENTS_DATA.map((achievement, idx) => (
               <div key={idx} className="print-avoid-break">
-                <div className="experience-flex" style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
-                  <h4 style={{ fontSize: "15px", fontWeight: 700, margin: "0 0 3px 0" }}>{achievement.title}</h4>
-                  <span style={{ fontSize: "13px", color: "#555555", fontWeight: 600 }}>{achievement.year}</span>
+                <div
+                  className="experience-flex"
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "baseline",
+                  }}
+                >
+                  <h4
+                    style={{
+                      fontSize: "15px",
+                      fontWeight: 700,
+                      margin: "0 0 3px 0",
+                    }}
+                  >
+                    {achievement.title}
+                  </h4>
+                  <span
+                    style={{
+                      fontSize: "13px",
+                      color: "#555555",
+                      fontWeight: 600,
+                    }}
+                  >
+                    {achievement.year}
+                  </span>
                 </div>
-                <div style={{ fontSize: "13px", fontWeight: 600, color: "#333333", marginBottom: "3px" }}>
+                <div
+                  style={{
+                    fontSize: "13px",
+                    fontWeight: 600,
+                    color: "#333333",
+                    marginBottom: "3px",
+                  }}
+                >
                   {achievement.issuer}
                 </div>
-                <p style={{ fontSize: "13px", margin: 0 }}>{achievement.description}</p>
+                <p style={{ fontSize: "13px", margin: 0 }}>
+                  {achievement.description}
+                </p>
               </div>
             ))}
           </div>
@@ -254,24 +449,83 @@ export default function ResumePage() {
           </h3>
 
           <div style={{ marginBottom: "12px" }} className="print-avoid-break">
-            <div className="experience-flex" style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
-              <h4 style={{ fontSize: "15px", fontWeight: 700, margin: "0 0 3px 0" }}>SMKN 2 DEPOK SLEMAN</h4>
-              <span style={{ fontSize: "13px", color: "#555555", fontWeight: 600 }}>2023 - 2027</span>
+            <div
+              className="experience-flex"
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "baseline",
+              }}
+            >
+              <h4
+                style={{
+                  fontSize: "15px",
+                  fontWeight: 700,
+                  margin: "0 0 3px 0",
+                }}
+              >
+                SMKN 2 DEPOK SLEMAN
+              </h4>
+              <span
+                style={{ fontSize: "13px", color: "#555555", fontWeight: 600 }}
+              >
+                2023 - 2027
+              </span>
             </div>
-            <div style={{ fontSize: "14px" }}>Sistem Informasi Jaringan & Aplikasi (SIJA)</div>
+            <div style={{ fontSize: "14px" }}>
+              Sistem Informasi Jaringan & Aplikasi (SIJA)
+            </div>
           </div>
 
           <div style={{ marginBottom: "12px" }} className="print-avoid-break">
-            <div className="experience-flex" style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
-              <h4 style={{ fontSize: "15px", fontWeight: 700, margin: "0 0 3px 0" }}>SMPN 6 YOGYAKARTA</h4>
-              <span style={{ fontSize: "13px", color: "#555555", fontWeight: 600 }}>2020 - 2023</span>
+            <div
+              className="experience-flex"
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "baseline",
+              }}
+            >
+              <h4
+                style={{
+                  fontSize: "15px",
+                  fontWeight: 700,
+                  margin: "0 0 3px 0",
+                }}
+              >
+                SMPN 6 YOGYAKARTA
+              </h4>
+              <span
+                style={{ fontSize: "13px", color: "#555555", fontWeight: 600 }}
+              >
+                2020 - 2023
+              </span>
             </div>
           </div>
 
           <div className="print-avoid-break">
-            <div className="experience-flex" style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
-              <h4 style={{ fontSize: "15px", fontWeight: 700, margin: "0 0 3px 0" }}>SDN GLAGAH</h4>
-              <span style={{ fontSize: "13px", color: "#555555", fontWeight: 600 }}>2014 - 2020</span>
+            <div
+              className="experience-flex"
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "baseline",
+              }}
+            >
+              <h4
+                style={{
+                  fontSize: "15px",
+                  fontWeight: 700,
+                  margin: "0 0 3px 0",
+                }}
+              >
+                SDN GLAGAH
+              </h4>
+              <span
+                style={{ fontSize: "13px", color: "#555555", fontWeight: 600 }}
+              >
+                2014 - 2020
+              </span>
             </div>
           </div>
         </section>

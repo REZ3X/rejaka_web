@@ -6,9 +6,7 @@ import { ViewModeProvider } from "@/context/ViewModeContext";
 import StatusWidgetStack from "@/components/StatusWidgetStack";
 import ResumeSidebarButton from "@/components/ResumeSidebarButton";
 import { PerformanceProvider } from "@/context/PerformanceContext";
-import PerformanceModeToggle from "@/components/PerformanceModeToggle";
-import PerformanceMetrics from "@/components/PerformanceMetrics";
-import PerformanceMetricsOverlay from "@/components/PerformanceMetricsOverlay";
+import PerformanceWidgetsGate from "@/components/PerformanceWidgetsGate";
 import "./globals.css";
 
 const inter = Inter({
@@ -365,9 +363,7 @@ export default function RootLayout({
             <StatusWidgetStack />
             {/* Global resume button on the left edge */}
             <ResumeSidebarButton />
-            <PerformanceModeToggle />
-            <PerformanceMetrics />
-            <PerformanceMetricsOverlay />
+            <PerformanceWidgetsGate />
           </ViewModeProvider>
         </PerformanceProvider>
       </body>
