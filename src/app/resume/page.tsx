@@ -298,7 +298,7 @@ export default function ResumePage() {
               <span
                 style={{ fontSize: "13px", color: "#555555", fontWeight: 600 }}
               >
-                June 2025 - Oktober 2025
+                July 2025 - Oktober 2025
               </span>
             </div>
             <div
