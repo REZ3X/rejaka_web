@@ -472,7 +472,7 @@ The threshold logic works exactly as expected. The pump transitions cleanly betw
 
 ### Telegram Bot
 
-![Telegram Chat Example](./telegram-chat "Telegram Chat Example")
+![Telegram Chat Example](./telegram-chat.png "Telegram Chat Example")
 
 ```
 /monitoring response:
