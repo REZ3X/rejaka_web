@@ -12,6 +12,51 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: "n8njson",
+    title: "n8n JSON Template for Hydroponic Monitoring and Control System",
+    date: "2026-06-14",
+    excerpt: "n8n JSON template for hydroponic monitoring and control system",
+    coverImage: "",
+    readingTime: 1,
+    tags: ["IoT", "JSON", "n8n", "Automation"],
+    category: "n8n JSON",
+    lastModified: "2026-06-14",
+  },
+  {
+    slug: "n8nsystemprompt",
+    title: "System Prompt for n8n Hydroponic AI Agent (Indonesia)",
+    date: "2026-06-14",
+    excerpt: "System prompt for n8n Hydroponic AI Agent",
+    coverImage: "",
+    readingTime: 1,
+    tags: ["IoT", "Prompt", "n8n", "Gemini AI", "Automation"],
+    category: "AI Prompt",
+    lastModified: "2026-06-14",
+  },
+  {
+    slug: "smartHydroponic",
+    title: "Smart Hydroponic: IoT-Based Monitoring and Control System",
+    date: "2026-06-14",
+    excerpt:
+      "Manual hydroponic checks get skipped the moment you leave the house. Here is how an ESP8266, a pair of sensors, MQTT, n8n, and a Gemini-powered Telegram bot replace that with 24/7 automated monitoring and pump control.",
+    coverImage: "/blog/posts/smartHydroponic/main.jpeg",
+    readingTime: 18,
+    tags: [
+      "IoT",
+      "ESP8266",
+      "MicroPython",
+      "MQTT",
+      "Hydroponics",
+      "n8n",
+      "ThingSpeak",
+      "Telegram Bot",
+      "Gemini AI",
+      "Automation",
+    ],
+    category: "IoT",
+    lastModified: "2026-06-14",
+  },
+  {
     slug: "mikrotikQos",
     title:
       "MikroTik QoS with Simple Queue: Bandwidth Control That Actually Works",
