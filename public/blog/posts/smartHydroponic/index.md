@@ -380,7 +380,7 @@ Create a new channel with three fields:
 
 The dashboard will show live-updating line charts for all three values.
 
-![ThingSpeak Dashboard](./thingspeakdashboard "ThingSpeak Dashboard")
+![ThingSpeak Dashboard](./thingspeakdashboard.png "ThingSpeak Dashboard")
 
 ---
 
