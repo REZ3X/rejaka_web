@@ -61,6 +61,10 @@ All components connect to the ESP8266 on a breadboard.
 | Relay                | COM     | 3V3         |
 | Relay NO + Mini Pump | —       | —           |
 
+![Fritzing](./fritzing.png "Fritzing")
+
+*DHT22 is replaced by DHT11*
+
 The HC-SR04 measures the distance from the sensor (mounted above the tank) down to the water surface. A small distance means the tank is full. A large distance means the tank is running low. The threshold is set at 10 cm — below that, tank is considered full and the pump turns off.
 
 One thing worth noting on the wiring table: HC-SR04 VCC goes to **VIN**, not 3V3. The HC-SR04 is a 5V sensor. Running it on 3.3V causes frequent read errors. VIN on the ESP8266 carries the raw input voltage (~5V from USB), which is what the sensor actually needs. More on why this creates its own problem in the [Known Issues](#known-issues) section.
