@@ -63,7 +63,7 @@ export default function ResumePage() {
                 textTransform: "uppercase",
               }}
             >
-              Fullstack Developer
+              Full-Stack Developer
             </h2>
 
             <div
@@ -259,7 +259,7 @@ export default function ResumePage() {
                 marginBottom: "8px",
               }}
             >
-              Freelance Fullstack Developer
+              Freelance Full-Stack Developer
             </div>
             <ul style={{ fontSize: "14px", margin: 0, paddingLeft: "20px" }}>
               <li>

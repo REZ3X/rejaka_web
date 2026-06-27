@@ -364,7 +364,7 @@ export default function GUITerminal() {
             {aboutData?.name || "Loading..."}
           </h2>
           <div className="inline-block px-3 py-1 bg-[#00adb4]/20 border border-[#00adb4]/50 rounded-full text-[#00adb4] text-sm mb-4">
-            Web Developer
+            Full-Stack Developer
           </div>
           <p className="text-gray-300 leading-relaxed whitespace-pre-wrap">
             {aboutData?.bio ? renderBioWithLinks(aboutData.bio) : "Loading..."}

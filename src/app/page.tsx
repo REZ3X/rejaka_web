@@ -44,7 +44,7 @@ export default function Home() {
               planeBaseHeight={8}
             />
             <span className="sr-only">
-              Rejaka Abimanyu Susanto — Full-Stack Web Developer Portfolio
+              Rejaka Abimanyu Susanto — Full-Stack Developer Portfolio
             </span>
           </h1>
 
@@ -57,7 +57,7 @@ export default function Home() {
               planeBaseHeight={6}
             />
             <span className="sr-only">
-              Rejaka Abimanyu Susanto — Full-Stack Web Developer Portfolio
+              Rejaka Abimanyu Susanto — Full-Stack Developer Portfolio
             </span>
           </h1>
 
@@ -99,7 +99,7 @@ export default function Home() {
           <div className="sr-only">
             <h2>About Rejaka Abimanyu Susanto</h2>
             <p>
-              Award-winning full-stack web developer from Yogyakarta, Indonesia.
+              Award-winning full-stack developer from Yogyakarta, Indonesia.
               Team Lead of Slaviors Development Team. Specializing in Next.js,
               React, TypeScript, MongoDB, and API development. 1st Place winner
               of the National Digital Hero Competition 2024.

@@ -25,13 +25,13 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://rejaka.id"),
   title: {
     template: "%s | Rejaka Abimanyu Susanto",
-    default: "Rejaka Abimanyu Susanto | Full-Stack Web Developer",
+    default: "Rejaka Abimanyu Susanto | Full-Stack Developer",
   },
   description:
-    "Web developer portfolio by Rejaka Abimanyu Susanto. Portfolio +  API real-time terminal, tech stack explorer, apidata endpoints, and projects showcase.",
+    "Full-Stack developer portfolio by Rejaka Abimanyu Susanto. Portfolio +  API real-time terminal, tech stack explorer, apidata endpoints, and projects showcase.",
   keywords: [
     "Rejaka Abimanyu Susanto",
-    "Web Developer Yogyakarta",
+    "Full-Stack Developer Yogyakarta",
     "Next.js Developer Indonesia",
     "TypeScript React Developer",
     "Full-Stack Developer Portfolio",
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     "Web Development Competition Winner",
     "Node.js Backend Engineer",
     "Modern Web Technologies",
-    "Freelance Web Developer Indonesia",
+    "Freelance Full-Stack Developer Indonesia",
   ],
   authors: [
     {
@@ -75,9 +75,9 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Rejaka Abimanyu Susanto | Web Developer & Tech Innovator",
+    title: "Rejaka Abimanyu Susanto | Full-Stack Developer & Tech Innovator",
     description:
-      "Interactive API request portfolio dashboard of Rejaka Abimanyu Susanto - Web developer specializing in Next.js, React, TypeScript, Rust, and MongoDB. Test API endpoints, explore apidata, and experience real-time request handling. Award-winning developer and Freelance Fullstack Developer at Slaviors.",
+      "Interactive API request portfolio dashboard of Rejaka Abimanyu Susanto - Full-Stack developer specializing in Next.js, React, TypeScript, Rust, and MongoDB. Test API endpoints, explore apidata, and experience real-time request handling. Award-winning developer and Freelance Full-Stack Developer at Slaviors.",
     url: "https://rejaka.id",
     siteName: "Rejaka Abimanyu Susanto - Developer Portfolio",
     locale: "en_US",
@@ -87,7 +87,7 @@ export const metadata: Metadata = {
         url: "/assets/rez3x.png",
         width: 1200,
         height: 630,
-        alt: "Rejaka Abimanyu Susanto - Web Developer Portfolio",
+        alt: "Rejaka Abimanyu Susanto - Full-Stack Developer Portfolio",
         type: "image/png",
       },
     ],
@@ -96,9 +96,9 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     site: "@rejaka",
     creator: "@rejaka",
-    title: "Rejaka Abimanyu Susanto | Web Developer",
+    title: "Rejaka Abimanyu Susanto | Full-Stack Developer",
     description:
-      "Award-winning web developer from Yogyakarta. Specializing in Next.js, React, TypeScript, Rust, WebAssembly. Interactive API request portfolio with real-time terminal logging and apidata explorer.",
+      "Award-winning full-stack developer from Yogyakarta. Specializing in Next.js, React, TypeScript, Rust, WebAssembly. Interactive API request portfolio with real-time terminal logging and apidata explorer.",
     images: {
       url: "/assets/rez3x.png",
       alt: "Rejaka Abimanyu Susanto Portfolio Dashboard",
@@ -227,15 +227,15 @@ export default function RootLayout({
                     url: "https://rejaka.id/assets/rez3x.png",
                     width: 800,
                     height: 600,
-                    caption: "Rejaka Abimanyu Susanto - Web Developer",
+                    caption: "Rejaka Abimanyu Susanto - Full-Stack Developer",
                   },
                   sameAs: [
                     "https://github.com/REZ3X",
                     "https://linkedin.com/in/rejaka-me",
                   ],
-                  jobTitle: "Web Developer",
+                  jobTitle: "Full-Stack Developer",
                   description:
-                    "Award-winning web developer, database engineer, and tech innovator specializing in modern web technologies including Next.js, React, TypeScript, Rust, and WebAssembly",
+                    "Award-winning full-stack developer, database engineer, and tech innovator specializing in modern web technologies including Next.js, React, TypeScript, Rust, and WebAssembly",
                   worksFor: {
                     "@type": "Organization",
                     name: "Slaviors",
@@ -267,7 +267,7 @@ export default function RootLayout({
                   ],
                   hasOccupation: {
                     "@type": "Occupation",
-                    name: "Web Developer",
+                    name: "Full-Stack Developer",
                     occupationLocation: {
                       "@type": "City",
                       name: "Yogyakarta, Indonesia",

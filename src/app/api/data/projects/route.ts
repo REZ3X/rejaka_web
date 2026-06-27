@@ -18,6 +18,7 @@ export async function GET(request: Request) {
       category: "web",
       description: [
         "A dedicated web platform for Formula 1 enthusiasts, delivering up-to-date race results, schedules, and information.",
+        "Built with Next.js, MariaDB, and TypeScript."
       ],
       features: [
         "Responsive design: Optimized for both desktop and mobile devices",
@@ -46,6 +47,7 @@ export async function GET(request: Request) {
       description: [
         "JogjaWaskita is a comprehensive civic engagement platform designed to bridge the gap between citizens and government departments. It provides a structured public room for citizens to report local issues, attach media evidence, and track the resolution process.",
         "The platform is uniquely powered by an advanced Agentic AI that assists citizens in drafting effective reports and helps government officials manage queues, analyze department-specific analytics, and automate responses.",
+        "Built with Next.js, Axum, MariaDB, JavaScript, and Rust."
       ],
       features: [
         "Agentic AI Chat Interface: AI-powered assistance for drafting reports and multimodal image analysis",
@@ -70,12 +72,13 @@ export async function GET(request: Request) {
     },
     {
       id: "blessedly",
-      title: "Blessedly - AI-Powered Mental Health Companion (Alpha)",
+      title: "Blessedly - AI-Powered Mental Health Companion",
       subtitle:
         "AI-powered mental health companion with journaling, mood tracking, and AI-driven emotional support",
       category: "web",
       description: [
         "Blessedly is a mental health companion platform that utilizes AI technology to provide emotional support and guidance to users. The platform offers a range of features designed to help users improve their mental well-being, including journaling, mood tracking, and AI-driven emotional support.",
+        "Built with Axum, MariaDB, and Rust."
       ],
       features: [
         "Healthy article: Provides healthy articles to help users improve their mental well-being",
@@ -94,30 +97,30 @@ export async function GET(request: Request) {
         },
       ],
     },
-    {
-      id: "roomet",
-      title: "Roomet - Socialize by Chats",
-      subtitle:
-        "Chat rooms with XP progression, achievements, and end-to-end encryption. A social space designed for real connection",
-      category: "web",
-      description: [
-        "Roomet is a chat room platform that combines social interaction with gamification elements. Users can join various chat rooms based on their interests and engage in conversations while earning XP and unlocking achievements.",
-        "The platform emphasizes privacy and security, with end-to-end encryption to ensure that all conversations remain confidential.",
-      ],
-      features: [
-        "Chat Rooms: Join and create chat rooms based on interests",
-        "XP Progression: Earn XP for active participation and unlock achievements",
-        "End-to-End Encryption: Ensures all conversations are secure and private",
-      ],
-      year: 2026,
-      links: [
-        {
-          label: "GitHub Repo",
-          url: "https://github.com/REZ3X/roomet",
-          type: "url",
-        },
-      ],
-    },
+    // {
+    //   id: "roomet",
+    //   title: "Roomet - Socialize by Chats",
+    //   subtitle:
+    //     "Chat rooms with XP progression, achievements, and end-to-end encryption. A social space designed for real connection",
+    //   category: "web",
+    //   description: [
+    //     "Roomet is a chat room platform that combines social interaction with gamification elements. Users can join various chat rooms based on their interests and engage in conversations while earning XP and unlocking achievements.",
+    //     "The platform emphasizes privacy and security, with end-to-end encryption to ensure that all conversations remain confidential.",
+    //   ],
+    //   features: [
+    //     "Chat Rooms: Join and create chat rooms based on interests",
+    //     "XP Progression: Earn XP for active participation and unlock achievements",
+    //     "End-to-End Encryption: Ensures all conversations are secure and private",
+    //   ],
+    //   year: 2026,
+    //   links: [
+    //     {
+    //       label: "GitHub Repo",
+    //       url: "https://github.com/REZ3X/roomet",
+    //       type: "url",
+    //     },
+    //   ],
+    // },
     {
       id: "alimentify",
       title: "Alimentify - AI-Powered Meal Nutrition Analyzer",
@@ -126,6 +129,7 @@ export async function GET(request: Request) {
       category: "web",
       description: [
         "Alimentify is an AI-powered meal nutrition analyzer that helps users understand the nutritional content of their meals. By leveraging advanced AI technology, Alimentify provides detailed insights into calories, macronutrients, vitamins, and minerals present in various dishes.",
+        "Created with Next.js, MongoDB, Axum, JavaScript, and Rust."
       ],
       // technologies: ["Next.js", "Axum", "Rust", "MongoDB", "TypeScript", "Tailwind CSS"],
       features: [
@@ -135,11 +139,11 @@ export async function GET(request: Request) {
       ],
       year: 2025,
       links: [
-        // {
-        //   Label: "Frontend Repo",
-        //   url: "https://github.com/REZ3X/alimentify_frontend",
-        //   type: "url",
-        // },
+        {
+          Label: "Frontend Repo",
+          url: "https://github.com/REZ3X/alimentify_frontend",
+          type: "url",
+        },
         {
           Label: "Backend API Repo",
           url: "https://github.com/REZ3X/alimentify_backend",
@@ -155,6 +159,7 @@ export async function GET(request: Request) {
       description: [
         "Snaplove Digital Photobooth is a web-based application that allows users to capture and share memorable moments through a digital photobooth experience. The platform is designed to be user-friendly and accessible, making it easy for anyone to create fun and engaging photos.",
         "Sharing frames and effects to enhance the photobooth experience.",
+        "Built with Next.js, MariaDB, Express, and TypeScript."
       ],
       // technologies: ["Next.js", "MongoDB", "JavaScript", "Tailwind CSS"],
       features: [
@@ -180,6 +185,7 @@ export async function GET(request: Request) {
       category: "web",
       description: [
         "NKPol is an event booth organizer that provides various services for event management and booth setup.",
+        "Created with Next.js, MongoDB, and TypeScript."
       ],
       // technologies: ["Next.js", "MongoDB", "JavaScript", "Tailwind CSS"],
       features: [
@@ -267,6 +273,7 @@ export async function GET(request: Request) {
       category: "web",
       description: [
         "FWB+ is a platform designed to facilitate event organization in a safe and supportive environment.",
+        "Created with Next.js, MongoDB, and TypeScript.",
       ],
       // technologies: ["Next.js", "MongoDB", "JavaScript", "Tailwind CSS"],
       features: [
@@ -317,6 +324,7 @@ export async function GET(request: Request) {
       description: [
         "V0ID ChatBot is a mobile application designed to provide users with a unique and engaging chatbot experience. The app features a motherly girlfriend chatbot that interacts with users in a friendly and supportive manner.",
         "The chatbot is capable of holding natural conversations, providing emotional support, and offering personalized recommendations based on user preferences.",
+        "Built with Next.js, MongoDB, TypeScript, and MIT App Inventor."
       ],
       // technologies: [
       //   "Java",
@@ -349,6 +357,7 @@ export async function GET(request: Request) {
       description: [
         "JaMak is a community network project aimed at improving connectivity and access to information in rural areas. It leverages local resources and community engagement to create a sustainable network infrastructure.",
         "The project focuses on providing essential services such as education, healthcare, and agriculture support through digital platforms.",
+        "Created with Next.js, ImageKit, MongoDB, and TypeScript."
       ],
       // technologies: [
       //   "Next.js",
@@ -467,6 +476,7 @@ export async function GET(request: Request) {
       description: [
         "Gachapon is a web application that allows users to generate randomized items based on predefined categories. It is designed for gaming and entertainment purposes, providing users with a fun way to discover new items.",
         "The website features a user-friendly interface and customizable settings for generating items.",
+        "Built with Next.js, TypeScript, and PWA."
       ],
       // technologies: ["Next.js", "TypeScript", "Tailwind CSS", "PWA"],
       features: [
@@ -516,6 +526,7 @@ export async function GET(request: Request) {
       description: [
         "Slaviors is a comprehensive team profile that showcases team members and provides easy access to important resources. It serves as both a team profile website and a resource hub for the development team.",
         "The platform includes detailed team member profiles and a dedicated links portal for quick access to essential tools and resources.",
+        "Created using Next.js with JavaScript."
       ],
       // technologies: ["Next.js", "JavaScript", "Tailwind CSS"],
       features: [
