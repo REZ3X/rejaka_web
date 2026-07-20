@@ -1,5 +1,11 @@
 import { NextResponse } from "next/server";
 
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
+
+const FORMSUBMIT_EMAIL = process.env.FORMSUBMIT_EMAIL || "abim@rejaka.id";
+const FORMSUBMIT_URL = `https://formsubmit.co/ajax/${FORMSUBMIT_EMAIL}`;
+
 export async function POST(request: Request) {
   try {
     const body = await request.json();
@@ -33,6 +39,35 @@ export async function POST(request: Request) {
       message,
       timestamp: new Date().toISOString(),
     });
+
+    const formSubmitResponse = await fetch(FORMSUBMIT_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        name,
+        email,
+        message,
+        _subject: subject,
+        _template: "table",
+        _captcha: "false",
+      }),
+    });
+
+    const formSubmitData = await formSubmitResponse.json().catch(() => null);
+
+    if (!formSubmitResponse.ok || !formSubmitData?.success) {
+      console.error("FormSubmit error:", formSubmitData);
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Failed to send message. Please try again later.",
+        },
+        { status: 502 }
+      );
+    }
 
     return NextResponse.json(
       {
