@@ -1,7 +1,6 @@
 import { google } from 'googleapis';
 import { NextResponse, NextRequest } from 'next/server';
 
-// Unwraps array-wrapped or stringified-array values into a plain string
 function unwrap(value: unknown): string | undefined {
   if (value == null) return undefined;
   if (Array.isArray(value)) return String(value[0]);
@@ -16,15 +15,28 @@ function unwrap(value: unknown): string | undefined {
   return String(value);
 }
 
+// Ensures a timestamp has a timezone offset; if missing, appends the given offset
+function ensureOffset(value: string | undefined, offset: string): string | undefined {
+  if (!value || value === 'null') return undefined;
+  if (/[+-]\d{2}:\d{2}$/.test(value) || value.endsWith('Z')) {
+    return value;
+  }
+  return `${value}${offset}`;
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json().catch(() => ({}));
 
-    // Optional filters — all safe to omit
-    const timeMin = unwrap(body.timeMin); // e.g. "2026-07-20T00:00:00+07:00"
-    const timeMax = unwrap(body.timeMax); // e.g. "2026-08-01T00:00:00+07:00"
+    const DEFAULT_OFFSET = '+07:00'; // Asia/Jakarta
+
+    const timeMinRaw = unwrap(body.timeMin);
+    const timeMaxRaw = unwrap(body.timeMax);
     const maxResultsRaw = unwrap(body.maxResults);
     const maxResults = maxResultsRaw ? parseInt(maxResultsRaw, 10) : 20;
+
+    const timeMin = ensureOffset(timeMinRaw, DEFAULT_OFFSET);
+    const timeMax = ensureOffset(timeMaxRaw, DEFAULT_OFFSET);
 
     const auth = new google.auth.GoogleAuth({
       credentials: {
@@ -38,10 +50,10 @@ export async function POST(request: NextRequest) {
 
     const res = await calendar.events.list({
       calendarId: process.env.GOOGLE_CALENDAR_ID,
-      timeMin: timeMin || new Date().toISOString(), // default: from now onward
+      timeMin: timeMin || new Date().toISOString(),
       timeMax: timeMax || undefined,
       maxResults: isNaN(maxResults) ? 20 : maxResults,
-      singleEvents: true,   // expands recurring events into individual instances
+      singleEvents: true,
       orderBy: 'startTime',
     });
 
