@@ -1,6 +1,22 @@
 import { google } from 'googleapis';
 import { NextResponse, NextRequest } from 'next/server';
 
+// Unwraps array-wrapped or stringified-array values into a plain string
+function unwrap(value: unknown): string {
+  if (Array.isArray(value)) {
+    return String(value[0]);
+  }
+  if (typeof value === 'string' && value.trim().startsWith('[')) {
+    try {
+      const parsed = JSON.parse(value);
+      return Array.isArray(parsed) ? String(parsed[0]) : value;
+    } catch {
+      return value;
+    }
+  }
+  return String(value);
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
@@ -12,6 +28,9 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
+
+    const cleanStartTime = unwrap(start_time);
+    const cleanEndTime = unwrap(end_time);
 
     const auth = new google.auth.GoogleAuth({
       credentials: {
@@ -26,11 +45,11 @@ export async function POST(request: NextRequest) {
     const event = {
       summary: summary || 'Reminder',
       start: {
-        dateTime: start_time,
+        dateTime: cleanStartTime,
         timeZone: timeZone || 'Asia/Jakarta',
       },
       end: {
-        dateTime: end_time,
+        dateTime: cleanEndTime,
         timeZone: timeZone || 'Asia/Jakarta',
       },
     };
