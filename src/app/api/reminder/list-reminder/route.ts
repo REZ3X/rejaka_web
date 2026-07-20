@@ -3,11 +3,13 @@ import { NextResponse, NextRequest } from 'next/server';
 
 function unwrap(value: unknown): string | undefined {
   if (value == null) return undefined;
-  if (Array.isArray(value)) return String(value[0]);
+  if (Array.isArray(value)) return value.length > 0 ? String(value[0]) : undefined;
   if (typeof value === 'string' && value.trim().startsWith('[')) {
     try {
       const parsed = JSON.parse(value);
-      return Array.isArray(parsed) ? String(parsed[0]) : value;
+      return Array.isArray(parsed)
+        ? (parsed.length > 0 ? String(parsed[0]) : undefined)
+        : value;
     } catch {
       return value;
     }
@@ -15,13 +17,28 @@ function unwrap(value: unknown): string | undefined {
   return String(value);
 }
 
-// Ensures a timestamp has a timezone offset; if missing, appends the given offset
-function ensureOffset(value: string | undefined, offset: string): string | undefined {
-  if (!value || value === 'null') return undefined;
-  if (/[+-]\d{2}:\d{2}$/.test(value) || value.endsWith('Z')) {
-    return value;
+// Catches every "meant to be empty" representation before it reaches Google
+function isEmpty(value: unknown): boolean {
+  if (value == null) return true;
+  const str = String(value).trim().toLowerCase();
+  return (
+    str === '' ||
+    str === 'null' ||
+    str === 'undefined' ||
+    str === '[]' ||
+    str === '[""]' ||
+    str === 'nan'
+  );
+}
+
+// Ensures a timestamp has a timezone offset; returns undefined if the input is empty
+function ensureOffset(value: unknown, offset: string): string | undefined {
+  if (isEmpty(value)) return undefined; // 🔑 guard added here
+  const str = String(value);
+  if (/[+-]\d{2}:\d{2}$/.test(str) || str.endsWith('Z')) {
+    return str;
   }
-  return `${value}${offset}`;
+  return `${str}${offset}`;
 }
 
 export async function POST(request: NextRequest) {
@@ -33,7 +50,7 @@ export async function POST(request: NextRequest) {
     const timeMinRaw = unwrap(body.timeMin);
     const timeMaxRaw = unwrap(body.timeMax);
     const maxResultsRaw = unwrap(body.maxResults);
-    const maxResults = maxResultsRaw ? parseInt(maxResultsRaw, 10) : 20;
+    const maxResults = isEmpty(maxResultsRaw) ? 20 : parseInt(String(maxResultsRaw), 10);
 
     const timeMin = ensureOffset(timeMinRaw, DEFAULT_OFFSET);
     const timeMax = ensureOffset(timeMaxRaw, DEFAULT_OFFSET);
