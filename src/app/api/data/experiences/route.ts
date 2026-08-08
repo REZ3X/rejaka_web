@@ -6,6 +6,11 @@ export const runtime = "nodejs";
 export async function GET() {
   const experiences = [
     {
+      title: "Fullstack Developer Intern",
+      company: "PT Botika Teknologi Indonesia",
+      period: "July 2026 – Present",
+    },
+    {
       title: "Freelance Fullstack Developer",
       company: "Slaviors - Self Employed",
       period: "June 2025 – January 2026",

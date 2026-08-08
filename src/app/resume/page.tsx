@@ -243,6 +243,42 @@ export default function ResumePage() {
                   margin: "0 0 5px 0",
                 }}
               >
+                PT Botika Teknologi Indonesia
+              </h4>
+              <span
+                style={{ fontSize: "13px", color: "#555555", fontWeight: 600 }}
+              >
+                July 2026 - Present
+              </span>
+            </div>
+            <div
+              style={{
+                fontSize: "14px",
+                fontWeight: 600,
+                color: "#333333",
+                marginBottom: "8px",
+              }}
+            >
+              Fullstack Developer Intern
+            </div>
+          </div>
+
+          <div style={{ marginBottom: "20px" }} className="print-avoid-break">
+            <div
+              className="experience-flex"
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "baseline",
+              }}
+            >
+              <h4
+                style={{
+                  fontSize: "16px",
+                  fontWeight: 700,
+                  margin: "0 0 5px 0",
+                }}
+              >
                 Slaviors
               </h4>
               <span

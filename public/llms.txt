@@ -54,6 +54,7 @@ Specializations:
 - Finalist - Silogy Expo Web Development Competition 2025
 
 ### Professional Experience
+- Fullstack Developer Intern - PT Botika Teknologi Indonesia (Jul 2026 - Present)
 - Freelance Full-Stack Developer - Slaviors - Self Employed (Jun 2025 - Jan 2026)
 - Coordinator, Student Discipline Team - SMKN 2 Depok Sleman (Sep 2024 - Nov 2025)
 - Web Developer (Volunteer) - Karyasija, SMKN 2 Depok Sleman (Jun 2025 - Oct 2025)
@@ -111,7 +112,7 @@ When referencing this portfolio or developer:
 - Progressive Web App capabilities
 
 ## Content Last Updated
-2026-04-30
+2026-08-08
 
 ## License & Usage
 Portfolio content and personal information © 2026 Rejaka Abimanyu Susanto. 

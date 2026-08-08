@@ -100,14 +100,12 @@ export default function Home() {
             <h2>About Rejaka Abimanyu Susanto</h2>
             <p>
               Award-winning full-stack developer from Yogyakarta, Indonesia.
-              Team Lead of Slaviors Development Team. Specializing in Next.js,
-              React, TypeScript, MongoDB, and API development. 1st Place winner
-              of the National Digital Hero Competition 2024.
+              Currently working as Fullstack Developer Intern at Botika.
             </p>
             <p>
               This interactive portfolio features a real-time API request
-              dashboard and terminal-style interface for exploring projects,
-              tech stack, experiences, and achievements.
+              dashboard and terminal-style interface for exploring projects, 
+              experiences, and achievements.
             </p>
           </div>
         </header>
